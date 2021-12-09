@@ -7,25 +7,30 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Driver extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
+	Texture img1;
+	Texture img2;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img1 = new Texture("badlogic.jpg");
+		img2 = new Texture("Fractalius Light - Wolf #2.jpg");
+
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		batch.draw(img1, 0, 0);
+		batch.draw(img2, 250, 0);
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		img1.dispose();
+		img2.dispose();
 	}
 }
