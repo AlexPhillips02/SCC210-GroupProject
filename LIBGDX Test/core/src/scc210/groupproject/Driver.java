@@ -49,8 +49,6 @@ public class Driver extends ApplicationAdapter
 		ScreenUtils.clear(1, 0, 0, 1);
 		camera.update();
 
-		Texture temp = bucketClass.getBucketImage();
-
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(bucketClass.getBucketImage(), bucketClass.getX(), bucketClass.getY());
