@@ -23,7 +23,7 @@ public class PlayerController
         float x = player.getX();
         float y = player.getY();
         int movementSpeed = player.getMovementSpeed();
-
+        
         //Use arrow keys for player
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
 		{
@@ -52,8 +52,8 @@ public class PlayerController
     //ie. moving up would get the future positions of the top corners (the square they are wanting to move to) and check if its a path (not a wall)
     public void playerMovement(int offsetAX, int offsetAY, int offsetBX, int offsetBY, float x, float y)
     {
-        Squares pointA = board.getGameSquare((int) ((x + offsetAX) / 32), (int) ((y + offsetAY) / 32));
-        Squares pointB = board.getGameSquare((int) ((x + offsetBX) / 32), (int) ((y + offsetBY) / 32));
+        Squares pointA = board.getGameSquare((int)((x + offsetAX) / 32), (int)((y + offsetAY) / 32));
+        Squares pointB = board.getGameSquare((int)((x + offsetBX) / 32), (int)((y + offsetBY) / 32));
 
         if (pointA.getTile() instanceof Path && pointB.getTile() instanceof Path) 
         {

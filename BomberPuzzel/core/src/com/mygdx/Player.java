@@ -29,7 +29,7 @@ public class Player
         y = player.y;
         player.width = 32;
         player.height = 64;
-        
+        movementSpeed = 100;
     } 
 
     public Rectangle getPlayer() {
