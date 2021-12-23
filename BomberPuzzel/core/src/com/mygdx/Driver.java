@@ -1,49 +1,40 @@
 package com.mygdx;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Driver extends ApplicationAdapter 
 {
-	Board gameBoard;
-	Player player;
+	private Board gameBoard;
+	private Player player;
+	private PlayerController controller;
+	private SpriteBatch batch;
 	
 	@Override
-	public void create () {
+	public void create () 
+	{
 		gameBoard = new Board();
 		player = new Player();
+		batch = new SpriteBatch();
+		controller = new PlayerController(player, gameBoard);
 	}
 
 	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
+	public void render() 
+	{
+		ScreenUtils.clear(0, 0, 0, 0);
+		
+		controller.update();	//Controller That moves player
 
-		//Use arrow keys for player
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-		{
-			player.setX(player.getX() - (200 * Gdx.graphics.getDeltaTime()));
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-		{
-			player.setX(player.getX() + (200 * Gdx.graphics.getDeltaTime()));
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP))
-		{
-			player.setY(player.getY() + (200 * Gdx.graphics.getDeltaTime()));
-		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
-		{
-			player.setY(player.getY() - (200 * Gdx.graphics.getDeltaTime()));
-		}
-
-		gameBoard.Draw();
-		player.Draw();
+		batch.begin();
+		gameBoard.Draw(batch);	//draws gameboard
+		player.Draw(batch);		//Draws player
+		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
-		//batch.dispose();
+		batch.dispose();
 	}
 }

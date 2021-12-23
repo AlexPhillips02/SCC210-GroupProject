@@ -5,13 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Board 
 {    
     Squares[][] gameSquares = new Squares[30][16];
-    SpriteBatch batch;
     
     //Creates initial board
     public Board()
     {
-        batch = new SpriteBatch();
-
         for (int x = 0; x < gameSquares.length; x++) 
         {
             for (int y = 0; y < gameSquares[x].length; y++) 
@@ -35,13 +32,13 @@ public class Board
                 gameSquares[x][y] = new Squares((x * xSize), (y * ySize), tempTile);
             }
         }
+
+        gameSquares[3][3].setTile(new Wall());
     }
 
     //Draws the squares
-    public void Draw()
+    public void Draw(SpriteBatch batch)
     {
-        batch.begin();
-		
         for (int x = 0; x < gameSquares.length; x++) 
         {
             for (int y = 0; y < gameSquares[x].length; y++) 
@@ -50,7 +47,10 @@ public class Board
                 batch.draw(current.getTexture(), current.getX(), current.getY());
             }
         }
+    }
 
-        batch.end();
+    public Squares getGameSquare(int x, int y) 
+    {
+        return gameSquares[x][y];
     }
 }

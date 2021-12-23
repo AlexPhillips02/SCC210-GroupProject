@@ -20,6 +20,11 @@ public class Squares
         this.tile = tile;
     }
 
+    public Tile getTile() 
+    {
+        return tile;
+    }
+
     public Squares getSquare()
     {
         return this;

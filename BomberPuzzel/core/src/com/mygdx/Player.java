@@ -10,11 +10,10 @@ public class Player
     private Rectangle player;
     private float x;
     private float y;
-    private SpriteBatch batch;
+    private int movementSpeed;
 
     public Player()
     {
-        batch = new SpriteBatch();
         player = new Rectangle();
         image = new Texture("badlogic.jpg");
         this.x = 0;
@@ -24,20 +23,25 @@ public class Player
 
     public void setDefaults()
     {
-        player.x = 100;
+        player.x = 150;
         player.y = 100;
         x = player.x;
         y = player.y;
         player.width = 32;
         player.height = 64;
+        
+    } 
+
+    public Rectangle getPlayer() {
+        return player;
     }
 
     public Texture getImage() {
         return image;
     }
 
-    public Rectangle getPlayer() {
-        return player;
+    public int getMovementSpeed() {
+        return movementSpeed;
     }
 
     public float getX() {
@@ -58,11 +62,8 @@ public class Player
         player.y = y;
     }
 
-    public void Draw()
+    public void Draw(SpriteBatch batch)
     {
-        batch.begin();
 		batch.draw(image , x, y);
-		batch.end();
-
     }
 }
