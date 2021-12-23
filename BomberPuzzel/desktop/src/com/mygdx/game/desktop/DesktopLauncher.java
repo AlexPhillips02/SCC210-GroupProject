@@ -8,7 +8,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("Puzzle Bomber");
-		config.setWindowedMode(1000, 500);
+		config.setWindowedMode(960, 512);
 
 		new Lwjgl3Application(new Driver(), config);
   }

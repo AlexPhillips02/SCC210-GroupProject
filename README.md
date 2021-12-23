@@ -1,10 +1,8 @@
 # SCC210-GroupProject
 
 hello <br/>
-To run, open build.gradle file (dont open folder within intellij) open by selecting gradle file. Then open as project <br/>
-<br/>
-press ctrl twice <br/>
-"gradle run" <br/>
-hit enter <br/>
-enjoy the bucket <br/>
+Test folder is a basic bucket catch game (read to get used to libgdx)
+
+Bomberpuzzel is the actual game
+To run open in vs, select the play button in the top right. If asked to select a main, select desktopLauncher.
 -Alex Phillips <br/>

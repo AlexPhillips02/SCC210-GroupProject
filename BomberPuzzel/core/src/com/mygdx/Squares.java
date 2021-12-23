@@ -6,13 +6,18 @@ public class Squares
 {
     private int x;
     private int y; 
-    private Texture image;
+    private Tile tile;
     
-    public Squares(int x, int y, Texture image)
+    public Squares(int x, int y, Tile tile)
     {
         this.x = x;
         this.y = y;
-        this.image = image;
+        this.tile = tile;
+    }
+
+    public void setTile(Tile tile)
+    {
+        this.tile = tile;
     }
 
     public Squares getSquare()
@@ -22,7 +27,7 @@ public class Squares
 
     public Texture getTexture()
     {
-        return image;
+        return tile.image;
     }
 
     public int getX()
