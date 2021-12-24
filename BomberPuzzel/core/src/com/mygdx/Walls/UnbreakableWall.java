@@ -1,10 +1,11 @@
-package com.mygdx;
+package com.mygdx.Walls;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.Board.Tile;
 
-public class Wall extends Tile
+public class UnbreakableWall extends Tile
 {
-    public Wall()
+    public UnbreakableWall()
     {
         image = new Texture("Wall.jpg");
         isWalkable = false;

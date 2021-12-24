@@ -1,6 +1,7 @@
-package com.mygdx;
+package com.mygdx.Board;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.Walls.UnbreakableWall;
 
 public class Board 
 {    
@@ -18,7 +19,7 @@ public class Board
                 //Creates boarder around the outside
                 if(x == 0 || y == 0 || x == (gameSquares.length - 1) || y == (gameSquares[x].length - 1))
                 {
-                    tempTile = new Wall();
+                    tempTile = new UnbreakableWall();
                 }
                 else
                 {
@@ -33,7 +34,7 @@ public class Board
             }
         }
 
-        gameSquares[3][3].setTile(new Wall());
+        gameSquares[3][3].setTile(new UnbreakableWall());
     }
 
     //Draws the squares

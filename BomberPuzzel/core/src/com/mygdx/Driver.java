@@ -3,6 +3,9 @@ package com.mygdx;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.Board.Board;
+import com.mygdx.Player.Player;
+import com.mygdx.Player.PlayerController;
 
 public class Driver extends ApplicationAdapter 
 {
@@ -35,6 +38,6 @@ public class Driver extends ApplicationAdapter
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+		batch.dispose();		//Honestly not really sure what this does or if it is ever used
 	}
 }
