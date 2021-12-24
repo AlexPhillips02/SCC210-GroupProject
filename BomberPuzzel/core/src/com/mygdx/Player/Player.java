@@ -14,6 +14,7 @@ public class Player
 
     public Player()
     {
+        //Rectangle could be used for collisions with enemies (see bucket game)
         player = new Rectangle();
         image = new Texture("badlogic.jpg");
         this.x = 0;
