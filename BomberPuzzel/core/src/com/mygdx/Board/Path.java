@@ -6,7 +6,6 @@ public class Path extends Tile
 {
     public Path()
     {
-        image = new Texture("Path.jpg");
-        isWalkable = true;
+        super("Path.jpg");
     }    
 }

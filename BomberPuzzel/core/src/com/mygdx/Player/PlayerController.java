@@ -2,26 +2,23 @@ package com.mygdx.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.Board.Board;
 import com.mygdx.Board.Path;
 import com.mygdx.Board.Squares;
 
 public class PlayerController
 {
-    Player player;
-    Board board;
     int playerHeight;
     int playerWidth;
+    Player player;
 
-    public PlayerController(Player player, Board board)
+    public PlayerController(Player player)
     {
-        this.player = player;
-        this.board = board;
+        this.player = player; 
         playerHeight = player.getImage().getHeight();
         playerWidth = player.getImage().getWidth();
     }
 
-	public void update() 
+	public void checkInput() 
     {
         float x = player.getX();
         float y = player.getY();
@@ -60,11 +57,10 @@ public class PlayerController
     //Check that the future tile of the player, all 4 corners are still on path tiles
     public void playerMovement(float x, float y)
     {
-        
-        Squares bottomLeft = board.getGameSquare((int)(x / 32), (int)(y / 32));
-        Squares bottomRight = board.getGameSquare((int)((x + playerWidth) / 32), (int)(y / 32));
-        Squares topLeft = board.getGameSquare((int)(x / 32), (int)((y + playerHeight) / 32));
-        Squares topRight = board.getGameSquare((int)((x + playerWidth) / 32), (int)((y + playerHeight) / 32));
+        Squares bottomLeft = player.board.getGameSquare((int)(x / 32), (int)(y / 32));
+        Squares bottomRight = player.board.getGameSquare((int)((x + playerWidth) / 32), (int)(y / 32));
+        Squares topLeft = player.board.getGameSquare((int)(x / 32), (int)((y + playerHeight) / 32));
+        Squares topRight = player.board.getGameSquare((int)((x + playerWidth) / 32), (int)((y + playerHeight) / 32));
         
         if (bottomLeft.getTile() instanceof Path && bottomRight.getTile() instanceof Path && topLeft.getTile() instanceof Path && topRight.getTile() instanceof Path) 
         {

@@ -5,7 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 public class Tile 
 {
     protected Texture image;
-    protected boolean isWalkable;
+
+    public Tile(String imageURL)
+    {
+        image = new Texture(imageURL);
+    }
     
     public Texture getImage() 
     {

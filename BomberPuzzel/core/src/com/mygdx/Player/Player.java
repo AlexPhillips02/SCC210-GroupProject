@@ -1,70 +1,19 @@
 package com.mygdx.Player;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.Board.Board;
 
-public class Player 
+public class Player extends Entity
 {
-    private Texture image;
-    private Rectangle player;
-    private float x;
-    private float y;
-    private int movementSpeed;
+    private PlayerController controller;
 
-    public Player()
+    public Player(Board board, float x, float y, int movementSpeed)
     {
-        //Rectangle could be used for collisions with enemies (see bucket game)
-        player = new Rectangle();
-        image = new Texture("badlogic.jpg");
-        this.x = 0;
-        this.y = 0;
-        setDefaults();
+        super("badlogic.jpg", board, x, y, movementSpeed);
+        
+        controller = new PlayerController(this);
     }
 
-    public void setDefaults()
-    {
-        player.x = 150;
-        player.y = 100;
-        x = player.x;
-        y = player.y;
-        player.width = 32;
-        player.height = 64;
-        movementSpeed = 100;
-    } 
-
-    public Rectangle getPlayer() {
-        return player;
-    }
-
-    public Texture getImage() {
-        return image;
-    }
-
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
-    public float getX() {
-        return x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-        player.x = x;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-        player.y = y;
-    }
-
-    public void Draw(SpriteBatch batch)
-    {
-		batch.draw(image , x, y);
+    public void checkInput() {
+        controller.checkInput();
     }
 }
