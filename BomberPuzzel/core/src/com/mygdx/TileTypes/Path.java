@@ -1,6 +1,6 @@
-package com.mygdx.Board;
+package com.mygdx.TileTypes;
 
-import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.Board.Tile;
 
 public class Path extends Tile
 {

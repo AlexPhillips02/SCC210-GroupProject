@@ -1,4 +1,4 @@
-package com.mygdx.Walls;
+package com.mygdx.TileTypes;
 
 public class SoftWall extends BreakableWall
 {

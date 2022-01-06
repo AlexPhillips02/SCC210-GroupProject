@@ -8,7 +8,7 @@ public class Player extends Entity
 
     public Player(Board board, float x, float y, int movementSpeed)
     {
-        super("badlogic.jpg", board, x, y, movementSpeed);
+        super("Player.jpg", board, x, y, movementSpeed);
         
         controller = new PlayerController(this);
     }

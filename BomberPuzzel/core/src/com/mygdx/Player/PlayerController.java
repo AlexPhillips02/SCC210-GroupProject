@@ -2,8 +2,8 @@ package com.mygdx.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.Board.Path;
 import com.mygdx.Board.Squares;
+import com.mygdx.TileTypes.Path;
 
 public class PlayerController
 {
@@ -30,17 +30,17 @@ public class PlayerController
 			x = (x - (movementSpeed * Gdx.graphics.getDeltaTime()));
             playerMovement(x, y);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+		else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
 		{
 			x = (x + (movementSpeed * Gdx.graphics.getDeltaTime()));
             playerMovement(x, y);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.UP))
+		else if(Gdx.input.isKeyPressed(Input.Keys.UP))
 		{
 			y = (y + (movementSpeed * Gdx.graphics.getDeltaTime()));
             playerMovement(x, y);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
 		{
 			y = (y - (movementSpeed * Gdx.graphics.getDeltaTime()));
             playerMovement(x, y);

@@ -1,15 +1,18 @@
 package com.mygdx.Board;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.Walls.UnbreakableWall;
+import com.mygdx.TileTypes.Path;
+import com.mygdx.TileTypes.UnbreakableWall;
 
 public class Board 
 {    
-    Squares[][] gameSquares = new Squares[30][16];
+    Squares[][] gameSquares;
     
     //Creates initial board
-    public Board()
+    public Board(int xLength, int yLength)
     {
+        gameSquares = new Squares[xLength][yLength];
+
         for (int x = 0; x < gameSquares.length; x++) 
         {
             for (int y = 0; y < gameSquares[x].length; y++) 
@@ -29,12 +32,15 @@ public class Board
                 //Size of image (32 pixels) --> Amount to skip to draw next image otherwise they overlap
                 int xSize = tempTile.getWidth(); 
                 int ySize = tempTile.getHeight();
-
+                //Creates squares initially with coordinates (based on window coords not amount of tiles)
                 gameSquares[x][y] = new Squares((x * xSize), (y * ySize), tempTile);
+
+                if (x % 2 == 0 && y % 2 == 0) 
+                {
+                    gameSquares[x][y].setTile(new UnbreakableWall());    
+                }
             }
         }
-
-        gameSquares[3][3].setTile(new UnbreakableWall());
     }
 
     //Draws the squares
