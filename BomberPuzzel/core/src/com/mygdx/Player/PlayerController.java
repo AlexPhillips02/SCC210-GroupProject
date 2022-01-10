@@ -57,10 +57,13 @@ public class PlayerController
     //Check that the future tile of the player, all 4 corners are still on path tiles
     public void playerMovement(float x, float y)
     {
-        Squares bottomLeft = player.board.getGameSquare((int)(x / 32), (int)(y / 32));
-        Squares bottomRight = player.board.getGameSquare((int)((x + playerWidth) / 32), (int)(y / 32));
-        Squares topLeft = player.board.getGameSquare((int)(x / 32), (int)((y + playerHeight) / 32));
-        Squares topRight = player.board.getGameSquare((int)((x + playerWidth) / 32), (int)((y + playerHeight) / 32));
+        int tileWidth = 64;
+        int tileHight = 64;
+
+        Squares bottomLeft = player.board.getGameSquare((int)(x / tileWidth), (int)(y / tileHight));
+        Squares bottomRight = player.board.getGameSquare((int)((x + playerWidth) / tileWidth), (int)(y / tileHight));
+        Squares topLeft = player.board.getGameSquare((int)(x / tileWidth), (int)((y + playerHeight) / tileHight));
+        Squares topRight = player.board.getGameSquare((int)((x + playerWidth) / tileWidth), (int)((y + playerHeight) / tileHight));
         
         if (bottomLeft.getTile() instanceof Path && bottomRight.getTile() instanceof Path && topLeft.getTile() instanceof Path && topRight.getTile() instanceof Path) 
         {
