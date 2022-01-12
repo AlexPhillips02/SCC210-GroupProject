@@ -22,7 +22,7 @@ public class PlayerController
     {
         float x = player.getX();
         float y = player.getY();
-        int movementSpeed = player.getMovementSpeed();
+        float movementSpeed = player.getMovementSpeed();
         
         //Use arrow keys for player
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
@@ -52,18 +52,18 @@ public class PlayerController
         }
     }   
 
-    //Collision detection. cordinates are based of the bottom left corner of the player
+    //Collision detection. Coordinates are based of the bottom left corner of the player
     //Gets the position of the corners of the player (/ 32 as that is size of the board squares)
     //Check that the future tile of the player, all 4 corners are still on path tiles
     public void playerMovement(float x, float y)
     {
         int tileWidth = 64;
-        int tileHight = 64;
+        int tileHeight = 64;
 
-        Squares bottomLeft = player.board.getGameSquare((int)(x / tileWidth), (int)(y / tileHight));
-        Squares bottomRight = player.board.getGameSquare((int)((x + playerWidth) / tileWidth), (int)(y / tileHight));
-        Squares topLeft = player.board.getGameSquare((int)(x / tileWidth), (int)((y + playerHeight) / tileHight));
-        Squares topRight = player.board.getGameSquare((int)((x + playerWidth) / tileWidth), (int)((y + playerHeight) / tileHight));
+        Squares bottomLeft = player.board.getGameSquare((int)(x / tileWidth), (int)(y / tileHeight));
+        Squares bottomRight = player.board.getGameSquare((int)((x + playerWidth) / tileWidth), (int)(y / tileHeight));
+        Squares topLeft = player.board.getGameSquare((int)(x / tileWidth), (int)((y + playerHeight) / tileHeight));
+        Squares topRight = player.board.getGameSquare((int)((x + playerWidth) / tileWidth), (int)((y + playerHeight) / tileHeight));
         
         if (bottomLeft.getTile() instanceof Path && bottomRight.getTile() instanceof Path && topLeft.getTile() instanceof Path && topRight.getTile() instanceof Path) 
         {

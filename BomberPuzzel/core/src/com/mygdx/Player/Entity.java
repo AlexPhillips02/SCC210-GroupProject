@@ -10,30 +10,30 @@ public abstract class Entity
     protected Texture image;
     protected float x;
     protected float y;
-    protected int movementSpeed;
+    protected float movementSpeed;
     protected Board board;    
-    protected Rectangle collisioRectangle;
+    protected Rectangle collisionRectangle;
 
-    public Entity(String imageURL, Board board, float x, float y, int movementSpeed)
+    public Entity(String imageURL, Board board, float x, float y, float movementSpeed)
     {
         image = new Texture(imageURL);
         this.board = board;
         this.x = x;
         this.y = y;
         this.movementSpeed = movementSpeed;
-        collisioRectangle = new Rectangle(x, y, image.getWidth(), image.getHeight());
+        collisionRectangle = new Rectangle(x, y, image.getWidth(), image.getHeight());
     }
 
-    public Rectangle getCollisioRectangle() 
+    public Rectangle getCollisionRectangle()
     {
-        return collisioRectangle;
+        return collisionRectangle;
     }
 
     public Texture getImage() {
         return image;
     }
 
-    public int getMovementSpeed() {
+    public float getMovementSpeed() {
         return movementSpeed;
     }
 
@@ -47,12 +47,12 @@ public abstract class Entity
 
     public void setX(float x) {
         this.x = x;
-        collisioRectangle.x = x;
+        collisionRectangle.x = x;
     }
 
     public void setY(float y) {
         this.y = y;
-        collisioRectangle.y = y;
+        collisionRectangle.y = y;
     }
 
     public void Draw(SpriteBatch batch)
