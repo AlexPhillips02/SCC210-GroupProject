@@ -2,6 +2,7 @@ package com.mygdx.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.Abilities.Bomb;
 import com.mygdx.Board.Squares;
 import com.mygdx.TileTypes.Path;
 
@@ -48,7 +49,7 @@ public class PlayerController
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) 
         {
-            //Place bomb
+           Bomb bomb = new Bomb(player.board, player.getX(), player.getY(), 5);
         }
     }   
 

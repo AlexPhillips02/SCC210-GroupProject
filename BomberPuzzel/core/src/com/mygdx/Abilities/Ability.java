@@ -1,40 +1,30 @@
-package com.mygdx.Player;
+package com.mygdx.Abilities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
+import com.mygdx.Player.Player;
 
-public abstract class Entity 
-{
+public abstract class Ability {
     protected Texture image;
+    protected Board board;
     protected float x;
     protected float y;
-    protected float movementSpeed;
-    protected Board board;    
+    protected Player player;
     protected Rectangle collisionRectangle;
 
-    public Entity(String imageURL, Board board, float x, float y, float movementSpeed)
+    public Ability(String imageURL, Board board, float x, float y)
     {
         image = new Texture(imageURL);
         this.board = board;
         this.x = x;
         this.y = y;
-        this.movementSpeed = movementSpeed;
         collisionRectangle = new Rectangle(x, y, image.getWidth(), image.getHeight());
-    }
-
-    public Rectangle getCollisionRectangle()
-    {
-        return collisionRectangle;
     }
 
     public Texture getImage() {
         return image;
-    }
-
-    public float getMovementSpeed() {
-        return movementSpeed;
     }
 
     public float getX() {
@@ -55,12 +45,8 @@ public abstract class Entity
         collisionRectangle.y = y;
     }
 
-    public void setMovementSpeed(float movementSpeed) {
-        this.movementSpeed = movementSpeed;
-    }
-
     public void Draw(SpriteBatch batch)
     {
-		batch.draw(image , x, y);
+        batch.draw(image , x, y);
     }
 }
