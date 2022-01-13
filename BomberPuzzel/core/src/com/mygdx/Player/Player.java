@@ -45,10 +45,6 @@ public class Player extends Entity
         return bombsRange;
     }
 
-    public boolean getDeadIs () {
-        return isDead;
-    }
-
     public void setHealth (int health) {
         this.health = health;
     }

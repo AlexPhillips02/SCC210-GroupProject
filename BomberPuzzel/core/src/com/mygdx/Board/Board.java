@@ -19,7 +19,7 @@ public class Board
             {
                 Tile tempTile;
 
-                //Creates boarder around the outside
+                //Creates border around the outside
                 if(x == 0 || y == 0 || x == (gameSquares.length - 1) || y == (gameSquares[x].length - 1))
                 {
                     tempTile = new UnbreakableWall();
