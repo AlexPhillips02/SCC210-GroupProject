@@ -14,7 +14,8 @@ public class Bomb extends Ability{
 
     protected State state;
 
-    public Bomb(Board board, float x, float y, int time) {
+    public Bomb(Board board, float x, float y, int time) 
+    {
         super("bomb_1.png", board, x, y);
         this.time = time;
         state = State.READY;

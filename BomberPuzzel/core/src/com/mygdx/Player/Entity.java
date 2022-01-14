@@ -33,6 +33,16 @@ public abstract class Entity
         return image;
     }
 
+    public int getHeight()
+    {
+        return image.getHeight();
+    }
+
+    public int getWidth()
+    {
+        return image.getWidth();
+    }
+
     public float getMovementSpeed() {
         return movementSpeed;
     }
