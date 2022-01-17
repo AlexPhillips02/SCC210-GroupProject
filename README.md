@@ -1,6 +1,6 @@
 # SCC210-GroupProject
 
-hello <br/>
+<br/>
 Test folder is a basic bucket catch game (read to get used to libgdx)
 
 Bomberpuzzel is the actual game
