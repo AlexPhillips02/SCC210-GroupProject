@@ -8,24 +8,35 @@ import com.mygdx.Player.Player;
 import com.mygdx.TileTypes.Path;
 import com.mygdx.Board.Squares;
 
+/**
+ * @author Alex Phillips
+ * Controls the games will create the board / player / enemies
+ * Creates and controls the camera
+ */
 public class GameController
 {
-	private Boolean winStatus;
+	//private Boolean winStatus;
     private Board gameBoard;
 	private Player player;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 
+	/**
+	 * Creates the camera
+	 * @param batch
+	 */
     public GameController(SpriteBatch batch)
     {
         this.batch = batch;
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		System.out.print(Gdx.graphics.getWidth());
 
-		//camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		CreateLevel();
     }
 
+	/**
+	 * Creates the level
+	 */
 	public void CreateLevel() 
 	{
 		gameBoard = new Board(29, 15);
@@ -37,6 +48,10 @@ public class GameController
 		temps.setTile(new Path());
 	}
 
+	/**
+	 * Continuosly sends updates looking for player movement
+	 * Also calls the function to draw the player and the board
+	 */
 	public void Update() 
 	{
 		player.checkInput();
@@ -46,6 +61,9 @@ public class GameController
 		player.Draw(batch);		//Draws player
 	}
 
+	/**
+	 * Moves the camera along with the player movement
+	 */
 	public void moveCamera()
 	{
 		float startX = camera.viewportWidth / 2;

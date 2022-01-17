@@ -4,11 +4,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.TileTypes.Path;
 import com.mygdx.TileTypes.UnbreakableWall;
 
+/**
+ * @author Alex Phillips
+ * Holds the squares to create the board
+ */
 public class Board 
 {    
     Squares[][] gameSquares;
     
-    //Creates initial board
+    /**
+     * Creates initial board
+     * @param xLength How many squares along the x axis
+     * @param yLength How many squares along the y axis
+     */
     public Board(int xLength, int yLength)
     {
         gameSquares = new Squares[xLength][yLength];
@@ -43,7 +51,10 @@ public class Board
         }
     }
 
-    //Draws the squares
+    /**
+     * Draws the board squares
+     * @param batch Spritebatch to output images (Controlled within driver)
+     */
     public void Draw(SpriteBatch batch)
     {
         for (int x = 0; x < gameSquares.length; x++) 
@@ -56,6 +67,12 @@ public class Board
         }
     }
 
+    /**
+     * Gets the gamesquare at position
+     * @param x X position
+     * @param y Y position
+     * @return Gamesquare
+     */
     public Squares getGameSquare(int x, int y) 
     {
         return gameSquares[x][y];
