@@ -22,11 +22,8 @@ public class PlayerController
         this.player = player; 
         playerHeight = player.getImage().getHeight();
         playerWidth = player.getImage().getWidth();
-        playerHeight = 63;
-        playerWidth = 63;
-
-        System.out.println(playerHeight);
-        System.out.println(playerWidth);
+        playerHeight = 60;
+        playerWidth = 60;
     }
 
     /**

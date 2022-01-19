@@ -3,10 +3,10 @@ package com.mygdx;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.Board.Board;
 import com.mygdx.Player.Player;
-import com.mygdx.TileTypes.Path;
-import com.mygdx.Board.Squares;
 
 /**
  * @author Alex Phillips
@@ -20,6 +20,7 @@ public class GameController
 	private Player player;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
+	private Viewport gamePort;
 
 	/**
 	 * Creates the camera
@@ -28,24 +29,22 @@ public class GameController
     public GameController(SpriteBatch batch)
     {
         this.batch = batch;
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		//camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+		camera = new OrthographicCamera();
+		gamePort = new FitViewport(928, 480, camera);
 
-		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-		CreateLevel();
+		CreateLevel(20);
     }
 
 	/**
 	 * Creates the level
+	 * @param percentageOfDestructableWalls Percentage of the map to be filled with walls (0 - 100)
 	 */
-	public void CreateLevel() 
+	public void CreateLevel(float percentageOfDestructableWalls) 
 	{
-		gameBoard = new Board(29, 15);
-
+		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 64, 64, 150);
-
-		//Just creates a bit of room to move around in at start
-		Squares temps = gameBoard.getGameSquare(2, 2);
-		temps.setTile(new Path());
 	}
 
 	/**
@@ -71,30 +70,35 @@ public class GameController
 		float width = Gdx.graphics.getWidth();
 		float height = Gdx.graphics.getHeight();
 
+		//Updates camera position with player
 		batch.setProjectionMatrix(camera.combined);
-
-		camera.position.set(player.getX(), player.getY(), 0);
+		camera.position.set((player.getX() + player.getWidth() / 2), (player.getY() + player.getHeight() / 2), 0);
 
 		//Left wall and bottom wall (Prevents camera from showing past the wall)
-		if(player.getX() < startX)
+		if((player.getX() + player.getWidth() / 2) < startX)
 		{
 			camera.position.x = startX;
 		}  
-		if(player.getY() < startY)
+		if((player.getY() + player.getHeight() / 2) < startY)
 		{
 			camera.position.y = startY;
 		}
 
 		//Right wall and top wall
-		if(player.getX() > (width + startX))
+		if((player.getX() + player.getWidth() / 2) > (width + startX))
 		{
 			camera.position.x = (width + startX);
 		} 
-		if(player.getY() > (height + startY))
+		if((player.getY() + player.getHeight() / 2) > (height + startY))
 		{
 			camera.position.y = (height + startY);
 		}
 
 		camera.update();
+	}
+
+	public void resize(int screenWidth, int screenHeight)
+	{
+		gamePort.update(screenWidth, screenHeight);
 	}
 }

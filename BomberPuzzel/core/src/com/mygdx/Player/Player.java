@@ -28,8 +28,6 @@ public class Player extends Entity
     {
         super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f00.png" , board, x, y, movementSpeed);
         createAnimations();
-        setAnimation(walkUp);
-        
 
         //providing a frame for the player with characteristics including bomb stash
         this.health = 3;
@@ -67,7 +65,7 @@ public class Player extends Entity
         }
 
         //Number relates to speed of animation can be decreaed / sped up
-        walkDown = new Animation<>(0.2f, frames);
+        walkDown = new Animation<>(1/15f, frames);
         frames.clear();
 
         //Walking Upwards (Back of player)
@@ -85,7 +83,7 @@ public class Player extends Entity
             frames.add(new TextureRegion(new Texture(upIcons[i])));
         }
 
-        walkUp = new Animation<>(0.2f, frames);
+        walkUp = new Animation<>(1/15f, frames);
         frames.clear();
 
         //Walking to the Right
@@ -103,7 +101,7 @@ public class Player extends Entity
             frames.add(new TextureRegion(new Texture(rightIcons[i])));
         }
 
-        walkRight = new Animation<>(0.2f, frames);
+        walkRight = new Animation<>(1/15f, frames);
         frames.clear();
 
         //Walking to the left

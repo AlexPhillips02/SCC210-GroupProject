@@ -9,8 +9,8 @@ public class SoftWall extends BreakableWall
      * Type of breakable wall (only takes 1 hit with bomb)
      * @param health Amoount of hits
      */
-    public SoftWall(int health)
+    public SoftWall()
     {
-        super("", health);
+        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Blocks/ExplodableBlock.png", 1);
     }
 }

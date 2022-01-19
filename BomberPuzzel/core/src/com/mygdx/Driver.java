@@ -30,4 +30,10 @@ public class Driver extends ApplicationAdapter
 	public void dispose () {
 		batch.dispose();		//Honestly not really sure what this does or if it is ever used
 	}
+
+	@Override
+	public void resize(int width, int height)
+	{
+		controller.resize(width, height);
+	}
 }

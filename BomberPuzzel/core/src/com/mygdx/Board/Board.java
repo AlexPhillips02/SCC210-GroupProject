@@ -2,6 +2,8 @@ package com.mygdx.Board;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.TileTypes.Path;
+import com.mygdx.TileTypes.ReinforcedWall;
+import com.mygdx.TileTypes.SoftWall;
 import com.mygdx.TileTypes.UnbreakableWall;
 
 /**
@@ -11,16 +13,31 @@ import com.mygdx.TileTypes.UnbreakableWall;
 public class Board 
 {    
     Squares[][] gameSquares;
+    int xLength;
+    int yLength;
     
     /**
      * Creates initial board
      * @param xLength How many squares along the x axis
      * @param yLength How many squares along the y axis
      */
-    public Board(int xLength, int yLength)
+    public Board(int xLength, int yLength, float percentageOfDestructableWalls)
     {
+        this.xLength = xLength;
+        this.yLength = yLength;
         gameSquares = new Squares[xLength][yLength];
+        createBasicLevelLayout();
+        addDestructableWalls(percentageOfDestructableWalls);
+        addCenterUnbreakableWalls();
+        createStartingSquaresForPlayer();
+    }
 
+    /**
+     * Places a boarder around the outside of the board
+     * Fills the middle with path blocks
+     */
+    public void createBasicLevelLayout()
+    {
         for (int x = 0; x < gameSquares.length; x++) 
         {
             for (int y = 0; y < gameSquares[x].length; y++) 
@@ -37,16 +54,69 @@ public class Board
                     tempTile = new Path();
                 }
 
-                //Size of image (32 pixels) --> Amount to skip to draw next image otherwise they overlap
+                //Size of image (64 pixels) --> Amount to skip to draw next image otherwise they overlap
                 int xSize = tempTile.getWidth(); 
                 int ySize = tempTile.getHeight();
                 //Creates squares initially with coordinates (based on window coords not amount of tiles)
                 gameSquares[x][y] = new Squares((x * xSize), (y * ySize), tempTile);
+            }
+        }
+    }
 
+    /**
+     * Places destructable walls into the gameboard
+     * @param percentage Rough percentage of destructable blocks to be placed (Is rough estimate as random placement)
+     */
+    public void addDestructableWalls(float percentage)
+    {
+        //totalUsableBlocks = size of the map - the walls around the outside
+        int totalUseableBlocks = (xLength - 2) * (yLength - 2);
+        float totalSoftBlocks = (percentage / 100) * totalUseableBlocks;
+        
+        int xPosition = 0;
+        int yPosition = 0;
+
+        for (int i = 0; i < totalSoftBlocks; i++) 
+        {
+            xPosition = (int)(Math.random() * (xLength - 2)  + 1);
+            yPosition = (int)(Math.random() * (yLength - 2)  + 1);
+
+            //33% of breakable walls will be reinforced
+            if(i % 3 == 0)
+            {
+                gameSquares[xPosition][yPosition].setTile(new SoftWall());
+            }
+            else
+            {
+                gameSquares[xPosition][yPosition].setTile(new ReinforcedWall(2));
+            }
+        }
+    }
+
+    /**
+     * Adds the unbreakable walls into the middle of the map
+     */
+    public void addCenterUnbreakableWalls()
+    {
+        for (int x = 0; x < gameSquares.length; x++) 
+        {
+            for (int y = 0; y < gameSquares[x].length; y++) 
+            {
                 if (x % 2 == 0 && y % 2 == 0) 
                 {
                     gameSquares[x][y].setTile(new UnbreakableWall());    
                 }
+            }
+        }
+    }
+
+    private void createStartingSquaresForPlayer() 
+    {
+        for (int x = 1; x <= 2; x++) 
+        {
+            for (int y = 1; y <= 2; y++) 
+            {
+                gameSquares[x][y].setTile(new Path());
             }
         }
     }
