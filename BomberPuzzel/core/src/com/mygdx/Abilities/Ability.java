@@ -9,6 +9,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 import com.mygdx.Player.Player;
 
+/**
+ * @author Alex Chalakov
+ * Abilities class creates basis for all abilities.
+ */
 public abstract class Ability {
     protected Texture defaultImage;
     protected Board board;
@@ -20,6 +24,13 @@ public abstract class Ability {
     protected Animation<TextureRegion> currentAnimation;
     private float elapsedTime = 0f;
 
+    /**
+     * Constructor for the abstract class of Abilities, all of them should be extended by this.
+     * @param imageURL URL to an image to use for the entity (Stored as a Texture)
+     * @param board The game board
+     * @param x X coordinate of the entity
+     * @param y Y coordinate of the entity
+     */
     public Ability(String imageURL, Board board, float x, float y)
     {
         defaultImage = new Texture(imageURL);
@@ -35,6 +46,10 @@ public abstract class Ability {
         currentAnimation = animation;
     }
 
+    /**
+     * Draws the entity on the board, either with an animation or an image.
+     * @param batch Spritebatch which displays all of the stuff in the driver
+     */
     public void Draw(SpriteBatch batch)
     {
         if (currentAnimation == null){
@@ -45,6 +60,7 @@ public abstract class Ability {
         }
     }
 
+    //Getters and Setters
     public Texture getImage() {
         return defaultImage;
     }
