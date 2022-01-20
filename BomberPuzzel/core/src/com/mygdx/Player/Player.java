@@ -26,7 +26,7 @@ public class Player extends Entity
         //providing a frame for the player with characteristics including bomb stash
         this.health = 3;
         this.bombsNumber = 0;
-        this.bombsMax = 1;
+        this.bombsMax = 2;
         this.bombsRange = 1;
         this.isDead = false;
 
@@ -163,6 +163,10 @@ public class Player extends Entity
         if ( health == 0){
             //GAME OVER
         }
+    }
+
+    public int incrementBombsNumber (){
+        return bombsNumber++;
     }
 
     public void checkInput() {

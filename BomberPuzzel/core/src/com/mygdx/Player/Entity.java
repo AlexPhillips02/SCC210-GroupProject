@@ -179,8 +179,8 @@ public abstract class Entity
     /**
      * @param point1 Square corner of player is in
      * @param point2 Square other corner of player is in (Ie. if moving down, both bottom corners)
-     * @param x X coordiante of player
-     * @param y Y coordinate of player
+     * @param tempX
+     * @param tempY
      * @return If the player is able to move without adjustement (Corner cutting)
      */
     public boolean validMove(Tile point1, Tile point2, float tempX, float tempY)
@@ -200,8 +200,8 @@ public abstract class Entity
      * to continue moving
      * @param point1 Square corner of player is in
      * @param point2 Square other corner of player is in (Ie. if moving down, both bottom corners)
-     * @param x X coordiante of player
-     * @param y Y coordinate of player
+     * @param tempX
+     * @param tempY
      * @param direction Direction of movement
      */
     public void possibleCornerCut(Tile point1, Tile point2, float tempX, float tempY, String direction)

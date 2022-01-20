@@ -33,7 +33,7 @@ public class Bomb extends Ability{
      */
     public Bomb(Board board) 
     {
-        super("", board, 0, 0);
+        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomb/Bomb_f01.png", board, 0, 0);
         state = State.READY;
 
         bombController(this);
@@ -82,7 +82,7 @@ public class Bomb extends Ability{
             frames.add(new TextureRegion(new Texture((explosionBomb[i]))));
         }
 
-        bombExplosion = new Animation<>(1/5f, frames);
+        bombExplosion = new Animation<>(2f, frames);
         frames.clear();
     }
 }
