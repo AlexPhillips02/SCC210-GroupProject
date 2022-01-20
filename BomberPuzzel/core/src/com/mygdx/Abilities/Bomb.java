@@ -30,13 +30,10 @@ public class Bomb extends Ability{
     /**
      * Constructor for our bombs.
      * @param board The game board
-     * @param x X coordinate of the entity
-     * @param y Y coordinate of the entity
-     * @param time time until the bomb explodes
      */
     public Bomb(Board board) 
     {
-        super("bomb_1.png", board, 0, 0);
+        super("", board, 0, 0);
         state = State.READY;
 
         bombController(this);

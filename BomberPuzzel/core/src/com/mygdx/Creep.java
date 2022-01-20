@@ -52,13 +52,13 @@ public class Creep extends Enemies
         frames.clear();
 
         //Walking to the Right
-        String[] rightIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f06.png"};
+        String[] rightIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f00.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f01.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f02.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f03.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f04.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f05.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f06.png"};
 
         for (int i = 0; i < rightIcons.length; i++) 
         {
@@ -69,13 +69,13 @@ public class Creep extends Enemies
         frames.clear();
 
         //Walking to the left
-        String[] leftIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Side/Creep_S_f06.png"};
+        String[] leftIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f00.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f01.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f02.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f03.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f04.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f05.png",
+        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f06.png"};
 
         for (int i = 0; i < leftIcons.length; i++) 
         {
