@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
+import com.mygdx.Board.Tile;
+import com.mygdx.TileTypes.Path;
 
 /**
  * @author Alex Phillips
@@ -17,12 +19,20 @@ public abstract class Entity
     protected Texture defaultImage;
     protected float x;
     protected float y;
+
     protected float movementSpeed;
+    protected String movementDirection;
     protected Board board;    
     protected Rectangle collisionRectangle;
 
     protected Animation<TextureRegion> currentAnimation;
-    private float elapsedTime = 0f;
+    protected Animation<TextureRegion> walkDown;
+    protected Animation<TextureRegion> walkUp;
+    protected Animation<TextureRegion> walkLeft;
+    protected Animation<TextureRegion> walkRight;
+    protected float elapsedTime = 0f;
+
+    protected int health;
 
     /**
      * @param imageURL URL to an image to use for the entity (Stored as a Texture)
@@ -52,6 +62,210 @@ public abstract class Entity
     }
 
     /**
+     * Called within player controller, sets the animation if walking in a direction
+     * @param direction Direction of the player (If null standing still)
+     */
+    public void setAnimationDirection(String direction)
+    {
+        switch (direction) {
+            case "UP":
+                setAnimation(walkUp);
+            break;
+
+            case "DOWN":
+                setAnimation(walkDown);
+            break;
+
+            case "LEFT":
+                setAnimation(walkLeft);
+            break;
+
+            case "RIGHT":
+                setAnimation(walkRight);
+            break;
+        
+            default:
+                setAnimation(null);
+            break;
+        }
+    }
+
+    public boolean move()
+    {
+        float tempX = this.getX();
+        float tempY = this.getY();
+
+        int imageHeight = 60;
+        int imageWidth = 60;
+
+        int tileHeight = 64;
+        int tileWidth = 64;
+
+        if(movementDirection == null)
+        {
+            return false;
+        }
+
+        switch (movementDirection) 
+        {
+            case "UP":
+                tempY = (tempY + (movementSpeed * Gdx.graphics.getDeltaTime()));
+                Tile uTopLeft = (board.getGameSquare((int)(tempX / tileWidth), (int)((tempY + imageHeight) / tileHeight))).getTile();
+                Tile uTopRight = (board.getGameSquare((int)((tempX + imageWidth) / tileWidth), (int)((tempY + imageHeight) / tileHeight))).getTile();
+
+                if(!validMove(uTopLeft, uTopRight, tempX, tempY))
+                {
+                    possibleCornerCut(uTopLeft, uTopRight, this.getX(), this.getY(), movementDirection);
+                }
+                else 
+                {
+                    return true;
+                }
+            break;
+
+            case "DOWN":
+                tempY = (tempY - (movementSpeed * Gdx.graphics.getDeltaTime()));
+                Tile dBottomLeft = (board.getGameSquare((int)(tempX / tileWidth), (int)(tempY / tileHeight))).getTile();
+                Tile dBottomRight = (board.getGameSquare((int)((tempX + imageWidth) / tileWidth), (int)(tempY / tileHeight))).getTile();
+
+                if(!validMove(dBottomLeft, dBottomRight, tempX, tempY))
+                {
+                    possibleCornerCut(dBottomLeft, dBottomRight, this.getX(), this.getY(), movementDirection);
+                }
+                else 
+                {
+                    return true;
+                }
+            break;
+
+            case "LEFT":
+                tempX = (tempX - (movementSpeed * Gdx.graphics.getDeltaTime()));   
+                Tile lBottomLeft = (board.getGameSquare((int)(tempX / tileWidth), (int)(tempY / tileHeight))).getTile();
+                Tile lTopLeft = (board.getGameSquare((int)(tempX / tileWidth), (int)((tempY + imageHeight) / tileHeight))).getTile(); 
+
+                if(!validMove(lBottomLeft, lTopLeft, tempX, tempY))
+                {
+                    possibleCornerCut(lBottomLeft, lTopLeft, this.getX(), this.getY(), movementDirection);
+                }
+                else 
+                {
+                    return true;
+                }
+            break;
+
+            case "RIGHT":
+                tempX = (tempX + (movementSpeed * Gdx.graphics.getDeltaTime()));
+                Tile rBottomRight = (board.getGameSquare((int)((tempX + imageWidth) / tileWidth), (int)(tempY / tileHeight))).getTile();
+                Tile rTopRight = (board.getGameSquare((int)((tempX + imageWidth) / tileWidth), (int)((tempY + imageHeight) / tileHeight))).getTile();
+
+                if(!validMove(rBottomRight, rTopRight, tempX, tempY))
+                {
+                    possibleCornerCut(rBottomRight, rTopRight, this.getX(), this.getY(), movementDirection);
+                }
+                else 
+                {
+                    return true;
+                }
+            break;
+        }
+
+        return false;
+    }
+
+    //Collision detection. Points are inputted from the direction (corners) they are travelling
+    //Ie. moving left will pass through the 2 left corners (top and bottom)
+    //Returns true if both future postions are paths and moves the player
+    //Returns false if one or both is blocked then checks if the corner can be "shortcutted"
+    /**
+     * @param point1 Square corner of player is in
+     * @param point2 Square other corner of player is in (Ie. if moving down, both bottom corners)
+     * @param x X coordiante of player
+     * @param y Y coordinate of player
+     * @return If the player is able to move without adjustement (Corner cutting)
+     */
+    public boolean validMove(Tile point1, Tile point2, float tempX, float tempY)
+    {                
+        if (point1 instanceof Path && point2 instanceof Path) 
+        {
+            this.setY(tempY);
+            this.setX(tempX);
+            return true; 
+        }
+
+        return false;
+    }
+
+    /**
+     * Adjusts for "corner cutting" if the player isnt lined up correctly will adjust the values to allow them
+     * to continue moving
+     * @param point1 Square corner of player is in
+     * @param point2 Square other corner of player is in (Ie. if moving down, both bottom corners)
+     * @param x X coordiante of player
+     * @param y Y coordinate of player
+     * @param direction Direction of movement
+     */
+    public void possibleCornerCut(Tile point1, Tile point2, float tempX, float tempY, String direction)
+    {
+        switch (direction) 
+        {
+            case "UP":
+                if (point1 instanceof Path) 
+                {
+                    //Top left free (adjust left)
+                    tempX = (tempX - (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                else if (point2 instanceof Path)
+                {
+                    //Top right free (adjust right)
+                    tempX = (tempX + (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                break;
+        
+            case "RIGHT":
+                if (point1 instanceof Path) 
+                {
+                    //Bottom right free (adjust downwards)
+                    tempY = (tempY - (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                else if (point2 instanceof Path)
+                {
+                    //Top right free (adjust upwards)
+                    tempY = (tempY + (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                break;
+
+            case "DOWN":
+                if (point1 instanceof Path) 
+                {
+                    //Bottom left free (adjust left)
+                    tempX = (tempX - (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                else if (point2 instanceof Path)
+                {
+                    //Bottom right free (adjust right)
+                    tempX = (tempX + (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                break;
+
+            case "LEFT":
+                if (point1 instanceof Path) 
+                {
+                    //Bottom left free (adjust down)
+                    tempY = (tempY - (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                else if (point2 instanceof Path)
+                {
+                    //Top left free (adjust upwards)
+                    tempY = (tempY + (movementSpeed * Gdx.graphics.getDeltaTime()));
+                }
+                break;
+        }
+
+        this.setY(tempY);
+        this.setX(tempX);
+    }
+
+    /**
      * Draws the entity on the board, either with an animation or an image
      * @param batch Spritebatch which displays all of the stuff in the driver
      */
@@ -59,17 +273,22 @@ public abstract class Entity
     {
         if (currentAnimation == null) 
         {
-            batch.draw(defaultImage , x, y);   
+            batch.draw(defaultImage , this.getX(), this.getY());   
         }
         else
         {
             //Draws the animation (gets the frame of the animation (elapsed time kinda like an index | true loops | x / y coordinates))
-            batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), x, y);
+            batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), this.getX(), this.getY());
             elapsedTime += Gdx.graphics.getDeltaTime();
         }
     }
 
     //Getters and setters
+    public void setMovementDirection(String direction)
+    {
+        this.movementDirection = direction;
+    }
+
     public Rectangle getCollisionRectangle()
     {
         return collisionRectangle;

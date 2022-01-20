@@ -18,6 +18,7 @@ public class GameController
 	//private Boolean winStatus;
     private Board gameBoard;
 	private Player player;
+	private Enemies enemies;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
@@ -45,6 +46,7 @@ public class GameController
 	{
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 64, 64, 150);
+		enemies = new Creep(gameBoard, 64, 64, 100);
 	}
 
 	/**
@@ -54,9 +56,11 @@ public class GameController
 	public void Update() 
 	{
 		player.checkInput();
+		enemies.update();
 		moveCamera();
 
 		gameBoard.Draw(batch);	//draws gameboard
+		enemies.Draw(batch);
 		player.Draw(batch);		//Draws player
 	}
 

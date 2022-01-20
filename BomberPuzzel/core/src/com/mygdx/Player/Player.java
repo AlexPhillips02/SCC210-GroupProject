@@ -12,17 +12,11 @@ import com.mygdx.Board.Board;
 public class Player extends Entity
 {
     private PlayerController controller;
-    private int health;
     private int bombsNumber;
     private int bombsMax;
     private int bombsRange;
-    private boolean isAlive = true;
+    //private boolean isAlive = true;
     private boolean isDead;
-
-    private Animation<TextureRegion> walkDown;
-    private Animation<TextureRegion> walkUp;
-    private Animation<TextureRegion> walkLeft;
-    private Animation<TextureRegion> walkRight;
 
     public Player(Board board, float x, float y, float movementSpeed)
     {
@@ -122,32 +116,6 @@ public class Player extends Entity
         walkLeft = new Animation<>(1/15f, frames);
     }
 
-    /**
-     * Called within player controller, sets the animation if walking in a direction
-     * @param direction Direction of the player (If null standing still)
-     */
-    public void setAnimationDirection(String direction)
-    {
-        switch (direction) {
-            case "UP":
-                setAnimation(walkUp);
-                break;
-            case "DOWN":
-                setAnimation(walkDown);
-                break;
-            case "LEFT":
-                setAnimation(walkLeft);
-                break;
-            case "RIGHT":
-                setAnimation(walkRight);
-                break;
-        
-            default:
-                setAnimation(null);
-                break;
-        }
-    }
-
     // Getters and Setters
     public int getHealth() {
         return health;
@@ -190,7 +158,7 @@ public class Player extends Entity
 
         this.health -= 1;
         this.isDead = true;
-        isAlive = false;
+        //isAlive = false;
 
         if ( health == 0){
             //GAME OVER
