@@ -5,10 +5,13 @@ package com.mygdx.Puzzles.Memory;
  */
 public class ColourButton
 {
-    String name;
+    protected String name;
 
     public ColourButton(String name)
     {
         this.name = name;
     }
+
+    public void buttonPressed()
+    {}
 }
