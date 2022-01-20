@@ -1,6 +1,8 @@
 package com.mygdx.Board;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * @author Alex Phillips
@@ -46,6 +48,11 @@ public class Squares
         return tile.image;
     }
 
+    public Animation<TextureRegion> getAnimation()
+    {
+        return tile.getAnimation();
+    }
+
     public int getX()
     {
         return x;
@@ -54,5 +61,10 @@ public class Squares
     public int getY()
     {
         return y;
+    }
+
+    public void setAnimation(Animation<TextureRegion> bombExplosion) 
+    {
+        tile.setAnimation(bombExplosion);
     }
 }

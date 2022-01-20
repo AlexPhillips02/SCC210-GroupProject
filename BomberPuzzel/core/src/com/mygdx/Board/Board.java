@@ -1,5 +1,6 @@
 package com.mygdx.Board;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.TileTypes.Path;
 import com.mygdx.TileTypes.ReinforcedWall;
@@ -15,6 +16,7 @@ public class Board
     Squares[][] gameSquares;
     int xLength;
     int yLength;
+    private float elapsedTime = 0f;
     
     /**
      * Creates initial board
@@ -110,6 +112,9 @@ public class Board
         }
     }
 
+    /**
+     * Creates area with no walls around the player spawn so they are guarranteed to be able to move
+     */
     private void createStartingSquaresForPlayer() 
     {
         for (int x = 1; x <= 2; x++) 
@@ -132,7 +137,17 @@ public class Board
             for (int y = 0; y < gameSquares[x].length; y++) 
             {
                 Squares current = gameSquares[x][y].getSquare();
-                batch.draw(current.getTexture(), current.getX(), current.getY());
+
+                if (current.getAnimation() != null) 
+                {
+                    batch.draw(current.getTexture(), current.getX(), current.getY());
+                    batch.draw(current.getAnimation().getKeyFrame(elapsedTime, true), current.getX(), current.getY());
+                    elapsedTime += Gdx.graphics.getDeltaTime();
+                }
+                else
+                {
+                    batch.draw(current.getTexture(), current.getX(), current.getY());
+                }
             }
         }
     }

@@ -16,10 +16,12 @@ public class PlayerController
     int playerWidth;
     Player player;
     int currentPlayerImage = 0;
+    Bomb playerBombs;
 
     public PlayerController(Player player)
     {
         this.player = player; 
+        playerBombs = new Bomb(player.board);
         playerHeight = player.getImage().getHeight();
         playerWidth = player.getImage().getWidth();
         playerHeight = 60;
@@ -95,7 +97,7 @@ public class PlayerController
         //Places a bomb
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) 
         {
-            new Bomb(player.board, player.getX(), player.getY(), 5);
+            playerBombs.drawBomb((player.getX() + (playerWidth / 2)), player.getY(), 5);
         }
     }   
 

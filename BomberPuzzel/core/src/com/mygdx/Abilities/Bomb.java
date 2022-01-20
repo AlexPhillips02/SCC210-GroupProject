@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.Board.Board;
+import com.mygdx.Board.Squares;
 
 /**
  * @author Alex Chalakov
@@ -33,14 +34,23 @@ public class Bomb extends Ability{
      * @param y Y coordinate of the entity
      * @param time time until the bomb explodes
      */
-    public Bomb(Board board, float x, float y, int time) 
+    public Bomb(Board board) 
     {
-        super("bomb_1.png", board, x, y);
-        this.time = time;
+        super("bomb_1.png", board, 0, 0);
         state = State.READY;
 
         bombController(this);
         createAnimations();
+    }
+
+    public void drawBomb(float x, float y, int time)
+    {
+        this.time = time;
+        int tileX = (int)(x / 64);
+        int tileY = (int)(y / 64);
+
+        Squares temp = board.getGameSquare(tileX, tileY);
+        temp.setAnimation(bombExplosion);
     }
 
     protected Bomb bomb;
@@ -75,7 +85,7 @@ public class Bomb extends Ability{
             frames.add(new TextureRegion(new Texture((explosionBomb[i]))));
         }
 
-        bombExplosion = new Animation<>(1/15f, frames);
+        bombExplosion = new Animation<>(1/5f, frames);
         frames.clear();
     }
 }
