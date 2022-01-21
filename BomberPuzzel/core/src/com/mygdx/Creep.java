@@ -6,14 +6,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.Board.Board;
 
+/**
+ * @author Alex Phillips
+ * Creep is a type of enemy
+ */
 public class Creep extends Enemies
 {
+    /**
+     * 
+     * @param board Gameboard
+     * @param x Starting x position
+     * @param y Starting y position
+     * @param movementSpeed Movement speed
+     */
     public Creep(Board board, float x, float y, float movementSpeed)
     {
         super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f00.png", board, x, y, movementSpeed);
         createAnimations();
     }
 
+    /**
+     * Creates the animations of a creep (Stored within entity)
+     */
     public void createAnimations()
     {
         //Walking downwards

@@ -162,4 +162,19 @@ public class Board
     {
         return gameSquares[x][y];
     }
+
+    public int getXLength()
+    {
+        return this.xLength;
+    }
+
+    public int getYLength()
+    {
+        return this.yLength;
+    }
+
+    public int getTileSize()
+    {
+        return gameSquares[0][0].getTile().getHeight();
+    }
 }

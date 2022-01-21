@@ -49,7 +49,7 @@ public abstract class Entity
         this.y = y;
         this.movementSpeed = movementSpeed;
         //Collision rectangle to be used for collisions with other entities
-        collisionRectangle = new Rectangle(x, y, defaultImage.getWidth(), defaultImage.getHeight());
+        collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), defaultImage.getHeight());
     }
 
     /**
@@ -90,6 +90,10 @@ public abstract class Entity
         }
     }
 
+    /**
+     * Moves the entity according to the direction of current travel
+     * @return Returns false if the entity is unable to move (Used for enemies finding new direction)
+     */
     public boolean move()
     {
         float tempX = this.getX();
@@ -101,11 +105,16 @@ public abstract class Entity
         int tileHeight = 64;
         int tileWidth = 64;
 
+        //If the entity is standing still
         if(movementDirection == null)
         {
             return false;
         }
 
+        //Calculate the corners of the entity in the new position
+        //Get the tile in those corners then check if they are path tiles
+        //If both are, move the player
+        //If one is but one isnt adjust the player automatically
         switch (movementDirection) 
         {
             case "UP":
@@ -179,8 +188,8 @@ public abstract class Entity
     /**
      * @param point1 Square corner of player is in
      * @param point2 Square other corner of player is in (Ie. if moving down, both bottom corners)
-     * @param tempX
-     * @param tempY
+     * @param tempX X position the player is moving into
+     * @param tempY Y position the player is moving into
      * @return If the player is able to move without adjustement (Corner cutting)
      */
     public boolean validMove(Tile point1, Tile point2, float tempX, float tempY)
@@ -197,11 +206,11 @@ public abstract class Entity
 
     /**
      * Adjusts for "corner cutting" if the player isnt lined up correctly will adjust the values to allow them
-     * to continue moving
+     * to continue moving (If one point is moving onto a path, but the other is hitting a wall)
      * @param point1 Square corner of player is in
      * @param point2 Square other corner of player is in (Ie. if moving down, both bottom corners)
-     * @param tempX
-     * @param tempY
+     * @param tempX X position the player is moving into
+     * @param tempY Y position the player is moving into
      * @param direction Direction of movement
      */
     public void possibleCornerCut(Tile point1, Tile point2, float tempX, float tempY, String direction)

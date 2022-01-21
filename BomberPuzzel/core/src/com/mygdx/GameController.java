@@ -1,8 +1,11 @@
 package com.mygdx;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.Board.Board;
@@ -18,7 +21,7 @@ public class GameController
 	//private Boolean winStatus;
     private Board gameBoard;
 	private Player player;
-	private Enemies enemies;
+	private ArrayList<Enemies> enemies;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
@@ -35,18 +38,47 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20);
+		CreateLevel(20, 5);
     }
 
 	/**
 	 * Creates the level
 	 * @param percentageOfDestructableWalls Percentage of the map to be filled with walls (0 - 100)
 	 */
-	public void CreateLevel(float percentageOfDestructableWalls) 
+	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount) 
 	{
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 64, 64, 150);
-		enemies = new Creep(gameBoard, 64, 64, 100);
+		enemies = new ArrayList<Enemies>();
+		CreateEnemies(10);
+	}
+
+	/**
+	 * Creates the enemies and places them randomly around the map
+	 * @param amount Amount of enemys to spawn around the map
+	 */
+	public void CreateEnemies(int amount)
+	{
+		int xPosition;
+		int yPosition;
+
+		for (int i = 0; i < amount; i++) 
+		{
+			//Loops until spawn position is a path
+			do 
+			{
+				xPosition = (int)(Math.random() * (gameBoard.getXLength() - 2)  + 1);
+            	yPosition = (int)(Math.random() * (gameBoard.getYLength() - 2)  + 1);	
+			} while ((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path);
+
+			//Translates grid position to coordinate
+			xPosition = xPosition * gameBoard.getTileSize();
+			yPosition = yPosition * gameBoard.getTileSize();
+
+			//Creates the enemy and adds to list of enemies
+			Enemies enemy = new Creep(gameBoard, xPosition, yPosition, 100);	
+			enemies.add(enemy);
+		}
 	}
 
 	/**
@@ -55,13 +87,39 @@ public class GameController
 	 */
 	public void Update() 
 	{
-		player.checkInput();
-		enemies.update();
-		moveCamera();
+		if (gameBoard != null) 
+		{
+			gameBoard.Draw(batch);	//draws gameboard	
+		}
 
-		gameBoard.Draw(batch);	//draws gameboard
-		enemies.Draw(batch);
-		player.Draw(batch);		//Draws player
+		//Draws and updates all enemeies created
+		if (enemies != null) 
+		{
+			for (Enemies enemies : enemies) 
+			{
+				enemies.update();
+				enemies.Draw(batch);	
+
+				//Player contact with enemy
+				if (enemies.getCollisionRectangle().overlaps(player.getCollisionRectangle()) && player.isAlive()) 
+				{
+					player.reduceHealth();
+					System.out.println("Player has had contact with enemy!");
+					if (player.isAlive() == false) 
+					{
+						System.out.println("Player is now dead");
+					}
+				}
+			}
+		}
+
+		if (player != null) 
+		{
+			player.checkInput();
+			player.Draw(batch);		//Draws player
+		}
+
+		moveCamera();
 	}
 
 	/**

@@ -6,16 +6,19 @@ import com.mygdx.Abilities.Bomb;
 
 /**
  * @author Alex Phillips
- * Player controller controls the player (User input, player movement)
+ * Player controller controls the player (User input)
  */
 public class PlayerController
 {
     int playerHeight;
     int playerWidth;
     Player player;
-    int currentPlayerImage = 0;
     Bomb playerBombs;
 
+    /**
+     * 
+     * @param player Player the controller is to control
+     */
     public PlayerController(Player player)
     {
         this.player = player; 
@@ -34,7 +37,7 @@ public class PlayerController
     {
         String direction = "";
         
-        //Use arrow keys for player
+        //Use arrow keys for player sets direction of player movement
 		if(Gdx.input.isKeyPressed(Input.Keys.UP))
 		{
             direction = "UP";
@@ -52,7 +55,7 @@ public class PlayerController
             direction = "LEFT";
 		}
         
-        //Sets the animation within the player
+        //Sets the animation within the player and movement direction (If "" player is standing still)
         player.setMovementDirection(direction);
         player.setAnimationDirection(direction);
         player.move();
@@ -62,7 +65,6 @@ public class PlayerController
         {
             if (player.getBombsNumber() < player.getBombsMax()) {
                 player.incrementBombsNumber();
-                //System.out.println(player.getBombsNumber());
                 playerBombs.drawBomb((player.getX() + (playerWidth / 2)), player.getY(), 5);
             }
         }

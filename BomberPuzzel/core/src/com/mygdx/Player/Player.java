@@ -1,5 +1,7 @@
 package com.mygdx.Player;
 
+import javax.swing.text.html.HTMLFrameHyperlinkEvent;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,8 +17,6 @@ public class Player extends Entity
     private int bombsNumber;
     private int bombsMax;
     private int bombsRange;
-    //private boolean isAlive = true;
-    private boolean isDead;
 
     public Player(Board board, float x, float y, float movementSpeed)
     {
@@ -28,7 +28,6 @@ public class Player extends Entity
         this.bombsNumber = 0;
         this.bombsMax = 2;
         this.bombsRange = 1;
-        this.isDead = false;
 
         controller = new PlayerController(this);
     }
@@ -150,18 +149,20 @@ public class Player extends Entity
         this.bombsRange = bombsRange;
     }
 
-    // Death function
-    public void deathOccurs() {
-        if (isDead == true){
-            return;
+    public void reduceHealth()
+    {
+        this.health --;
+    }
+
+    public Boolean isAlive()
+    {
+        if(health <= 0)
+        {
+            return false;
         }
-
-        this.health -= 1;
-        this.isDead = true;
-        //isAlive = false;
-
-        if ( health == 0){
-            //GAME OVER
+        else
+        {
+            return true;
         }
     }
 
