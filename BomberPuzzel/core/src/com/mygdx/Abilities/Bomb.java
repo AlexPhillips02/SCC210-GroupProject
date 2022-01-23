@@ -45,9 +45,8 @@ public class Bomb extends Ability
         square.addBomb(this);
     }
 
-    public void expload()
+    public void explode()
     {
-        System.out.println("BOOOMM!");
         player.decreasePlacedBombs();
         
         square.removeBomb();
@@ -65,6 +64,7 @@ public class Bomb extends Ability
 
         Texture bombs = new Texture("core/assets/Bomb.png");
 
+        //Bomb placement 
         for (int y = 0; y < 4; y++)
         {
             for (int x = 0; x < 4; x++) 
@@ -73,37 +73,37 @@ public class Bomb extends Ability
             }
         }
   
-        bombExplosion = new Animation<>(0.5f, frames);
+        bombExplosion = new Animation<>(1/3f, frames);
         frames.clear();
+        
+        Texture explosions = new Texture("core/assets/Explosions.png");
 
-        String[] centerIcons = {"core/assets/BombExplosionThings/pixil-frame-0.png"};
-
-        for (int i = 0; i < centerIcons.length; i++) 
+        //Explosion centre
+        for (int x = 0; x < 7; x++) 
         {
-            frames.add(new TextureRegion(new Texture(centerIcons[i])));
+            frames.add(new TextureRegion(explosions, 64 * x, 64 * 0, 64, 64));
         }
 
-        explolsionCenter = new Animation<>(1f, frames);
+        explolsionCenter = new Animation<>(1/10f, frames);
         frames.clear();
 
-        String[] UpDownIcons = {"core/assets/BombExplosionThings/pixil-frame-0 (4).png"};
-
-        for (int i = 0; i < UpDownIcons.length; i++) 
+        //Horizontal Lines
+        for (int x = 0; x < 7; x++) 
         {
-            frames.add(new TextureRegion(new Texture(UpDownIcons[i])));
+            frames.add(new TextureRegion(explosions, 64 * x, 64 * 1, 64, 64));
         }
 
-        explosionLinesVertical = new Animation<>(1f, frames);
+        explosionLinesHorizontal = new Animation<>(1/10f, frames);
         frames.clear();
 
-        String[] LeftRight = {"core/assets/BombExplosionThings/pixil-frame-0 (3).png"};
-
-        for (int i = 0; i < LeftRight.length; i++) 
+        //Vertiacal lines
+        for (int x = 0; x < 7; x++) 
         {
-            frames.add(new TextureRegion(new Texture(LeftRight[i])));
+            TextureRegion image = new TextureRegion(explosions, 64 * x, 64 * 2, 64, 64);
+            frames.add(image);
         }
 
-        explosionLinesHorizontal = new Animation<>(1f, frames);
+        explosionLinesVertical = new Animation<>(1/10f, frames);
         frames.clear();
     }
     

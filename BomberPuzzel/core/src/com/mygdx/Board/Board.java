@@ -137,36 +137,45 @@ public class Board
         {
             for (int y = 0; y < gameSquares[x].length; y++) 
             {
+                //Draws the background tile for each square
                 Squares current = gameSquares[x][y].getSquare();
+                batch.draw(current.getTexture(), current.getX(), current.getY());
 
+                //If the tile also has a animation, draws the animation ontop of the tile
                 if (current.getAnimation() != null) 
                 {
-                    batch.draw(current.getTexture(), current.getX(), current.getY());
-
+                    //If the Tile has a bomb placed ontop of it
                     if(current.getBomb() != null)
                     {
                         Bomb bomb = current.getBomb();
                         float elapsedTime = bomb.getElapsedTime();
                         batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
 
-                        bomb.setElapsedTime(elapsedTime += Gdx.graphics.getDeltaTime()); 
-
-                        if (current.getBomb().getAnimation().isAnimationFinished(elapsedTime)) 
+                        //If the bomb has finished the animation remove it
+                        if (bomb.getAnimation().isAnimationFinished(elapsedTime)) 
                         {
                             createExplosion(current, bomb);
-                            bomb.expload();
+                            bomb.explode();
                         }
-
-                        bomb.setElapsedTime(elapsedTime += Gdx.graphics.getDeltaTime()); 
+                        else
+                        {
+                            bomb.setElapsedTime(elapsedTime += Gdx.graphics.getDeltaTime()); 
+                        }
                     }
                     else
                     {
-                        batch.draw(current.getAnimation().getKeyFrame(0, false), current.getX(), current.getY());
+                        float elapsedTime = current.getElapsedTime();
+
+                        if (current.getAnimation().isAnimationFinished(current.getElapsedTime())) 
+                        {
+                            current.removeAnimation();
+                        }
+                        else
+                        {
+                            batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
+                            current.setElapsedTime(elapsedTime + Gdx.graphics.getDeltaTime());
+                        }
                     }
-                }
-                else
-                {
-                    batch.draw(current.getTexture(), current.getX(), current.getY());
                 }
             }
         }
@@ -206,6 +215,15 @@ public class Board
         if (current.getTile() instanceof Path && size >= 0) 
         {
             System.out.println("X: " + (current.getX() / current.getTile().getWidth()) + " Y: " + (current.getY() / current.getTile().getHeight()));
+
+            //If the bomb explodes on a tile with another bomb. The other bomb breaks
+            if (current.getBomb() != null) 
+            {
+                Bomb bombRemoval = current.getBomb();
+                bombRemoval.explode();
+            }
+
+            //Draws lines either vertically or horizontally
             if (direction == 0 || direction == 1) 
             {
                 current.createExplosion(bomb.getExplosionLinesHorizontalAnimation());
@@ -216,6 +234,7 @@ public class Board
             }
         
             size--;
+            //Gets next square
             Squares next = GetNext(current, direction);
             SetExplosionPath(next, size, direction, bomb);
         }

@@ -25,7 +25,7 @@ public class Player extends Entity
         this.health = 3;
         this.bombsNumber = 0;
         this.bombsMax = 4;
-        this.bombsRange = 1;
+        this.bombsRange = 2;
 
         controller = new PlayerController(this);
     }

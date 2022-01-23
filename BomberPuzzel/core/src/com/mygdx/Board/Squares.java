@@ -3,7 +3,6 @@ package com.mygdx.Board;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.Abilities.Bomb;
 
 /**
@@ -16,6 +15,7 @@ public class Squares
     private int y; 
     private Tile tile;
     private Bomb bomb;
+    private float elapsedTime = 0f;
     
     /**
      * Creates a square 
@@ -80,10 +80,12 @@ public class Squares
     public void removeAnimation()
     {
         tile.removeAnimation();
+        this.elapsedTime = 0f;
     }
 
     public void setAnimation(Animation<TextureRegion> bombExplosion) 
     {
+        this.elapsedTime = 0f;
         tile.setAnimation(bombExplosion);
     }
 
@@ -95,5 +97,15 @@ public class Squares
     public Bomb getBomb() 
     {
         return bomb;
+    }
+
+    public float getElapsedTime() 
+    {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(float elapsedTime) 
+    {
+        this.elapsedTime = elapsedTime;
     }
 }
