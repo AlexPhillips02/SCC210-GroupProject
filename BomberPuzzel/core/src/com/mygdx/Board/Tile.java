@@ -38,6 +38,11 @@ public class Tile
         this.tileAnimation = animation;
     }
 
+    public void removeAnimation()
+    {
+        this.tileAnimation = null;
+    }
+
     public int getHeight()
     {
         return image.getHeight();

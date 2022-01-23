@@ -1,7 +1,5 @@
 package com.mygdx.Player;
 
-import javax.swing.text.html.HTMLFrameHyperlinkEvent;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,7 +24,7 @@ public class Player extends Entity
         //providing a frame for the player with characteristics including bomb stash
         this.health = 3;
         this.bombsNumber = 0;
-        this.bombsMax = 2;
+        this.bombsMax = 4;
         this.bombsRange = 1;
 
         controller = new PlayerController(this);
@@ -166,8 +164,14 @@ public class Player extends Entity
         }
     }
 
-    public int incrementBombsNumber (){
-        return bombsNumber++;
+    public void increasePlacedBombs()
+    {
+        this.bombsNumber++;
+    }
+
+    public void decreasePlacedBombs()
+    {
+        this.bombsNumber--;
     }
 
     public void checkInput() {

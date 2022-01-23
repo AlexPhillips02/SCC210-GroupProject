@@ -3,6 +3,8 @@ package com.mygdx.Board;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
+import com.mygdx.Abilities.Bomb;
 
 /**
  * @author Alex Phillips
@@ -13,6 +15,7 @@ public class Squares
     private int x;
     private int y; 
     private Tile tile;
+    private Bomb bomb;
     
     /**
      * Creates a square 
@@ -63,8 +66,34 @@ public class Squares
         return y;
     }
 
+    public void addBomb(Bomb bomb)
+    {
+        this.bomb = bomb;
+        setAnimation(bomb.getAnimation());
+    }
+
+    public void removeBomb()
+    {
+        this.bomb = null;
+    }
+
+    public void removeAnimation()
+    {
+        tile.removeAnimation();
+    }
+
     public void setAnimation(Animation<TextureRegion> bombExplosion) 
     {
         tile.setAnimation(bombExplosion);
+    }
+
+    public void createExplosion(Animation<TextureRegion> animation )
+    {
+        tile.setAnimation(animation);
+    }
+
+    public Bomb getBomb() 
+    {
+        return bomb;
     }
 }

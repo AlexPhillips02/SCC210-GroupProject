@@ -13,7 +13,8 @@ import com.mygdx.Player.Player;
  * @author Alex Chalakov
  * Abilities class creates basis for all abilities.
  */
-public abstract class Ability {
+public abstract class Ability 
+{
     protected Texture defaultImage;
     protected Board board;
     protected float x;
@@ -31,12 +32,13 @@ public abstract class Ability {
      * @param x X coordinate of the entity
      * @param y Y coordinate of the entity
      */
-    public Ability(String imageURL, Board board, float x, float y)
+    public Ability(String imageURL, Board board, float x, float y, Player player)
     {
         defaultImage = new Texture(imageURL);
         this.board = board;
         this.x = x;
         this.y = y;
+        this.player = player;
 
         collisionRectangle = new Rectangle(x, y, defaultImage.getWidth(), defaultImage.getHeight());
     }

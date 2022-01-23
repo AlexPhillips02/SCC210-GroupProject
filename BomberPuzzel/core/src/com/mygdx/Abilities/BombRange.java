@@ -17,8 +17,7 @@ public class BombRange extends Ability {
      * @param player the player which gets the ability.
      */
     public BombRange(Board board, float x, float y, Player player) {
-        super("bomb_ranged.png", board, x, y);
-        this.player = player;
+        super("bomb_ranged.png", board, x, y, player);
         player.setBombsRange(+2);
     }
 }

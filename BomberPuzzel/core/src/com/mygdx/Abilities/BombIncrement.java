@@ -17,8 +17,7 @@ public class BombIncrement extends Ability {
      * @param player the player which gets the ability.
      */
     public BombIncrement(Board board, float x, float y, Player player) {
-        super("bomb_increased.png", board, x, y);
-        this.player = player;
+        super("bomb_increased.png", board, x, y, player);
         player.setBombsMax(+1);
     }
 }

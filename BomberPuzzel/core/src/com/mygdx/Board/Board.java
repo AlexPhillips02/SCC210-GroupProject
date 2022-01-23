@@ -2,6 +2,8 @@ package com.mygdx.Board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.Abilities.Bomb;
+import com.mygdx.TileTypes.BreakableWall;
 import com.mygdx.TileTypes.Path;
 import com.mygdx.TileTypes.ReinforcedWall;
 import com.mygdx.TileTypes.SoftWall;
@@ -16,7 +18,6 @@ public class Board
     Squares[][] gameSquares;
     int xLength;
     int yLength;
-    private float elapsedTime = 0f;
     
     /**
      * Creates initial board
@@ -141,8 +142,27 @@ public class Board
                 if (current.getAnimation() != null) 
                 {
                     batch.draw(current.getTexture(), current.getX(), current.getY());
-                    batch.draw(current.getAnimation().getKeyFrame(elapsedTime, true), current.getX(), current.getY());
-                    elapsedTime += Gdx.graphics.getDeltaTime();
+
+                    if(current.getBomb() != null)
+                    {
+                        Bomb bomb = current.getBomb();
+                        float elapsedTime = bomb.getElapsedTime();
+                        batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
+
+                        bomb.setElapsedTime(elapsedTime += Gdx.graphics.getDeltaTime()); 
+
+                        if (current.getBomb().getAnimation().isAnimationFinished(elapsedTime)) 
+                        {
+                            createExplosion(current, bomb);
+                            bomb.expload();
+                        }
+
+                        bomb.setElapsedTime(elapsedTime += Gdx.graphics.getDeltaTime()); 
+                    }
+                    else
+                    {
+                        batch.draw(current.getAnimation().getKeyFrame(0, false), current.getX(), current.getY());
+                    }
                 }
                 else
                 {
@@ -151,6 +171,90 @@ public class Board
             }
         }
     }
+
+    /**
+     * Calculates which blocks will be effected by the explosion
+     * @param center Center of the explosion (Where the bomb was placed)
+     * @param size Size of the explosion (How far in each direction)
+     */
+    public void createExplosion(Squares center, Bomb bomb)
+    {
+        Squares current = center;
+        int size = bomb.getExplosionRange();
+        center.setAnimation(bomb.getCenterAnimation());
+        System.out.println("Center X: " + (current.getX() / current.getTile().getWidth()) + " Y: " + (current.getY() / current.getTile().getHeight()));
+        System.out.println("Affected blocks");
+
+        if (size > 0) 
+        {
+            for (int i = 0; i < 4; i++) 
+            {
+                Squares next = GetNext(current, i);
+                SetExplosionPath(next, size - 1, i, bomb);
+            }   
+        }
+    }
+
+    /**
+     * Recursive function that calulcates the affected blocks
+     * @param current Current square
+     * @param size Amount left to travel in that direction
+     * @param direction Direction of travel (0 = left, 1 = right and so on)
+     */
+    public void SetExplosionPath(Squares current, int size, int direction, Bomb bomb)
+    {
+        if (current.getTile() instanceof Path && size >= 0) 
+        {
+            System.out.println("X: " + (current.getX() / current.getTile().getWidth()) + " Y: " + (current.getY() / current.getTile().getHeight()));
+            if (direction == 0 || direction == 1) 
+            {
+                current.createExplosion(bomb.getExplosionLinesHorizontalAnimation());
+            }
+            else
+            {
+                current.createExplosion(bomb.getExplosionLinesVerticalAnimation());
+            }
+        
+            size--;
+            Squares next = GetNext(current, direction);
+            SetExplosionPath(next, size, direction, bomb);
+        }
+        else
+        {
+            //Either bomb has ran out of range, or has hit something that isnt a path
+            if (size >= 0 && current.getTile() instanceof BreakableWall) 
+            {
+                //If the wall is breakable reduce the health
+                ((BreakableWall)current.getTile()).reduceHealth();
+
+                //If the wall is broken, replace with a path block
+                if (((BreakableWall)current.getTile()).getHealth() <= 0 ) 
+                {
+                    current.setTile(new Path());
+                }
+            }
+
+            return;
+        }
+    }
+
+    /**
+     * Gets the next square in that direction
+     */
+    public Squares GetNext(Squares current, int n)
+    {
+        int x = 0;
+        int y = 0;
+
+        if (n == 0) {x = -1;} //Left
+		if (n == 1) {x = 1;} //Right
+		if (n == 2) {y = 1;} //Down
+		if (n == 3) {y = -1;} //Up
+
+        Squares next = (Squares)(getGameSquare(((current.getX() / current.getTile().getWidth()) + x), ((current.getY() / current.getTile().getHeight()) + y)));
+        return next;
+    }
+
 
     /**
      * Gets the gamesquare at position

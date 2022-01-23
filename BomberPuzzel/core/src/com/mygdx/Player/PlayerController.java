@@ -13,7 +13,6 @@ public class PlayerController
     int playerHeight;
     int playerWidth;
     Player player;
-    Bomb playerBombs;
 
     /**
      * 
@@ -22,7 +21,6 @@ public class PlayerController
     public PlayerController(Player player)
     {
         this.player = player; 
-        playerBombs = new Bomb(player.board);
         playerHeight = player.getImage().getHeight();
         playerWidth = player.getImage().getWidth();
         playerHeight = 60;
@@ -63,10 +61,16 @@ public class PlayerController
         //Places a bomb
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) 
         {
-            if (player.getBombsNumber() < player.getBombsMax()) {
-                player.incrementBombsNumber();
-                playerBombs.drawBomb((player.getX() + (playerWidth / 2)), player.getY(), 5);
+            if (player.getBombsNumber() <= player.getBombsMax()) {
+                player.increasePlacedBombs();
+                createBomb();
             }
         }
     }  
+
+    public void createBomb()
+    {
+        Bomb playerBombs = new Bomb(player.board, player.getX() + (playerWidth / 2), player.getY(), player, player.getBombsRange());
+        playerBombs.placeBomb((player.getX() + (playerWidth / 2)), player.getY(), 5);
+    }
 }
