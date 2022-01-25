@@ -6,9 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Path;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.Board.Board;
+import com.mygdx.Player.Entity;
 import com.mygdx.Player.Player;
 
 /**
@@ -87,10 +89,18 @@ public class GameController
 	 */
 	public void Update() 
 	{
-		if (gameBoard != null) 
+		gameBoard.Draw(batch);	//draws gameboard	
+		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb exploads
+
+		//If squares exist where damage should be inflicted
+		if (deathSquares.size() > 0) 
 		{
-			gameBoard.Draw(batch);	//draws gameboard	
+			checkForSquareCollision(deathSquares);
+			gameBoard.resetDeathSquares();
 		}
+
+		player.checkInput();
+		player.Draw(batch);		//Draws player
 
 		//Draws and updates all enemeies created
 		if (enemies != null) 
@@ -113,13 +123,33 @@ public class GameController
 			}
 		}
 
-		if (player != null) 
-		{
-			player.checkInput();
-			player.Draw(batch);		//Draws player
-		}
-
 		moveCamera();
+	}
+
+	public void checkForSquareCollision(ArrayList<Rectangle> deathSquares)
+	{
+		for (Rectangle deathSquare : deathSquares) 
+		{
+			if(deathSquare.overlaps(player.getCollisionRectangle())) 
+			{
+				player.reduceHealth();
+			}
+
+			if (enemies != null) 
+			{
+				for( int i = 0; i < enemies.size(); i++ )
+				{
+					Entity enemy = enemies.get(i);
+
+					if (enemy.getCollisionRectangle().overlaps(deathSquare)) 
+					{
+						enemies.remove(enemy);
+						i--;
+						System.out.println("Enemy killed");						
+					}
+				}
+			}
+		}
 	}
 
 	/**

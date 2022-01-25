@@ -3,6 +3,7 @@ package com.mygdx.Board;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Abilities.Bomb;
 
 /**
@@ -16,6 +17,7 @@ public class Squares
     private Tile tile;
     private Bomb bomb;
     private float elapsedTime = 0f;
+    protected Rectangle collisionRectangle;
     
     /**
      * Creates a square 
@@ -28,6 +30,7 @@ public class Squares
         this.x = x;
         this.y = y;
         this.tile = tile;
+        this.collisionRectangle = new Rectangle(this.x, this.y, tile.getWidth(), tile.getHeight());
     }
 
     //Getters and setters
@@ -107,5 +110,9 @@ public class Squares
     public void setElapsedTime(float elapsedTime) 
     {
         this.elapsedTime = elapsedTime;
+    }
+
+    public Rectangle getCollisionRectangle() {
+        return collisionRectangle;
     }
 }

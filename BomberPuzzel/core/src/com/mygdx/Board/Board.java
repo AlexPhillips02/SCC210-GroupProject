@@ -1,7 +1,10 @@
 package com.mygdx.Board;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Abilities.Bomb;
 import com.mygdx.TileTypes.BreakableWall;
 import com.mygdx.TileTypes.Path;
@@ -16,6 +19,7 @@ import com.mygdx.TileTypes.UnbreakableWall;
 public class Board 
 {    
     Squares[][] gameSquares;
+    ArrayList<Rectangle> deathSquares = new ArrayList<>();
     int xLength;
     int yLength;
     
@@ -147,20 +151,7 @@ public class Board
                     //If the Tile has a bomb placed ontop of it
                     if(current.getBomb() != null)
                     {
-                        Bomb bomb = current.getBomb();
-                        float elapsedTime = bomb.getElapsedTime();
-                        batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
-
-                        //If the bomb has finished the animation remove it
-                        if (bomb.getAnimation().isAnimationFinished(elapsedTime)) 
-                        {
-                            createExplosion(current, bomb);
-                            bomb.explode();
-                        }
-                        else
-                        {
-                            bomb.setElapsedTime(elapsedTime += Gdx.graphics.getDeltaTime()); 
-                        }
+                        bombHandeling(batch, current);
                     }
                     else
                     {
@@ -181,25 +172,43 @@ public class Board
         }
     }
 
+    public void bombHandeling(SpriteBatch batch, Squares current)
+    {
+        Bomb bomb = current.getBomb();
+        float elapsedTime = bomb.getElapsedTime();
+        batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
+
+        //If the bomb has finished the animation remove it and expload
+        if (bomb.getAnimation().isAnimationFinished(elapsedTime)) 
+        {
+            createExplosion(current, bomb, deathSquares);
+            bomb.explode();
+        }
+        else
+        {
+            bomb.setElapsedTime(elapsedTime += Gdx.graphics.getDeltaTime()); 
+        }
+    }
+
     /**
      * Calculates which blocks will be effected by the explosion
      * @param center Center of the explosion (Where the bomb was placed)
      * @param size Size of the explosion (How far in each direction)
      */
-    public void createExplosion(Squares center, Bomb bomb)
+    public void createExplosion(Squares center, Bomb bomb, ArrayList<Rectangle> deathSquares)
     {
-        Squares current = center;
         int size = bomb.getExplosionRange();
+
+        Squares current = center;
         center.setAnimation(bomb.getCenterAnimation());
-        System.out.println("Center X: " + (current.getX() / current.getTile().getWidth()) + " Y: " + (current.getY() / current.getTile().getHeight()));
-        System.out.println("Affected blocks");
+        deathSquares.add(current.getCollisionRectangle());
 
         if (size > 0) 
         {
             for (int i = 0; i < 4; i++) 
             {
                 Squares next = GetNext(current, i);
-                SetExplosionPath(next, size - 1, i, bomb);
+                SetExplosionPath(next, size - 1, i, bomb, deathSquares);
             }   
         }
     }
@@ -210,11 +219,11 @@ public class Board
      * @param size Amount left to travel in that direction
      * @param direction Direction of travel (0 = left, 1 = right and so on)
      */
-    public void SetExplosionPath(Squares current, int size, int direction, Bomb bomb)
+    public void SetExplosionPath(Squares current, int size, int direction, Bomb bomb, ArrayList<Rectangle> deathSquares)
     {
         if (current.getTile() instanceof Path && size >= 0) 
         {
-            System.out.println("X: " + (current.getX() / current.getTile().getWidth()) + " Y: " + (current.getY() / current.getTile().getHeight()));
+            deathSquares.add(current.getCollisionRectangle());
 
             //If the bomb explodes on a tile with another bomb. The other bomb breaks
             if (current.getBomb() != null) 
@@ -236,7 +245,7 @@ public class Board
             size--;
             //Gets next square
             Squares next = GetNext(current, direction);
-            SetExplosionPath(next, size, direction, bomb);
+            SetExplosionPath(next, size, direction, bomb, deathSquares);
         }
         else
         {
@@ -274,7 +283,6 @@ public class Board
         return next;
     }
 
-
     /**
      * Gets the gamesquare at position
      * @param x X position
@@ -299,5 +307,13 @@ public class Board
     public int getTileSize()
     {
         return gameSquares[0][0].getTile().getHeight();
+    }
+
+    public ArrayList<Rectangle> getDeathSquares() {
+        return deathSquares;
+    }
+
+    public void resetDeathSquares() {
+        deathSquares = new ArrayList<>();
     }
 }
