@@ -14,6 +14,7 @@ import com.mygdx.TileTypes.UnbreakableWall;
 
 /**
  * @author Alex Phillips
+ * Responsible for the game board
  * Holds the squares to create the board
  */
 public class Board 
@@ -27,6 +28,7 @@ public class Board
      * Creates initial board
      * @param xLength How many squares along the x axis
      * @param yLength How many squares along the y axis
+     * @param percentageOfDestructableWalls Perecntage of the map to be destructable walls
      */
     public Board(int xLength, int yLength, float percentageOfDestructableWalls)
     {
@@ -143,10 +145,10 @@ public class Board
             {
                 //Draws the background tile for each square
                 Squares current = gameSquares[x][y].getSquare();
-                batch.draw(current.getTexture(), current.getX(), current.getY());
+                batch.draw(current.getTile().getTexture(), current.getX(), current.getY());
 
                 //If the tile also has a animation, draws the animation ontop of the tile
-                if (current.getAnimation() != null) 
+                if (current.getTile().getAnimation() != null) 
                 {
                     //If the Tile has a bomb placed ontop of it
                     if(current.getBomb() != null)
@@ -157,13 +159,13 @@ public class Board
                     {
                         float elapsedTime = current.getElapsedTime();
 
-                        if (current.getAnimation().isAnimationFinished(current.getElapsedTime())) 
+                        if (current.getTile().getAnimation().isAnimationFinished(current.getElapsedTime())) 
                         {
                             current.removeAnimation();
                         }
                         else
                         {
-                            batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
+                            batch.draw(current.getTile().getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
                             current.setElapsedTime(elapsedTime + Gdx.graphics.getDeltaTime());
                         }
                     }
@@ -181,7 +183,7 @@ public class Board
     {
         Bomb bomb = current.getBomb();
         float elapsedTime = bomb.getElapsedTime();
-        batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
+        batch.draw(current.getTile().getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
 
         //If the bomb has finished the animation remove it and explode
         if (bomb.getAnimation().isAnimationFinished(elapsedTime)) 
@@ -243,11 +245,11 @@ public class Board
             //Draws lines either vertically or horizontally
             if (direction == 0 || direction == 1) 
             {
-                current.createExplosion(bomb.getExplosionLinesHorizontalAnimation());
+                current.setAnimation(bomb.getExplosionLinesHorizontalAnimation());
             }
             else
             {
-                current.createExplosion(bomb.getExplosionLinesVerticalAnimation());
+                current.setAnimation(bomb.getExplosionLinesVerticalAnimation());
             }
         
             size--;

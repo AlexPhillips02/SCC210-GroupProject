@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Tile 
 {
     protected Texture image;
-    protected Animation<TextureRegion> tileAnimation;
+    protected Animation<TextureRegion> bombAnimation;
 
     /**
      * Creates the texture
@@ -28,28 +28,49 @@ public class Tile
         return image;
     }
 
+    /**
+     * @return Current bomb animation (Either placed bomb or explosion animation)
+     */
     public Animation<TextureRegion> getAnimation()
     {
-        return tileAnimation;
+        return bombAnimation;
     }
 
+    /**
+     * Sets the current bomb animation
+     */
     public void setAnimation(Animation<TextureRegion> animation)
     {
-        this.tileAnimation = animation;
+        this.bombAnimation = animation;
     }
 
+    /**
+     * Removes the current bomb animation. Sets to null
+     */
     public void removeAnimation()
     {
-        this.tileAnimation = null;
+        this.bombAnimation = null;
     }
 
+    /**
+     * Gets the height of the image representing the tile
+     * @return Image height
+     */
     public int getHeight()
     {
         return image.getHeight();
     }
 
+    /**
+     * Gets the width of the image representing the tile
+     * @return Image width
+     */
     public int getWidth()
     {
         return image.getWidth();
+    }
+
+    public Texture getTexture() {
+        return image;
     }
 }

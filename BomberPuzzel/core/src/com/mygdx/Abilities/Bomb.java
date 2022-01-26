@@ -14,10 +14,9 @@ import com.mygdx.Player.Player;
  */
 public class Bomb extends Ability
 {
-    protected int time;
-    private Squares square;
-    private float elapsedTime = 0f;
-    private int explosionRange;
+    private Squares square; //Square the bomb is placed on
+    private float elapsedTime = 0f; //Used for the animations
+    private int explosionRange; //Range of the explosion (1 tile, 2 tiles etc etc)
 
     private Animation<TextureRegion> bombExplosion;
     private Animation<TextureRegion> explosionCenter;
@@ -35,9 +34,13 @@ public class Bomb extends Ability
         createAnimations();
     }
 
-    public void placeBomb(float x, float y, int time)
+    /**
+     * Adds a bomb to the square tile at coordinate x y
+     * @param x X coordinate to place the bomb
+     * @param y Y coordinate to place the bomb
+     */
+    public void placeBomb(float x, float y)
     {
-        this.time = time;
         int tileX = (int)(x / 64);
         int tileY = (int)(y / 64);
 
@@ -45,10 +48,13 @@ public class Bomb extends Ability
         square.addBomb(this);
     }
 
+    /**
+     * Called when the bomb needs to expload
+     * Allows player to replace bomb and removes from the square (Creates explosion)
+     */
     public void explode()
     {
         player.decreasePlacedBombs();
-        
         square.removeBomb(); //removes bomb from the grid
     }
 
@@ -73,7 +79,7 @@ public class Bomb extends Ability
             }
         }
   
-        bombExplosion = new Animation<>(1/3f, frames);
+        bombExplosion = new Animation<>(1/5f, frames);
         frames.clear();
         
         Texture explosions = new Texture("core/assets/Explosions.png");

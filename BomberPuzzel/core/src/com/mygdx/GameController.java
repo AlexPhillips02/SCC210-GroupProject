@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -14,6 +13,7 @@ import com.mygdx.Enemies.Creep;
 import com.mygdx.Enemies.Enemies;
 import com.mygdx.Player.Entity;
 import com.mygdx.Player.Player;
+import com.mygdx.TileTypes.Path;
 
 /**
  * @author Alex Phillips
@@ -73,7 +73,7 @@ public class GameController
 			{
 				xPosition = (int)(Math.random() * (gameBoard.getXLength() - 2)  + 1);
             	yPosition = (int)(Math.random() * (gameBoard.getYLength() - 2)  + 1);	
-			} while ((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path);
+			} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
 
 			//Translates grid position to coordinate
 			xPosition = xPosition * gameBoard.getTileSize();
@@ -129,13 +129,15 @@ public class GameController
 	}
 
 	/**
-	 * Method that ensures that if there is a collision between an enemy and a death square, the enemy would die.
-	 * @param deathSquares squares that should inflict damage when a bomb explodes.
+	 * Method that ensures that if there is a collision between an entity and a death square, the entity would take damage
+	 * @param deathSquares Squares that should inflict damage (E.g when a bomb exploads)
 	 */
 	public void checkForSquareCollision(ArrayList<Rectangle> deathSquares)
 	{
+		//Loops through all the death sqaures
 		for (Rectangle deathSquare : deathSquares) 
 		{
+			//If the player is in contact with a death square
 			if(deathSquare.overlaps(player.getCollisionRectangle())) 
 			{
 				player.reduceHealth();
@@ -144,10 +146,12 @@ public class GameController
 
 			if (enemies != null) 
 			{
+				//Loops though all of the enemies
 				for( int i = 0; i < enemies.size(); i++ )
 				{
 					Entity enemy = enemies.get(i);
 
+					//If the enemy is in contact with the death square
 					if (enemy.getCollisionRectangle().overlaps(deathSquare)) 
 					{
 						enemies.remove(enemy);

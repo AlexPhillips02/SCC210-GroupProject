@@ -1,6 +1,5 @@
 package com.mygdx.Board;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -60,68 +59,92 @@ public class Squares
         this.elapsedTime = 0f;
     }
 
-    //Getters and setters
+    /**
+     * Sets the current tile of the square to the inputted tile
+     * @param tile Tile to set the sqaures tile to
+     */
     public void setTile(Tile tile)
     {
         this.tile = tile;
     }
 
+    /**
+     * Returns the current tile of the square
+     * @return Current tile
+     */
     public Tile getTile() 
     {
         return tile;
     }
 
+    /**
+     * Returns the sqaure at that board location
+     * @return This square
+     */
     public Squares getSquare()
     {
         return this;
     }
 
-    public Texture getTexture()
-    {
-        return tile.image;
-    }
-
-    public Animation<TextureRegion> getAnimation()
-    {
-        return tile.getAnimation();
-    }
-
+    /**
+     * Gets the x coordinate of this square
+     * @return x
+     */
     public int getX()
     {
         return x;
     }
 
+    /**
+     * Gets the y coordinate of this square
+     * @return y
+     */
     public int getY()
     {
         return y;
     }
 
-    public void setAnimation(Animation<TextureRegion> bombExplosion) 
+    /**
+     * Sets the current squares bomb animation
+     * @param bombAnimation Current bomb animation
+     */
+    public void setAnimation(Animation<TextureRegion> bombAnimation) 
     {
         this.elapsedTime = 0f;
-        tile.setAnimation(bombExplosion);
+        tile.setAnimation(bombAnimation);
     }
 
-    public void createExplosion(Animation<TextureRegion> animation )
-    {
-        tile.setAnimation(animation);
-    }
-
+    /**
+     * The current bomb on this square (null if a bomb is not on this tile)
+     * @return Bomb placed on this square
+     */
     public Bomb getBomb() 
     {
         return bomb;
     }
 
+    /**
+     * Gets eslapsed time for animations
+     * @return elapsedTime
+     */
     public float getElapsedTime() 
     {
         return elapsedTime;
     }
 
+    /**
+     * Sets the elapsed time for animations
+     * @param elapsedTime New elapsed time
+     */
     public void setElapsedTime(float elapsedTime) 
     {
         this.elapsedTime = elapsedTime;
     }
 
+    /**
+     * Gets collision rectange of this square (Used for bomb explosions)
+     * @return collisionRectangle
+     */
     public Rectangle getCollisionRectangle() {
         return collisionRectangle;
     }
