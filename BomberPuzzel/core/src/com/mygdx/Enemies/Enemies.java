@@ -1,4 +1,4 @@
-package com.mygdx;
+package com.mygdx.Enemies;
 
 import com.mygdx.Board.Board;
 import com.mygdx.Player.Entity;

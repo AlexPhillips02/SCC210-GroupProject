@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.Board.Board;
+import com.mygdx.Enemies.Creep;
+import com.mygdx.Enemies.Enemies;
 import com.mygdx.Player.Entity;
 import com.mygdx.Player.Player;
 
@@ -78,7 +80,7 @@ public class GameController
 			yPosition = yPosition * gameBoard.getTileSize();
 
 			//Creates the enemy and adds to list of enemies
-			Enemies enemy = new Creep(gameBoard, xPosition, yPosition, 100);	
+			Enemies enemy = new Creep(gameBoard, xPosition, yPosition, 100);
 			enemies.add(enemy);
 		}
 	}
@@ -90,7 +92,7 @@ public class GameController
 	public void Update() 
 	{
 		gameBoard.Draw(batch);	//draws gameboard	
-		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb exploads
+		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
 
 		//If squares exist where damage should be inflicted
 		if (deathSquares.size() > 0) 
@@ -126,6 +128,10 @@ public class GameController
 		moveCamera();
 	}
 
+	/**
+	 * Method that ensures that if there is a collision between an enemy and a death square, the enemy would die.
+	 * @param deathSquares squares that should inflict damage when a bomb explodes.
+	 */
 	public void checkForSquareCollision(ArrayList<Rectangle> deathSquares)
 	{
 		for (Rectangle deathSquare : deathSquares) 
@@ -133,6 +139,7 @@ public class GameController
 			if(deathSquare.overlaps(player.getCollisionRectangle())) 
 			{
 				player.reduceHealth();
+				System.out.println("Player hit by bomb");
 			}
 
 			if (enemies != null) 
@@ -189,6 +196,11 @@ public class GameController
 		camera.update();
 	}
 
+	/**
+	 * Window resizing method.
+	 * @param screenWidth width of the screen.
+	 * @param screenHeight height of the screen.
+	 */
 	public void resize(int screenWidth, int screenHeight)
 	{
 		gamePort.update(screenWidth, screenHeight);

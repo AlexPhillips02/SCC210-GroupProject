@@ -20,7 +20,7 @@ public class Bomb extends Ability
     private int explosionRange;
 
     private Animation<TextureRegion> bombExplosion;
-    private Animation<TextureRegion> explolsionCenter;
+    private Animation<TextureRegion> explosionCenter;
     private Animation<TextureRegion> explosionLinesVertical;
     private Animation<TextureRegion> explosionLinesHorizontal;
 
@@ -49,7 +49,7 @@ public class Bomb extends Ability
     {
         player.decreasePlacedBombs();
         
-        square.removeBomb();
+        square.removeBomb(); //removes bomb from the grid
     }
 
     /**
@@ -84,7 +84,7 @@ public class Bomb extends Ability
             frames.add(new TextureRegion(explosions, 64 * x, 64 * 0, 64, 64));
         }
 
-        explolsionCenter = new Animation<>(1/10f, frames);
+        explosionCenter = new Animation<>(1/10f, frames);
         frames.clear();
 
         //Horizontal Lines
@@ -127,7 +127,7 @@ public class Bomb extends Ability
 
     public Animation<TextureRegion> getCenterAnimation() 
     {
-        return explolsionCenter;
+        return explosionCenter;
     }
 
     public Animation<TextureRegion> getExplosionLinesVerticalAnimation() 

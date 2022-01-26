@@ -15,7 +15,7 @@ public class PlayerController
     Player player;
 
     /**
-     * 
+     * Controller for the Player
      * @param player Player the controller is to control
      */
     public PlayerController(Player player)
@@ -59,15 +59,18 @@ public class PlayerController
         player.move();
 
         //Places a bomb
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
         {
             if (player.getBombsNumber() <= player.getBombsMax()) {
                 player.increasePlacedBombs();
                 createBomb();
             }
         }
-    }  
+    }
 
+    /**
+     * The sole method that creates and places bombs on the game board.
+     */
     public void createBomb()
     {
         Bomb playerBombs = new Bomb(player.board, player.getX() + (playerWidth / 2), player.getY(), player, player.getBombsRange());

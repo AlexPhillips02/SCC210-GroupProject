@@ -114,7 +114,7 @@ public abstract class Entity
         //Calculate the corners of the entity in the new position
         //Get the tile in those corners then check if they are path tiles
         //If both are, move the player
-        //If one is but one isnt adjust the player automatically
+        //If one is but one isn't adjust the player automatically
         switch (movementDirection) 
         {
             case "UP":
@@ -183,8 +183,8 @@ public abstract class Entity
 
     //Collision detection. Points are inputted from the direction (corners) they are travelling
     //Ie. moving left will pass through the 2 left corners (top and bottom)
-    //Returns true if both future postions are paths and moves the player
-    //Returns false if one or both is blocked then checks if the corner can be "shortcutted"
+    //Returns true if both future positions are paths and moves the player
+    //Returns false if one or both is blocked then checks if the corner can be "shortcut"
     /**
      * @param point1 Square corner of player is in
      * @param point2 Square other corner of player is in (Ie. if moving down, both bottom corners)

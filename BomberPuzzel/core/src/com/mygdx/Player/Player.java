@@ -113,6 +113,53 @@ public class Player extends Entity
         walkLeft = new Animation<>(1/15f, frames);
     }
 
+    /**
+     * Reducing the health method
+     */
+    public void reduceHealth()
+    {
+        this.health --;
+    }
+
+    /**
+     * Method to check if the player is alive
+     * @return false if dead, true if alive
+     */
+    public Boolean isAlive()
+    {
+        if(health <= 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    /**
+     * Increasing the number of the placed Bombs
+     */
+    public void increasePlacedBombs()
+    {
+        this.bombsNumber++;
+    }
+
+    /**
+     * Decreasing the number of the placed Bombs
+     */
+    public void decreasePlacedBombs()
+    {
+        this.bombsNumber--;
+    }
+
+    /**
+     * Checking the input of the controller
+     */
+    public void checkInput() {
+        controller.checkInput();
+    }
+
     // Getters and Setters
     public int getHealth() {
         return health;
@@ -145,36 +192,5 @@ public class Player extends Entity
 
     public void setBombsRange(int bombsRange) {
         this.bombsRange = bombsRange;
-    }
-
-    public void reduceHealth()
-    {
-        this.health --;
-    }
-
-    public Boolean isAlive()
-    {
-        if(health <= 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    public void increasePlacedBombs()
-    {
-        this.bombsNumber++;
-    }
-
-    public void decreasePlacedBombs()
-    {
-        this.bombsNumber--;
-    }
-
-    public void checkInput() {
-        controller.checkInput();
     }
 }

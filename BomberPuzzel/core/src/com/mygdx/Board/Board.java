@@ -19,7 +19,7 @@ import com.mygdx.TileTypes.UnbreakableWall;
 public class Board 
 {    
     Squares[][] gameSquares;
-    ArrayList<Rectangle> deathSquares = new ArrayList<>();
+    ArrayList<Rectangle> deathSquares = new ArrayList<>(); //squares that should inflict damage when a bomb explodes
     int xLength;
     int yLength;
     
@@ -151,7 +151,7 @@ public class Board
                     //If the Tile has a bomb placed ontop of it
                     if(current.getBomb() != null)
                     {
-                        bombHandeling(batch, current);
+                        bombHandling(batch, current);
                     }
                     else
                     {
@@ -172,13 +172,18 @@ public class Board
         }
     }
 
-    public void bombHandeling(SpriteBatch batch, Squares current)
+    /**
+     * Method that does the bomb handling
+     * @param batch spritebatch to output images
+     * @param current the current square
+     */
+    public void bombHandling(SpriteBatch batch, Squares current)
     {
         Bomb bomb = current.getBomb();
         float elapsedTime = bomb.getElapsedTime();
         batch.draw(current.getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
 
-        //If the bomb has finished the animation remove it and expload
+        //If the bomb has finished the animation remove it and explode
         if (bomb.getAnimation().isAnimationFinished(elapsedTime)) 
         {
             createExplosion(current, bomb, deathSquares);
@@ -193,7 +198,8 @@ public class Board
     /**
      * Calculates which blocks will be effected by the explosion
      * @param center Center of the explosion (Where the bomb was placed)
-     * @param size Size of the explosion (How far in each direction)
+     * @param bomb Bomb that does the explosion
+     * @param deathSquares Squares that should inflict damage when a bomb explodes - size of explosion
      */
     public void createExplosion(Squares center, Bomb bomb, ArrayList<Rectangle> deathSquares)
     {
@@ -214,10 +220,12 @@ public class Board
     }
 
     /**
-     * Recursive function that calulcates the affected blocks
+     * Recursive function that calculates the affected blocks
      * @param current Current square
      * @param size Amount left to travel in that direction
      * @param direction Direction of travel (0 = left, 1 = right and so on)
+     * @param bomb Bomb that does the explosion
+     * @param deathSquares Squares that should inflict damage when a bomb explodes - size of explosion
      */
     public void SetExplosionPath(Squares current, int size, int direction, Bomb bomb, ArrayList<Rectangle> deathSquares)
     {

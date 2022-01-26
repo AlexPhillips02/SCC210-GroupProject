@@ -33,6 +33,33 @@ public class Squares
         this.collisionRectangle = new Rectangle(this.x, this.y, tile.getWidth(), tile.getHeight());
     }
 
+    /**
+     * Method for adding a bomb with an animation on the square.
+     * @param bomb bomb that is added.
+     */
+    public void addBomb(Bomb bomb)
+    {
+        this.bomb = bomb;
+        setAnimation(bomb.getAnimation());
+    }
+
+    /**
+     * Method for removing the bomb which is placed on the square.
+     */
+    public void removeBomb()
+    {
+        this.bomb = null;
+    }
+
+    /**
+     * Method for removing animations.
+     */
+    public void removeAnimation()
+    {
+        tile.removeAnimation();
+        this.elapsedTime = 0f;
+    }
+
     //Getters and setters
     public void setTile(Tile tile)
     {
@@ -67,23 +94,6 @@ public class Squares
     public int getY()
     {
         return y;
-    }
-
-    public void addBomb(Bomb bomb)
-    {
-        this.bomb = bomb;
-        setAnimation(bomb.getAnimation());
-    }
-
-    public void removeBomb()
-    {
-        this.bomb = null;
-    }
-
-    public void removeAnimation()
-    {
-        tile.removeAnimation();
-        this.elapsedTime = 0f;
     }
 
     public void setAnimation(Animation<TextureRegion> bombExplosion) 
