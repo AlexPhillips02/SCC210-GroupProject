@@ -17,7 +17,7 @@ public class SpeedIncrease extends Ability{
      * @param player the player which gets the ability.
      */
     public SpeedIncrease(Board board, float x, float y, Player player) {
-        super("speed_increased.png", board, x, y, player);
+        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Powerups/SpeedPowerup.png", board, x, y, player);
         player.setMovementSpeed(-0.25F);
     }
 }

@@ -1,6 +1,7 @@
 package com.mygdx;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,6 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.Abilities.Ability;
+import com.mygdx.Abilities.BombIncrement;
+import com.mygdx.Abilities.BombRange;
+import com.mygdx.Abilities.SpeedIncrease;
 import com.mygdx.Board.Board;
 import com.mygdx.Enemies.Creep;
 import com.mygdx.Enemies.Enemies;
@@ -16,7 +21,7 @@ import com.mygdx.Player.Player;
 import com.mygdx.TileTypes.Path;
 
 /**
- * @author Alex Phillips
+ * @author Alex Phillips, Alex Chalakov
  * Controls the games will create the board / player / enemies
  * Creates and controls the camera
  */
@@ -26,6 +31,8 @@ public class GameController
     private Board gameBoard;
 	private Player player;
 	private ArrayList<Enemies> enemies;
+	private ArrayList<Ability> abilities;
+	private ArrayList<Ability> newList;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
@@ -42,19 +49,23 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 5);
+		CreateLevel(20, 10, 5);
     }
 
 	/**
 	 * Creates the level
 	 * @param percentageOfDestructableWalls Percentage of the map to be filled with walls (0 - 100)
+	 * @param enemyAmount amount of enemies that are going to be spawned on the map
+	 * @param abilitiesAmount amount of abilities that are going to be spawned on the map
 	 */
-	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount) 
+	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount, int abilitiesAmount)
 	{
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 64, 64, 150);
 		enemies = new ArrayList<Enemies>();
+		abilities = new ArrayList<Ability>();
 		CreateEnemies(10);
+		CreateAbilities(5);
 	}
 
 	/**
@@ -82,6 +93,36 @@ public class GameController
 			//Creates the enemy and adds to list of enemies
 			Enemies enemy = new Creep(gameBoard, xPosition, yPosition, 100);
 			enemies.add(enemy);
+		}
+	}
+
+	public void CreateAbilities (int amount)
+	{
+		int xXPosition;
+		int yYPosition;
+
+		for (int i = 0; i < amount; i++)
+		{
+			//Loops until spawn position is a path or a soft wall
+			do
+			{
+				xXPosition = (int)(Math.random() * (gameBoard.getXLength() - 2)  + 1);
+				yYPosition = (int)(Math.random() * (gameBoard.getYLength() - 2)  + 1);
+			} while (!((gameBoard.getGameSquare(xXPosition, yYPosition).getTile()) instanceof Path));
+
+			//Translates grid position to coordinate
+			xXPosition = xXPosition * gameBoard.getTileSize();
+			yYPosition = yYPosition * gameBoard.getTileSize();
+
+			//Creates the abilities and adds them to the list
+			Ability bombMax = new BombIncrement(gameBoard, xXPosition, yYPosition, player);
+			Ability bombRange = new BombRange(gameBoard, xXPosition, yYPosition, player);
+			Ability speedPowerup = new SpeedIncrease(gameBoard, xXPosition, yYPosition, player);
+
+			abilities.add(bombMax);
+			abilities.add(bombRange);
+			abilities.add(speedPowerup);
+			System.out.println("Test");
 		}
 	}
 
@@ -125,7 +166,48 @@ public class GameController
 			}
 		}
 
+		//draw abilities - loop to print elements at random
+		if (abilities != null)
+		{
+			int numberOfElements = 5;
+			getRandomElement(abilities, numberOfElements);
+
+			for (Ability abilities : newList){
+				abilities.Draw(batch);
+			}
+
+			/* Spawning lines that make the abilities go crazy
+			Random random = new Random();
+			for (int i = 0; i < abilities.size(); i++)
+			{
+				int index = random.nextInt(abilities.size());
+				abilities.get(index).Draw(batch);
+			}*/
+		}
+
 		moveCamera();
+	}
+
+	/**
+	 * A method that gets a random ability from the list of power ups.
+	 * @param abilities an arraylist that contains all the abilities
+	 * @param totalElements an int variable that specifies about how many elements are we talking
+	 * @return the temporary list of abilities after the randomizer
+	 */
+	public ArrayList<Ability> getRandomElement(ArrayList<Ability> abilities, int totalElements)
+	{
+		Random rand = new Random();
+
+		//create a temporary list for storing the selected element
+		newList = new ArrayList<>();
+
+		for (int i = 0; i< totalElements; i++){
+
+			//take a random index between 0 to size of given list
+			int randomIndex = rand.nextInt(abilities.size());
+			newList.add(abilities.get(randomIndex));
+		}
+		return newList;
 	}
 
 	/**
