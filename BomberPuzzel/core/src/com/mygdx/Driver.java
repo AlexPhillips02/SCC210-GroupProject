@@ -1,10 +1,10 @@
 package com.mygdx;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Driver extends ApplicationAdapter 
+public class Driver extends Game 
 {
 	private SpriteBatch batch;
 	private GameController controller;

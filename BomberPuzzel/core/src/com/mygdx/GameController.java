@@ -2,7 +2,6 @@ package com.mygdx;
 
 import java.util.ArrayList;
 import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,7 +31,6 @@ public class GameController
 	private Player player;
 	private ArrayList<Enemies> enemies;
 	private ArrayList<Ability> abilities;
-	private ArrayList<Ability> newList;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
@@ -49,7 +47,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 10, 5);
+		CreateLevel(20, 10, 3);
     }
 
 	/**
@@ -61,11 +59,11 @@ public class GameController
 	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount, int abilitiesAmount)
 	{
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
-		player = new Player(gameBoard, 64, 64, 150);
+		player = new Player(gameBoard, 65, 65, 150);
 		enemies = new ArrayList<Enemies>();
 		abilities = new ArrayList<Ability>();
-		CreateEnemies(10);
-		CreateAbilities(5);
+		CreateEnemies(enemyAmount);
+		CreateAbilities(abilitiesAmount);
 	}
 
 	/**
@@ -76,14 +74,15 @@ public class GameController
 	{
 		int xPosition;
 		int yPosition;
+		Random rand = new Random();
 
 		for (int i = 0; i < amount; i++) 
 		{
 			//Loops until spawn position is a path
 			do 
 			{
-				xPosition = (int)(Math.random() * (gameBoard.getXLength() - 2)  + 1);
-            	yPosition = (int)(Math.random() * (gameBoard.getYLength() - 2)  + 1);	
+				xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
+            	yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
 			} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
 
 			//Translates grid position to coordinate
@@ -96,33 +95,28 @@ public class GameController
 		}
 	}
 
-	public void CreateAbilities (int amount)
+	public void CreateAbilities(int amount)
 	{
-		int xXPosition;
-		int yYPosition;
+		int xPosition;
+		int yPosition;
+		Random rand = new Random();
 
 		for (int i = 0; i < amount; i++)
 		{
 			//Loops until spawn position is a path or a soft wall
 			do
 			{
-				xXPosition = (int)(Math.random() * (gameBoard.getXLength() - 2)  + 1);
-				yYPosition = (int)(Math.random() * (gameBoard.getYLength() - 2)  + 1);
-			} while (!((gameBoard.getGameSquare(xXPosition, yYPosition).getTile()) instanceof Path));
+				xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
+            	yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
+			} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
 
 			//Translates grid position to coordinate
-			xXPosition = xXPosition * gameBoard.getTileSize();
-			yYPosition = yYPosition * gameBoard.getTileSize();
+			xPosition = xPosition * gameBoard.getTileSize();
+			yPosition = yPosition * gameBoard.getTileSize();
 
 			//Creates the abilities and adds them to the list
-			Ability bombMax = new BombIncrement(gameBoard, xXPosition, yYPosition, player);
-			Ability bombRange = new BombRange(gameBoard, xXPosition, yYPosition, player);
-			Ability speedPowerup = new SpeedIncrease(gameBoard, xXPosition, yYPosition, player);
-
-			abilities.add(bombMax);
-			abilities.add(bombRange);
-			abilities.add(speedPowerup);
-			System.out.println("Test");
+			Ability newAbility = getRandomAbility(xPosition, yPosition);
+			abilities.add(newAbility);
 		}
 	}
 
@@ -140,6 +134,15 @@ public class GameController
 		{
 			checkForSquareCollision(deathSquares);
 			gameBoard.resetDeathSquares();
+		}
+
+		//draw abilities - loop to print elements at random
+		if (abilities != null)
+		{
+			for (Ability abilities : abilities)
+			{
+				abilities.Draw(batch);
+			}
 		}
 
 		player.checkInput();
@@ -165,49 +168,37 @@ public class GameController
 				}
 			}
 		}
-
-		//draw abilities - loop to print elements at random
-		if (abilities != null)
-		{
-			int numberOfElements = 5;
-			getRandomElement(abilities, numberOfElements);
-
-			for (Ability abilities : newList){
-				abilities.Draw(batch);
-			}
-
-			/* Spawning lines that make the abilities go crazy
-			Random random = new Random();
-			for (int i = 0; i < abilities.size(); i++)
-			{
-				int index = random.nextInt(abilities.size());
-				abilities.get(index).Draw(batch);
-			}*/
-		}
-
+		
 		moveCamera();
 	}
 
 	/**
 	 * A method that gets a random ability from the list of power ups.
+	 * @param yYPosition
+	 * @param xXPosition
 	 * @param abilities an arraylist that contains all the abilities
 	 * @param totalElements an int variable that specifies about how many elements are we talking
 	 * @return the temporary list of abilities after the randomizer
 	 */
-	public ArrayList<Ability> getRandomElement(ArrayList<Ability> abilities, int totalElements)
+	public Ability getRandomAbility(int xXPosition, int yYPosition)
 	{
 		Random rand = new Random();
+		int randomIndex = rand.nextInt(3);
+		Ability newAbility;
 
-		//create a temporary list for storing the selected element
-		newList = new ArrayList<>();
-
-		for (int i = 0; i< totalElements; i++){
-
-			//take a random index between 0 to size of given list
-			int randomIndex = rand.nextInt(abilities.size());
-			newList.add(abilities.get(randomIndex));
+		if (randomIndex == 0) {
+			newAbility = new BombIncrement(gameBoard, xXPosition, yYPosition, player);
 		}
-		return newList;
+		else if (randomIndex == 1)
+		{
+			newAbility = new BombRange(gameBoard, xXPosition, yYPosition, player);
+		}
+		else
+		{
+			newAbility = new SpeedIncrease(gameBoard, xXPosition, yYPosition, player);
+		}
+
+		return newAbility;
 	}
 
 	/**
