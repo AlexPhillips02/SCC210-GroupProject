@@ -30,7 +30,8 @@ public class GameController
     private Board gameBoard;
 	private Player player;
 	private ArrayList<Enemies> enemies;
-	private ArrayList<Ability> abilities;
+	private ArrayList<Ability> boardAbilities;	//Abilites on the board
+	private ArrayList<Ability> activeAbilities;	//Abilities the player has picked up and currently using
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
@@ -47,7 +48,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 10, 3);
+		CreateLevel(20, 10, 10);
     }
 
 	/**
@@ -61,7 +62,8 @@ public class GameController
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 65, 65, 150);
 		enemies = new ArrayList<Enemies>();
-		abilities = new ArrayList<Ability>();
+		boardAbilities = new ArrayList<Ability>();
+		activeAbilities = new ArrayList<Ability>();
 		CreateEnemies(enemyAmount);
 		CreateAbilities(abilitiesAmount);
 	}
@@ -116,7 +118,7 @@ public class GameController
 
 			//Creates the abilities and adds them to the list
 			Ability newAbility = getRandomAbility(xPosition, yPosition);
-			abilities.add(newAbility);
+			boardAbilities.add(newAbility);
 		}
 	}
 
@@ -136,17 +138,43 @@ public class GameController
 			gameBoard.resetDeathSquares();
 		}
 
-		//draw abilities - loop to print elements at random
-		if (abilities != null)
+		//Draw abilities on the board
+		if (boardAbilities != null)
 		{
-			for (Ability abilities : abilities)
-			{
-				abilities.Draw(batch);
+			for(int i = 0; i < boardAbilities.size(); i++ )
+			{	
+				Ability ability = boardAbilities.get(i);
+				ability.Draw(batch);
+
+				//If the player collides with an ability set the ability as active and add to active list
+				//Remove from the board abilities (No longer needs to be drawn)
+				if (ability.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{
+					ability.setActive();
+					activeAbilities.add(ability);
+					boardAbilities.remove(i);
+					i--;
+				}
 			}
 		}
 
-		player.checkInput();
-		player.Draw(batch);		//Draws player
+		//Loops through active abilites
+		if (activeAbilities != null) 
+		{
+			for(int i = 0; i < activeAbilities.size(); i++ )
+			{	
+				Ability ability = activeAbilities.get(i);
+
+				ability.update();
+					
+				//If the ability has deactivated (Remove from active ability list)
+				if (ability.isDeactivated()) 
+				{
+					activeAbilities.remove(i);
+					i--;
+				}
+			}
+		}
 
 		//Draws and updates all enemeies created
 		if (enemies != null) 
@@ -168,6 +196,9 @@ public class GameController
 				}
 			}
 		}
+
+		player.checkInput();
+		player.Draw(batch);		//Draws player
 		
 		moveCamera();
 	}
@@ -176,7 +207,7 @@ public class GameController
 	 * A method that gets a random ability from the list of power ups.
 	 * @param yYPosition
 	 * @param xXPosition
-	 * @param abilities an arraylist that contains all the abilities
+	 * @param boardAbilities an arraylist that contains all the abilities
 	 * @param totalElements an int variable that specifies about how many elements are we talking
 	 * @return the temporary list of abilities after the randomizer
 	 */
