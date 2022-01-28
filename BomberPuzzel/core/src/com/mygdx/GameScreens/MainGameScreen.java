@@ -1,14 +1,19 @@
 package com.mygdx.GameScreens;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.GameController;
 
 public class MainGameScreen implements Screen {
 
-	private Driver game;
+	private SpriteBatch batch;
+	private GameController controller;
 	
-	public MainGameScreen (Driver game){
-		this.game = game;
+	public MainGameScreen (SpriteBatch batch)
+	{
+		this.batch = batch;
+		controller = new GameController(batch);
 	}
 
     @Override
@@ -17,12 +22,14 @@ public class MainGameScreen implements Screen {
 		ScreenUtils.clear(0, 0, 0, 0);
 
 		batch.begin();
-		game.controller.Update();
+		controller.Update();
 		batch.end();
 	}
 
 	@Override
-	public void resize (int width, int height) {
+	public void resize (int width, int height) 
+	{
+		controller.resize(width, height);
 	}
 
 	@Override

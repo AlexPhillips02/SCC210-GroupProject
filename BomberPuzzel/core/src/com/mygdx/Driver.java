@@ -7,15 +7,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.GameScreens.MainGameScreen;
 
 public class Driver extends Game {
-	public SpriteBatch batch;
-	public GameController controller;
+	private SpriteBatch batch;
 	
 	@Override
 	public void create ()
 	{
 		batch = new SpriteBatch();
-		controller = new GameController(batch);
-		this.setScreen(new MainGameScreen(this));
+		this.setScreen(new MainGameScreen(batch));
 	}
 
 	@Override
@@ -27,11 +25,5 @@ public class Driver extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();		//Honestly not really sure what this does or if it is ever used
-	}
-
-	@Override
-	public void resize(int width, int height)
-	{
-		controller.resize(width, height);
 	}
 }
