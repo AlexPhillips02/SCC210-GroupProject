@@ -1,29 +1,27 @@
 package com.mygdx;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Driver extends ApplicationAdapter 
-{
-	private SpriteBatch batch;
-	private GameController controller;
+import com.mygdx.GameScreens.MainGameScreen;
+
+public class Driver extends Game {
+	public SpriteBatch batch;
+	public GameController controller;
 	
 	@Override
-	public void create () 
+	public void create ()
 	{
 		batch = new SpriteBatch();
 		controller = new GameController(batch);
+		this.setScreen(new MainGameScreen(this));
 	}
 
 	@Override
 	public void render() 
 	{
-		ScreenUtils.clear(0, 0, 0, 0);
-
-		batch.begin();
-		controller.Update();
-		batch.end();
+		super.render();
 	}
 	
 	@Override
