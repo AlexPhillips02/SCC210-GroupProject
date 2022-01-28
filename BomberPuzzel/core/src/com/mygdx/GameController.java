@@ -97,6 +97,10 @@ public class GameController
 		}
 	}
 
+	/**
+	 * Creates an amount of abilities and spawns them randomly thought the map
+	 * @param amount Amount of abilities to spawn
+	 */
 	public void CreateAbilities(int amount)
 	{
 		int xPosition;
@@ -204,29 +208,27 @@ public class GameController
 	}
 
 	/**
-	 * A method that gets a random ability from the list of power ups.
-	 * @param yYPosition
-	 * @param xXPosition
-	 * @param boardAbilities an arraylist that contains all the abilities
-	 * @param totalElements an int variable that specifies about how many elements are we talking
-	 * @return the temporary list of abilities after the randomizer
+	 * A method that gets a random ability from the possible powerups and returns the ability
+	 * @param yPosition X coordinate of the ability
+	 * @param xPosition Y coordinate of the ability
+	 * @return The random ability
 	 */
-	public Ability getRandomAbility(int xXPosition, int yYPosition)
+	public Ability getRandomAbility(int xPosition, int yPosition)
 	{
 		Random rand = new Random();
 		int randomIndex = rand.nextInt(3);
 		Ability newAbility;
 
 		if (randomIndex == 0) {
-			newAbility = new BombIncrement(gameBoard, xXPosition, yYPosition, player);
+			newAbility = new BombIncrement(gameBoard, xPosition, yPosition, player);
 		}
 		else if (randomIndex == 1)
 		{
-			newAbility = new BombRange(gameBoard, xXPosition, yYPosition, player);
+			newAbility = new BombRange(gameBoard, xPosition, yPosition, player);
 		}
 		else
 		{
-			newAbility = new SpeedIncrease(gameBoard, xXPosition, yYPosition, player);
+			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
 		}
 
 		return newAbility;

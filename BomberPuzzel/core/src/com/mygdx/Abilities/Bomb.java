@@ -15,7 +15,6 @@ import com.mygdx.Player.Player;
 public class Bomb extends Ability
 {
     private Squares square; //Square the bomb is placed on
-    private float elapsedTime = 0f; //Used for the animations
     private int explosionRange; //Range of the explosion (1 tile, 2 tiles etc etc)
 
     private Animation<TextureRegion> bombExplosion;
@@ -112,19 +111,10 @@ public class Bomb extends Ability
         explosionLinesVertical = new Animation<>(1/10f, frames);
         frames.clear();
     }
-    
 
     public Animation<TextureRegion> getAnimation()
     {
         return bombExplosion;
-    }
-
-    public void setElapsedTime(float elapsedTime) {
-        this.elapsedTime = elapsedTime;
-    }
-
-    public float getElapsedTime() {
-        return elapsedTime;
     }
 
     public int getExplosionRange() {

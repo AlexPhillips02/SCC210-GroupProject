@@ -10,7 +10,7 @@ import com.mygdx.Board.Board;
 import com.mygdx.Player.Player;
 
 /**
- * @author Alex Chalakov
+ * @author Alex Chalakov, Alex Phillips
  * Abilities class creates basis for all abilities.
  */
 public abstract class Ability 
@@ -69,6 +69,16 @@ public abstract class Ability
             System.out.println("Decativate");
             deactivated = true;
         }
+    }
+
+    public void setElapsedTime(float newElapsedTime) 
+    {
+        elapsedTime = newElapsedTime;
+    }
+
+    public float getElapsedTime() 
+    {
+        return elapsedTime;
     }
 
     //Getters and Setters
