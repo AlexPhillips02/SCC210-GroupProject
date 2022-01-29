@@ -1,13 +1,17 @@
 package com.mygdx;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.Abilities.Ability;
+import com.mygdx.Abilities.BombIncrement;
+import com.mygdx.Abilities.BombRange;
+import com.mygdx.Abilities.SpeedIncrease;
 import com.mygdx.Board.Board;
 import com.mygdx.Enemies.Creep;
 import com.mygdx.Enemies.Enemies;
@@ -16,7 +20,7 @@ import com.mygdx.Player.Player;
 import com.mygdx.TileTypes.Path;
 
 /**
- * @author Alex Phillips
+ * @author Alex Phillips, Alex Chalakov
  * Controls the games will create the board / player / enemies
  * Creates and controls the camera
  */
@@ -26,6 +30,8 @@ public class GameController
     private Board gameBoard;
 	private Player player;
 	private ArrayList<Enemies> enemies;
+	private ArrayList<Ability> boardAbilities;	//Abilites on the board
+	private ArrayList<Ability> activeAbilities;	//Abilities the player has picked up and currently using
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
@@ -42,19 +48,24 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 5);
+		CreateLevel(20, 10, 10);
     }
 
 	/**
 	 * Creates the level
 	 * @param percentageOfDestructableWalls Percentage of the map to be filled with walls (0 - 100)
+	 * @param enemyAmount amount of enemies that are going to be spawned on the map
+	 * @param abilitiesAmount amount of abilities that are going to be spawned on the map
 	 */
-	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount) 
+	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount, int abilitiesAmount)
 	{
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
-		player = new Player(gameBoard, 64, 64, 150);
+		player = new Player(gameBoard, 65, 65, 150);
 		enemies = new ArrayList<Enemies>();
-		CreateEnemies(10);
+		boardAbilities = new ArrayList<Ability>();
+		activeAbilities = new ArrayList<Ability>();
+		CreateEnemies(enemyAmount);
+		CreateAbilities(abilitiesAmount);
 	}
 
 	/**
@@ -65,14 +76,15 @@ public class GameController
 	{
 		int xPosition;
 		int yPosition;
+		Random rand = new Random();
 
 		for (int i = 0; i < amount; i++) 
 		{
 			//Loops until spawn position is a path
 			do 
 			{
-				xPosition = (int)(Math.random() * (gameBoard.getXLength() - 2)  + 1);
-            	yPosition = (int)(Math.random() * (gameBoard.getYLength() - 2)  + 1);	
+				xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
+            	yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
 			} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
 
 			//Translates grid position to coordinate
@@ -82,6 +94,35 @@ public class GameController
 			//Creates the enemy and adds to list of enemies
 			Enemies enemy = new Creep(gameBoard, xPosition, yPosition, 100);
 			enemies.add(enemy);
+		}
+	}
+
+	/**
+	 * Creates an amount of abilities and spawns them randomly thought the map
+	 * @param amount Amount of abilities to spawn
+	 */
+	public void CreateAbilities(int amount)
+	{
+		int xPosition;
+		int yPosition;
+		Random rand = new Random();
+
+		for (int i = 0; i < amount; i++)
+		{
+			//Loops until spawn position is a path or a soft wall
+			do
+			{
+				xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
+            	yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
+			} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
+
+			//Translates grid position to coordinate
+			xPosition = xPosition * gameBoard.getTileSize();
+			yPosition = yPosition * gameBoard.getTileSize();
+
+			//Creates the abilities and adds them to the list
+			Ability newAbility = getRandomAbility(xPosition, yPosition);
+			boardAbilities.add(newAbility);
 		}
 	}
 
@@ -101,8 +142,43 @@ public class GameController
 			gameBoard.resetDeathSquares();
 		}
 
-		player.checkInput();
-		player.Draw(batch);		//Draws player
+		//Draw abilities on the board
+		if (boardAbilities != null)
+		{
+			for(int i = 0; i < boardAbilities.size(); i++ )
+			{	
+				Ability ability = boardAbilities.get(i);
+				ability.Draw(batch);
+
+				//If the player collides with an ability set the ability as active and add to active list
+				//Remove from the board abilities (No longer needs to be drawn)
+				if (ability.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{
+					ability.setActive();
+					activeAbilities.add(ability);
+					boardAbilities.remove(i);
+					i--;
+				}
+			}
+		}
+
+		//Loops through active abilites
+		if (activeAbilities != null) 
+		{
+			for(int i = 0; i < activeAbilities.size(); i++ )
+			{	
+				Ability ability = activeAbilities.get(i);
+
+				ability.update();
+					
+				//If the ability has deactivated (Remove from active ability list)
+				if (ability.isDeactivated()) 
+				{
+					activeAbilities.remove(i);
+					i--;
+				}
+			}
+		}
 
 		//Draws and updates all enemeies created
 		if (enemies != null) 
@@ -125,7 +201,37 @@ public class GameController
 			}
 		}
 
+		player.checkInput();
+		player.Draw(batch);		//Draws player
+		
 		moveCamera();
+	}
+
+	/**
+	 * A method that gets a random ability from the possible powerups and returns the ability
+	 * @param yPosition X coordinate of the ability
+	 * @param xPosition Y coordinate of the ability
+	 * @return The random ability
+	 */
+	public Ability getRandomAbility(int xPosition, int yPosition)
+	{
+		Random rand = new Random();
+		int randomIndex = rand.nextInt(3);
+		Ability newAbility;
+
+		if (randomIndex == 0) {
+			newAbility = new BombIncrement(gameBoard, xPosition, yPosition, player);
+		}
+		else if (randomIndex == 1)
+		{
+			newAbility = new BombRange(gameBoard, xPosition, yPosition, player);
+		}
+		else
+		{
+			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
+		}
+
+		return newAbility;
 	}
 
 	/**

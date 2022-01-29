@@ -3,10 +3,10 @@ package com.mygdx;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
 import com.mygdx.GameScreens.MainGameScreen;
 
 public class Driver extends Game {
+
 	private SpriteBatch batch;
 	
 	@Override

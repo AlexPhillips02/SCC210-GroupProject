@@ -10,7 +10,7 @@ import com.mygdx.Board.Board;
 import com.mygdx.Player.Player;
 
 /**
- * @author Alex Chalakov
+ * @author Alex Chalakov, Alex Phillips
  * Abilities class creates basis for all abilities.
  */
 public abstract class Ability 
@@ -20,10 +20,12 @@ public abstract class Ability
     protected float x;
     protected float y;
     protected Player player;
-    protected Rectangle collisionRectangle; //will see if its needed
+    protected Rectangle collisionRectangle;
+    protected boolean deactivated = false;
 
     protected Animation<TextureRegion> currentAnimation;
     private float elapsedTime = 0f;
+    protected float abilityLength = 4f; //In seconds
 
     /**
      * Constructor for the abstract class of Abilities, all of them should be extended by this.
@@ -43,11 +45,6 @@ public abstract class Ability
         collisionRectangle = new Rectangle(x, y, defaultImage.getWidth(), defaultImage.getHeight());
     }
 
-    public void setAnimation(Animation<TextureRegion> animation)
-    {
-        currentAnimation = animation;
-    }
-
     /**
      * Draws the entity on the board, either with an animation or an image.
      * @param batch Spritebatch which displays all of the stuff in the driver
@@ -62,7 +59,36 @@ public abstract class Ability
         }
     }
 
+    public void update() 
+    {
+        elapsedTime += Gdx.graphics.getDeltaTime();
+
+        if (elapsedTime > abilityLength) 
+        {
+            DeactivateAbility();
+            System.out.println("Decativate");
+            deactivated = true;
+        }
+    }
+
+    public void setElapsedTime(float newElapsedTime) 
+    {
+        elapsedTime = newElapsedTime;
+    }
+
+    public float getElapsedTime() 
+    {
+        return elapsedTime;
+    }
+
     //Getters and Setters
+    public void setActive() 
+    {
+        ActivateAbility();
+        elapsedTime = 0f;
+        System.out.println("Activate");
+    }
+
     public Texture getImage() {
         return defaultImage;
     }
@@ -94,4 +120,24 @@ public abstract class Ability
         this.y = y;
         collisionRectangle.y = y;
     }
+
+    public Rectangle getCollisionRectangle() {
+        return collisionRectangle;
+    }
+
+    public void setAnimation(Animation<TextureRegion> animation)
+    {
+        currentAnimation = animation;
+    }
+
+    public boolean isDeactivated() {
+        return deactivated;
+    }
+
+    //Method overriden in child clases
+    public void ActivateAbility()
+    {}   
+
+    public void DeactivateAbility()
+    {}
 }
