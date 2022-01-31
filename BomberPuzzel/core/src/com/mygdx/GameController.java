@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.Abilities.Ability;
-import com.mygdx.Abilities.BombIncrement;
-import com.mygdx.Abilities.BombRange;
-import com.mygdx.Abilities.SpeedIncrease;
+import com.mygdx.Abilities.*;
 import com.mygdx.Board.Board;
 import com.mygdx.Enemies.Creep;
 import com.mygdx.Enemies.Enemies;
@@ -30,7 +27,7 @@ public class GameController
     private Board gameBoard;
 	private Player player;
 	private ArrayList<Enemies> enemies;
-	private ArrayList<Ability> boardAbilities;	//Abilites on the board
+	private ArrayList<Ability> boardAbilities;	//Abilities on the board
 	private ArrayList<Ability> activeAbilities;	//Abilities the player has picked up and currently using
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
@@ -216,7 +213,7 @@ public class GameController
 	public Ability getRandomAbility(int xPosition, int yPosition)
 	{
 		Random rand = new Random();
-		int randomIndex = rand.nextInt(3);
+		int randomIndex = rand.nextInt(6);
 		Ability newAbility;
 
 		if (randomIndex == 0) {
@@ -226,9 +223,21 @@ public class GameController
 		{
 			newAbility = new BombRange(gameBoard, xPosition, yPosition, player);
 		}
-		else
+		else if (randomIndex == 2)
 		{
 			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
+		}
+		else if (randomIndex == 3)
+		{
+			newAbility = new SpeedDecrease(gameBoard, xPosition, yPosition, player);
+		}
+		else if (randomIndex == 4)
+		{
+			newAbility = new HealthIncrease(gameBoard, xPosition, yPosition, player);
+		}
+		else
+		{
+			newAbility = new Invincibility(gameBoard, xPosition, yPosition, player);
 		}
 
 		return newAbility;
