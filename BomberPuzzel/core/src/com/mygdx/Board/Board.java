@@ -67,7 +67,9 @@ public class Board
                 int xSize = tempTile.getWidth(); 
                 int ySize = tempTile.getHeight();
                 //Creates squares initially with coordinates (based on window coords not amount of tiles)
-                gameSquares[x][y] = new Squares((x * xSize), (y * ySize), tempTile);
+                Squares tempSquare = new AlgorithmSquares((x * xSize), (y * ySize));
+                tempSquare.setTile(tempTile);
+                gameSquares[x][y] = tempSquare;
             }
         }
     }

@@ -13,6 +13,8 @@ import com.mygdx.Abilities.BombIncrement;
 import com.mygdx.Abilities.BombRange;
 import com.mygdx.Abilities.SpeedIncrease;
 import com.mygdx.Board.Board;
+import com.mygdx.Board.Squares;
+import com.mygdx.Enemies.BombCarrier;
 import com.mygdx.Enemies.Creep;
 import com.mygdx.Enemies.Enemies;
 import com.mygdx.Player.Entity;
@@ -48,7 +50,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 10, 10);
+		CreateLevel(20, 10, 5);
     }
 
 	/**
@@ -74,25 +76,25 @@ public class GameController
 	 */
 	public void CreateEnemies(int amount)
 	{
-		int xPosition;
-		int yPosition;
-		Random rand = new Random();
-
 		for (int i = 0; i < amount; i++) 
 		{
-			//Loops until spawn position is a path
-			do 
-			{
-				xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
-            	yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
-			} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
+			Squares pathSquare = getRandomPath();
 
 			//Translates grid position to coordinate
-			xPosition = xPosition * gameBoard.getTileSize();
-			yPosition = yPosition * gameBoard.getTileSize();
+			int xPosition = pathSquare.getX();
+			int yPosition = pathSquare.getY();
 
 			//Creates the enemy and adds to list of enemies
-			Enemies enemy = new Creep(gameBoard, xPosition, yPosition, 100);
+			Enemies enemy;
+			if (i == 0) 
+			{
+				//enemy = new BombCarrier(gameBoard, xPosition, yPosition, 100, player);
+				enemy = new BombCarrier(gameBoard, 64, 192, 100, player);	
+			}
+			else
+			{
+				enemy = new Creep(gameBoard, xPosition, yPosition, 100);
+			}
 			enemies.add(enemy);
 		}
 	}
@@ -103,27 +105,35 @@ public class GameController
 	 */
 	public void CreateAbilities(int amount)
 	{
-		int xPosition;
-		int yPosition;
-		Random rand = new Random();
-
 		for (int i = 0; i < amount; i++)
 		{
-			//Loops until spawn position is a path or a soft wall
-			do
-			{
-				xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
-            	yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
-			} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
+			Squares pathSquare = getRandomPath();
 
 			//Translates grid position to coordinate
-			xPosition = xPosition * gameBoard.getTileSize();
-			yPosition = yPosition * gameBoard.getTileSize();
+			int xPosition = pathSquare.getX();
+			int yPosition = pathSquare.getY();
 
 			//Creates the abilities and adds them to the list
 			Ability newAbility = getRandomAbility(xPosition, yPosition);
 			boardAbilities.add(newAbility);
 		}
+	}
+
+	public Squares getRandomPath()
+	{
+		int xPosition;
+		int yPosition;
+		Random rand = new Random();
+
+		//Loops until spawn position is a path or a soft wall
+		do
+		{
+			xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
+			yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
+		} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
+
+		Squares pathSquare = gameBoard.getGameSquare(xPosition, yPosition);
+		return pathSquare;
 	}
 
 	/**

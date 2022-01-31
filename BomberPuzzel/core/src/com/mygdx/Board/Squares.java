@@ -16,7 +16,7 @@ public class Squares
     private Tile tile;
     private Bomb bomb;
     private float elapsedTime = 0f;
-    protected Rectangle collisionRectangle;
+    private Rectangle collisionRectangle;
     
     /**
      * Creates a square 
@@ -24,12 +24,10 @@ public class Squares
      * @param y Y position of this square 
      * @param tile Holds the tile for the square (image)
      */
-    public Squares(int x, int y, Tile tile)
+    public Squares(int x, int y)
     {
         this.x = x;
         this.y = y;
-        this.tile = tile;
-        this.collisionRectangle = new Rectangle(this.x, this.y, tile.getWidth(), tile.getHeight());
     }
 
     /**
@@ -66,6 +64,7 @@ public class Squares
     public void setTile(Tile tile)
     {
         this.tile = tile;
+        this.collisionRectangle = new Rectangle(this.x, this.y, tile.getWidth(), tile.getHeight());
     }
 
     /**
