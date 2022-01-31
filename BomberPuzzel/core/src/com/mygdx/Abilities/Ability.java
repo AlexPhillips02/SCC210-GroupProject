@@ -134,7 +134,7 @@ public abstract class Ability
         return deactivated;
     }
 
-    //Method overriden in child clases
+    //Method overridden in child classes
     public void ActivateAbility()
     {}   
 
