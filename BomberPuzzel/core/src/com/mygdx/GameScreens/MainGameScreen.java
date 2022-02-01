@@ -16,8 +16,13 @@ public class MainGameScreen implements Screen {
 		controller = new GameController(batch);
 	}
 
+	/**
+	 * Called when the screen should render itself.
+	 * @param delta The time in seconds since the last render.
+	 */
     @Override
-	public void render (float delta) {
+	public void render (float delta)
+	{
 		
 		ScreenUtils.clear(0, 0, 0, 0);
 
@@ -26,12 +31,19 @@ public class MainGameScreen implements Screen {
 		batch.end();
 	}
 
+	/**
+	 * @param width size of width
+	 * @param height size of height
+	 */
 	@Override
 	public void resize (int width, int height) 
 	{
 		controller.resize(width, height);
 	}
 
+	/**
+	 * Called when this screen becomes the current screen for a Game.
+	 */
 	@Override
 	public void show () {
 
