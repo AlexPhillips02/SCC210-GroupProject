@@ -22,13 +22,13 @@ public class Invincibility extends Ability {
 
     public void ActivateAbility() //will improve
     {
-        int currentHealth = player.getHealth();
-        player.setHealth(currentHealth + 200000); //could use Integer.MAX but tougher with deactivating
+        int currentHealth = ((Player) entity).getHealth();
+        entity.setHealth(currentHealth + 200000); //could use Integer.MAX but tougher with deactivating
     }
 
     public void DeactivateAbility()
     {
-        int currentHealth = player.getHealth();
-        player.setHealth(currentHealth - 200000); //health stays the same after ability period expires
+        int currentHealth = ((Player) entity).getHealth();
+        entity.setHealth(currentHealth - 200000); //health stays the same after ability period expires
     }
 }

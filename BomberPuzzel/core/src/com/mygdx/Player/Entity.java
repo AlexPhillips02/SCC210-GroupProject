@@ -292,7 +292,34 @@ public abstract class Entity
         }
     }
 
-    //Getters and setters
+    /**
+     * Reducing the health method
+     */
+    public void reduceHealth()
+    {
+        this.health --;
+    }
+
+    /**
+     * Method to check if the player is alive
+     * @return false if dead, true if alive
+     */
+    public Boolean isAlive()
+    {
+        if(health <= 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public void setHealth (int health) {
+        this.health = health;
+    }
+
     public void setMovementDirection(String direction)
     {
         this.movementDirection = direction;
@@ -346,5 +373,8 @@ public abstract class Entity
 
     public void setMovementSpeed(float movementSpeed) {
         this.movementSpeed = movementSpeed;
+    }
+
+    public void decreasePlacedBombs() {
     }
 }

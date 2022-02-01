@@ -114,30 +114,6 @@ public class Player extends Entity
     }
 
     /**
-     * Reducing the health method
-     */
-    public void reduceHealth()
-    {
-        this.health --;
-    }
-
-    /**
-     * Method to check if the player is alive
-     * @return false if dead, true if alive
-     */
-    public Boolean isAlive()
-    {
-        if(health <= 0)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    /**
      * Increasing the number of the placed Bombs
      */
     public void increasePlacedBombs()
@@ -176,10 +152,6 @@ public class Player extends Entity
     public int getBombsRange()
     {
         return bombsRange;
-    }
-
-    public void setHealth (int health) {
-        this.health = health;
     }
 
     public void setBombsNumber (int bombsNumber) {

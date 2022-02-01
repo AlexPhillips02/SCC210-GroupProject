@@ -73,7 +73,6 @@ public class PlayerController
      */
     public void createBomb()
     {
-        Bomb playerBombs = new Bomb(player.board, player.getX() + (playerWidth / 2), player.getY(), player, player.getBombsRange());
-        playerBombs.placeBomb((player.getX() + (playerWidth / 2)), player.getY());
+        new Bomb(player.board, player.getX() + (playerWidth / 2), player.getY(), player, player.getBombsRange());
     }
 }

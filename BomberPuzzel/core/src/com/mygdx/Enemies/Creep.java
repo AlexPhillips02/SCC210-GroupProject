@@ -23,6 +23,7 @@ public class Creep extends Enemies
     {
         super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f00.png", board, x, y, movementSpeed);
         createAnimations();
+        this.health = 1;
     }
 
     /**

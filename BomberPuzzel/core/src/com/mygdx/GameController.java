@@ -14,7 +14,6 @@ import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.BombCarrier;
 import com.mygdx.Enemies.Creep;
 import com.mygdx.Enemies.Enemies;
-import com.mygdx.Player.Entity;
 import com.mygdx.Player.Player;
 import com.mygdx.TileTypes.Path;
 
@@ -86,7 +85,7 @@ public class GameController
 			if (i == 0) 
 			{
 				//enemy = new BombCarrier(gameBoard, xPosition, yPosition, 100, player);
-				enemy = new BombCarrier(gameBoard, 64, 192, 100, player);	
+				enemy = new BombCarrier(gameBoard, 64, 400, 100, player);	
 			}
 			else
 			{
@@ -190,15 +189,26 @@ public class GameController
 		//Draws and updates all enemeies created
 		if (enemies != null) 
 		{
-			for (Enemies enemies : enemies) 
+			//Loops though all of the enemies
+			for( int i = 0; i < enemies.size(); i++ )
 			{
-				enemies.update();
-				enemies.Draw(batch);	
+				Enemies enemy = enemies.get(i);
+
+				enemy.update();
+				enemy.Draw(batch);	
+
+				if (!(enemy.isAlive())) 
+				{
+					enemies.remove(enemy);
+					i--;
+					System.out.println("Enemy dead");
+				}
 
 				//Player contact with enemy
-				if (enemies.getCollisionRectangle().overlaps(player.getCollisionRectangle()) && player.isAlive()) 
+				if (enemy.getCollisionRectangle().overlaps(player.getCollisionRectangle()) && player.isAlive()) 
 				{
-					player.reduceHealth();
+					enemy.Attack(player);
+
 					System.out.println("Player has had contact with enemy!");
 					if (player.isAlive() == false) 
 					{
@@ -274,14 +284,12 @@ public class GameController
 				//Loops though all of the enemies
 				for( int i = 0; i < enemies.size(); i++ )
 				{
-					Entity enemy = enemies.get(i);
+					Enemies enemy = enemies.get(i);
 
 					//If the enemy is in contact with the death square
 					if (enemy.getCollisionRectangle().overlaps(deathSquare)) 
 					{
-						enemies.remove(enemy);
-						i--;
-						System.out.println("Enemy killed");						
+						enemy.reduceHealth();				
 					}
 				}
 			}

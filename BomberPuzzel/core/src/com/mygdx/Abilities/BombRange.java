@@ -22,13 +22,13 @@ public class BombRange extends Ability {
 
     public void ActivateAbility() 
     {
-        int currentBombRange = player.getBombsRange();
-        player.setBombsRange(currentBombRange + 2);
+        int currentBombRange = ((Player) entity).getBombsRange();
+        ((Player) entity).setBombsRange(currentBombRange + 2);
     }
 
     public void DeactivateAbility()
     {
-        int currentBombRange = player.getBombsRange();
-        player.setBombsRange(currentBombRange - 2);
+        int currentBombRange = ((Player) entity).getBombsRange();
+        ((Player) entity).setBombsRange(currentBombRange - 2);
     }
 }

@@ -47,11 +47,8 @@ public abstract class PlayerTrackingEnemy extends Enemies
         currentSquare = (AlgorithmSquares)board.getGameSquare((int)x / board.getTileSize(), (int)y / board.getTileSize());
         findShortestPathToPlayer(0, currentSquare, null);
 
-        if (shortestRoute == -1) 
-        {
-            System.out.println("Player is unreachable or out or more than 10 blocks away");   
-        }
-        else
+        //If they have found a route
+        if (!(shortestRoute == -1)) 
         {
             calculateMovementDirection();
             move();
@@ -80,7 +77,7 @@ public abstract class PlayerTrackingEnemy extends Enemies
     }
 
     /**
-     * Calculates th
+     * Calculates the direction to move in and moves towards that square
      */
     public void calculateMovementDirection()
     {      

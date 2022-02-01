@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
-import com.mygdx.Player.Player;
+import com.mygdx.Player.Entity;
 
 /**
  * @author Alex Phillips, Alex Chalakov
@@ -26,11 +26,12 @@ public class Bomb extends Ability
      * Constructor for our bombs.
      * @param board The game board
      */
-    public Bomb(Board board, float y, float x, Player player, int explosionRange) 
+    public Bomb(Board board, float x, float y, Entity entity, int explosionRange) 
     {
-        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomb/Bomb_f01.png", board, x, y, player);
+        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomb/Bomb_f01.png", board, x, y, entity);
         this.explosionRange = explosionRange;
         createAnimations();
+        placeBomb();
     }
 
     /**
@@ -38,10 +39,10 @@ public class Bomb extends Ability
      * @param x X coordinate to place the bomb
      * @param y Y coordinate to place the bomb
      */
-    public void placeBomb(float x, float y)
+    public void placeBomb()
     {
-        int tileX = (int)(x / 64);
-        int tileY = (int)(y / 64);
+        int tileX = (int)(this.x / 64);
+        int tileY = (int)(this.y / 64);
 
         this.square = board.getGameSquare(tileX, tileY);
         square.addBomb(this);
@@ -53,7 +54,7 @@ public class Bomb extends Ability
      */
     public void explode()
     {
-        player.decreasePlacedBombs();
+        entity.decreasePlacedBombs();
         square.removeBomb(); //removes bomb from the grid
     }
 
@@ -78,7 +79,7 @@ public class Bomb extends Ability
             }
         }
   
-        bombExplosion = new Animation<>(1/5f, frames);
+        bombExplosion = new Animation<>(1/6f, frames);
         frames.clear();
         
         Texture explosions = new Texture("core/assets/Explosions.png");

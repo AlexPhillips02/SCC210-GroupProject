@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
-import com.mygdx.Player.Player;
+import com.mygdx.Player.Entity;
 
 /**
  * @author Alex Chalakov, Alex Phillips
@@ -19,7 +19,7 @@ public abstract class Ability
     protected Board board;
     protected float x;
     protected float y;
-    protected Player player;
+    protected Entity entity;
     protected Rectangle collisionRectangle;
     protected boolean deactivated = false;
 
@@ -34,13 +34,13 @@ public abstract class Ability
      * @param x X coordinate of the entity
      * @param y Y coordinate of the entity
      */
-    public Ability(String imageURL, Board board, float x, float y, Player player)
+    public Ability(String imageURL, Board board, float x, float y, Entity entity)
     {
         defaultImage = new Texture(imageURL);
         this.board = board;
         this.x = x;
         this.y = y;
-        this.player = player;
+        this.entity = entity;
 
         collisionRectangle = new Rectangle(x, y, defaultImage.getWidth(), defaultImage.getHeight());
     }

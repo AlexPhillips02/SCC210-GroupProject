@@ -22,13 +22,13 @@ public class HealthIncrease extends Ability { //also deemed as SHIELD in the spe
 
     public void ActivateAbility()
     {
-        int currentHealth = player.getHealth();
-        player.setHealth(currentHealth + 1);
+        int currentHealth = ((Player) entity).getHealth();
+        entity.setHealth(currentHealth + 1);
     }
 
     public void DeactivateAbility()
     {
-        int currentHealth = player.getHealth();
-        player.setHealth(currentHealth); //health stays the same after ability period expires
+        int currentHealth = ((Player) entity).getHealth();
+        entity.setHealth(currentHealth); //health stays the same after ability period expires
     }
 }

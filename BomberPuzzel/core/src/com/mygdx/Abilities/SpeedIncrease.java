@@ -23,13 +23,13 @@ public class SpeedIncrease extends Ability{
 
     public void ActivateAbility() 
     {
-        float currentSpeed = player.getMovementSpeed();
-        player.setMovementSpeed(currentSpeed + 50);
+        float currentSpeed = entity.getMovementSpeed();
+        entity.setMovementSpeed(currentSpeed + 50);
     }
 
     public void DeactivateAbility()
     {
-        float currentSpeed = player.getMovementSpeed();
-        player.setMovementSpeed(currentSpeed - 50);
+        float currentSpeed = entity.getMovementSpeed();
+        entity.setMovementSpeed(currentSpeed - 50);
     }
 }

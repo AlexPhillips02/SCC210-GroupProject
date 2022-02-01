@@ -2,6 +2,7 @@ package com.mygdx.Enemies;
 
 import com.mygdx.Board.Board;
 import com.mygdx.Player.Entity;
+import com.mygdx.Player.Player;
 
 /**
  * @author Alex Phillips
@@ -45,5 +46,14 @@ public abstract class Enemies extends Entity
 
         movementDirection = possibleDirections[direction];
         setAnimationDirection(movementDirection);
+    }
+
+    /**
+     * Basic function of enemies, can be overidden within specific enemy classes (e.g. BombCarrier)
+     * @param player
+     */
+    public void Attack(Player player)
+    {
+        player.reduceHealth();
     }
 }
