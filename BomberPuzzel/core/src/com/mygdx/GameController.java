@@ -15,6 +15,7 @@ import com.mygdx.Enemies.BombCarrier;
 import com.mygdx.Enemies.Creep;
 import com.mygdx.Enemies.Enemies;
 import com.mygdx.Player.Player;
+import com.mygdx.Puzzles.Memory.Order;
 import com.mygdx.TileTypes.Path;
 
 /**
@@ -34,6 +35,7 @@ public class GameController
 	private OrthographicCamera camera;
 	private Viewport gamePort;
 	private int puzzle;
+	private Order buttonGame;
 
 	/**
 	 * Creates the camera
@@ -82,6 +84,15 @@ public class GameController
 		{
 			// Run memory puzzle
 			System.out.println(puzzle + " Memory");
+			
+			// Choose 4 Random squares to place buttons on
+			Squares pathSquare1 = getRandomPath();
+			Squares pathSquare2 = getRandomPath();
+			Squares pathSquare3 = getRandomPath();
+			Squares pathSquare4 = getRandomPath();
+			// Puzzle set up
+			buttonGame = new Order(gameBoard, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
+			buttonGame.shuffleOrder();
 		}
 		else
 		{
@@ -180,6 +191,7 @@ public class GameController
 		else if(puzzle == 1)
 		{
 			// Draw buttons
+			buttonGame.Draw(batch);
 		}
 		else
 		{
