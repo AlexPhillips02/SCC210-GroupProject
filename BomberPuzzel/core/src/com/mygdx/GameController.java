@@ -18,7 +18,7 @@ import com.mygdx.Player.Player;
 import com.mygdx.TileTypes.Path;
 
 /**
- * @author Alex Phillips, Alex Chalakov
+ * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
  * Controls the games will create the board / player / enemies
  * Creates and controls the camera
  */
@@ -33,6 +33,7 @@ public class GameController
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
+	private int puzzle;
 
 	/**
 	 * Creates the camera
@@ -64,6 +65,29 @@ public class GameController
 		activeAbilities = new ArrayList<Ability>();
 		CreateEnemies(enemyAmount);
 		CreateAbilities(abilitiesAmount);
+		SetLevel();
+	}
+
+	public void SetLevel()
+	{
+		Random rand = new Random();
+		puzzle = rand.nextInt(3);
+
+		if(puzzle == 0)
+		{
+			// Run colour match puzzle
+			System.out.println(puzzle + " ColourMatch");
+		}
+		else if(puzzle == 1)
+		{
+			// Run memory puzzle
+			System.out.println(puzzle + " Memory");
+		}
+		else
+		{
+			// run object puzzle
+			System.out.println(puzzle + " Object");
+		}
 	}
 
 	/**
@@ -146,6 +170,20 @@ public class GameController
 		{
 			checkForSquareCollision(deathSquares);
 			gameBoard.resetDeathSquares();
+		}
+
+		// Draw puzzles on board
+		if(puzzle == 0)
+		{
+			// Draw colour tiles
+		}
+		else if(puzzle == 1)
+		{
+			// Draw buttons
+		}
+		else
+		{
+			// Draw Object & endpoint
 		}
 
 		//Draw abilities on the board
