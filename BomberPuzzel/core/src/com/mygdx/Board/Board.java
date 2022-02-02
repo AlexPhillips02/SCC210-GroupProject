@@ -1,6 +1,7 @@
 package com.mygdx.Board;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -134,6 +135,23 @@ public class Board
             }
         }
     }
+
+    public Squares getRandomPath()
+	{
+		int xPosition;
+		int yPosition;
+		Random rand = new Random();
+
+		//Loops until spawn position is a path or a soft wall
+		do
+		{
+			xPosition = rand.nextInt((this.getXLength() - 2) + 1);
+			yPosition = rand.nextInt((this.getYLength() - 2) + 1);	
+		} while (!((getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
+
+		Squares pathSquare = getGameSquare(xPosition, yPosition);
+		return pathSquare;
+	}
 
     /**
      * Draws the board squares

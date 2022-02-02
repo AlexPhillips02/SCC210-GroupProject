@@ -103,6 +103,14 @@ public class Squares
         return y;
     }
 
+    public int getXLocation() {
+        return getX() / 64;
+    }
+
+    public int getYLocation() {
+        return getY() / 64;
+    }
+
     /**
      * Sets the current squares bomb animation
      * @param bombAnimation Current bomb animation

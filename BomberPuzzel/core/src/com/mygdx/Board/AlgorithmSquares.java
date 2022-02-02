@@ -12,12 +12,4 @@ public class AlgorithmSquares extends Squares
     {
         super(x, y);
     }
-
-    public int getXLocation() {
-        return getX() / 64;
-    }
-
-    public int getYLocation() {
-        return getY() / 64;
-    }
 }
