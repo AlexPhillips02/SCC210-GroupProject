@@ -11,11 +11,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.Abilities.*;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
-import com.mygdx.Enemies.BombCarrier;
-import com.mygdx.Enemies.Creep;
-import com.mygdx.Enemies.Enemies;
+import com.mygdx.Enemies.EnemyController;
 import com.mygdx.Player.Player;
-import com.mygdx.TileTypes.Path;
 
 /**
  * @author Alex Phillips, Alex Chalakov
@@ -27,7 +24,7 @@ public class GameController
 	//private Boolean winStatus;
     private Board gameBoard;
 	private Player player;
-	private ArrayList<Enemies> enemies;
+	private EnemyController enemyController;
 	private ArrayList<Ability> boardAbilities;	//Abilities on the board
 	private ArrayList<Ability> activeAbilities;	//Abilities the player has picked up and currently using
 	private SpriteBatch batch;
@@ -46,7 +43,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 10, 5);
+		CreateLevel(0, 10, 5);
     }
 
 	/**
@@ -59,40 +56,11 @@ public class GameController
 	{
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 65, 65, 150);
-		enemies = new ArrayList<Enemies>();
+		enemyController = new EnemyController(gameBoard, player);
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
-		CreateEnemies(enemyAmount);
+		enemyController.CreateEnemies(enemyAmount);
 		CreateAbilities(abilitiesAmount);
-	}
-
-	/**
-	 * Creates the enemies and places them randomly around the map
-	 * @param amount Amount of enemys to spawn around the map
-	 */
-	public void CreateEnemies(int amount)
-	{
-		for (int i = 0; i < amount; i++) 
-		{
-			Squares pathSquare = getRandomPath();
-
-			//Translates grid position to coordinate
-			int xPosition = pathSquare.getX();
-			int yPosition = pathSquare.getY();
-
-			//Creates the enemy and adds to list of enemies
-			Enemies enemy;
-			if (i == 0) 
-			{
-				//enemy = new BombCarrier(gameBoard, xPosition, yPosition, 100, player);
-				enemy = new BombCarrier(gameBoard, 64, 400, 100, player);	
-			}
-			else
-			{
-				enemy = new Creep(gameBoard, xPosition, yPosition, 100);
-			}
-			enemies.add(enemy);
-		}
 	}
 
 	/**
@@ -103,7 +71,7 @@ public class GameController
 	{
 		for (int i = 0; i < amount; i++)
 		{
-			Squares pathSquare = getRandomPath();
+			Squares pathSquare = gameBoard.getRandomPath();
 
 			//Translates grid position to coordinate
 			int xPosition = pathSquare.getX();
@@ -113,23 +81,6 @@ public class GameController
 			Ability newAbility = getRandomAbility(xPosition, yPosition);
 			boardAbilities.add(newAbility);
 		}
-	}
-
-	public Squares getRandomPath()
-	{
-		int xPosition;
-		int yPosition;
-		Random rand = new Random();
-
-		//Loops until spawn position is a path or a soft wall
-		do
-		{
-			xPosition = rand.nextInt((gameBoard.getXLength() - 2) + 1);
-			yPosition = rand.nextInt((gameBoard.getYLength() - 2) + 1);	
-		} while (!((gameBoard.getGameSquare(xPosition, yPosition).getTile()) instanceof Path));
-
-		Squares pathSquare = gameBoard.getGameSquare(xPosition, yPosition);
-		return pathSquare;
 	}
 
 	/**
@@ -186,40 +137,15 @@ public class GameController
 			}
 		}
 
-		//Draws and updates all enemeies created
-		if (enemies != null) 
-		{
-			//Loops though all of the enemies
-			for( int i = 0; i < enemies.size(); i++ )
-			{
-				Enemies enemy = enemies.get(i);
-
-				enemy.update();
-				enemy.Draw(batch);	
-
-				if (!(enemy.isAlive())) 
-				{
-					enemies.remove(enemy);
-					i--;
-					System.out.println("Enemy dead");
-				}
-
-				//Player contact with enemy
-				if (enemy.getCollisionRectangle().overlaps(player.getCollisionRectangle()) && player.isAlive()) 
-				{
-					enemy.Attack(player);
-
-					System.out.println("Player has had contact with enemy!");
-					if (player.isAlive() == false) 
-					{
-						System.out.println("Player is now dead");
-					}
-				}
-			}
-		}
+		enemyController.Update(batch);
 
 		player.checkInput();
 		player.Draw(batch);		//Draws player
+
+		if (player.isAlive() == false) 
+		{
+			//System.out.println("Player is now dead");
+		}
 		
 		moveCamera();
 	}
@@ -260,6 +186,8 @@ public class GameController
 			newAbility = new Invincibility(gameBoard, xPosition, yPosition, player);
 		}
 
+		newAbility.setX(xPosition + (newAbility.getWidth()) / 2);
+		newAbility.setY(yPosition + (newAbility.getHeight() / 2));
 		return newAbility;
 	}
 
@@ -279,20 +207,7 @@ public class GameController
 				System.out.println("Player hit by bomb");
 			}
 
-			if (enemies != null) 
-			{
-				//Loops though all of the enemies
-				for( int i = 0; i < enemies.size(); i++ )
-				{
-					Enemies enemy = enemies.get(i);
-
-					//If the enemy is in contact with the death square
-					if (enemy.getCollisionRectangle().overlaps(deathSquare)) 
-					{
-						enemy.reduceHealth();				
-					}
-				}
-			}
+			enemyController.checkForCollision(deathSquare);
 		}
 	}
 
