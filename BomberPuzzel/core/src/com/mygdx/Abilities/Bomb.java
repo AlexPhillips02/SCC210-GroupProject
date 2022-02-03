@@ -44,6 +44,11 @@ public class Bomb extends Ability
         int tileX = (int)(this.x / 64);
         int tileY = (int)(this.y / 64);
 
+        if (tileX < 0 || tileY < 0 || tileX >= 29 || tileY >= 15)   
+        {
+            System.out.println("ENTITY BOMB Attempted to get gamesquare x: " + tileX + " y: " + tileY);
+        }
+
         this.square = board.getGameSquare(tileX, tileY);
         square.addBomb(this);
     }

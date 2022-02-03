@@ -99,8 +99,8 @@ public abstract class Entity
         float tempX = getX();
         float tempY = getY();
 
-        int imageHeight = 60;
-        int imageWidth = 60;
+        float imageHeight = 60;
+        float imageWidth = 60;
 
         int tileHeight = 64;
         int tileWidth = 64;
@@ -111,11 +111,20 @@ public abstract class Entity
             return false;
         }
 
+        int xx = (int)(tempX / tileWidth);
+        int yy = (int)((tempY) / tileHeight);
+        if (xx < 0 || yy < 0 || xx >= 29 || yy >= 15)   
+        {
+            System.out.println("ENTITY ERROR Attempted to get gamesquare x: " + xx + " y: " + yy);
+        }
+
         //Calculate the corners of the entity in the new position
         //Get the tile in those corners then check if they are path tiles
         //If both are, move the player
         //If one is but one isn't adjust the player automatically
-        switch (movementDirection) 
+        try 
+        {
+            switch (movementDirection) 
         {
             case "UP":
                 tempY = (tempY + (movementSpeed * Gdx.graphics.getDeltaTime()));
@@ -124,7 +133,7 @@ public abstract class Entity
 
                 if(!validMove(uTopLeft, uTopRight, tempX, tempY))
                 {
-                    possibleCornerCut(uTopLeft, uTopRight, this.getX(), this.getY(), movementDirection);
+                    possibleCornerCut(uTopLeft, uTopRight, getX(), getY(), movementDirection);
                 }
                 else 
                 {
@@ -139,7 +148,7 @@ public abstract class Entity
 
                 if(!validMove(dBottomLeft, dBottomRight, tempX, tempY))
                 {
-                    possibleCornerCut(dBottomLeft, dBottomRight, this.getX(), this.getY(), movementDirection);
+                    possibleCornerCut(dBottomLeft, dBottomRight, getX(), getY(), movementDirection);
                 }
                 else 
                 {
@@ -154,7 +163,7 @@ public abstract class Entity
 
                 if(!validMove(lBottomLeft, lTopLeft, tempX, tempY))
                 {
-                    possibleCornerCut(lBottomLeft, lTopLeft, this.getX(), this.getY(), movementDirection);
+                    possibleCornerCut(lBottomLeft, lTopLeft, getX(), getY(), movementDirection);
                 }
                 else 
                 {
@@ -169,13 +178,18 @@ public abstract class Entity
 
                 if(!validMove(rBottomRight, rTopRight, tempX, tempY))
                 {
-                    possibleCornerCut(rBottomRight, rTopRight, this.getX(), this.getY(), movementDirection);
+                    possibleCornerCut(rBottomRight, rTopRight, getX(), getY(), movementDirection);
                 }
                 else 
                 {
                     return true;
                 }
             break;
+        }
+        } catch (Exception e) 
+        {
+            System.out.println("Actual Gamesquare Bottom left of Entity x: " + xx + " y: " + yy);
+            System.out.println("Gamesquare + image sizes x: " + (int)((tempX + imageWidth) / tileWidth) + " y: " + (int)((tempY + imageHeight) / tileHeight));
         }
 
         return false;

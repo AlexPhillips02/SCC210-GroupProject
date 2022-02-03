@@ -69,14 +69,14 @@ public class EnemyController
 				{
 					enemy.Attack(player);
 
-					System.out.println("Player has had contact with enemy!");
+					//System.out.println("Player has had contact with enemy!");
 				}
 
 				if (!(enemy.isAlive())) 
 				{
 					enemies.remove(enemy);
 					i--;
-					System.out.println("Enemy dead");
+					//System.out.println("Enemy dead");
 				}
 			}
 		}

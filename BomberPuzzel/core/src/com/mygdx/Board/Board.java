@@ -321,11 +321,6 @@ public class Board
      */
     public Squares getGameSquare(int x, int y) 
     {
-        if (x > xLength || y > yLength || x < 0 || y < 0) 
-        {
-            System.out.println("ERROR Attempted to get gamesquare x: " + x + " y: " + y);
-            return gameSquares[0][0];
-        }
         return gameSquares[x][y];
     }
 
