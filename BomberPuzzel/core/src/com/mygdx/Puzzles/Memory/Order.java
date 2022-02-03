@@ -58,6 +58,11 @@ public class Order
         Y.Draw(batch);
     }
 
+    public ColourButton[] getButtons()
+    {
+        return buttons;
+    }
+
     // Randomly shuffle the order buttons need to be pressed in
     public void shuffleOrder()
     {
