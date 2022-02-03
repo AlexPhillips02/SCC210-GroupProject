@@ -13,6 +13,7 @@ import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
 import com.mygdx.Player.Player;
+import com.mygdx.Puzzles.Memory.ColourButton;
 import com.mygdx.Puzzles.Memory.Order;
 
 /**
@@ -143,6 +144,16 @@ public class GameController
 		{
 			// Draw buttons
 			buttonGame.Draw(batch);
+			ColourButton[] buttons = buttonGame.getButtons();
+			
+			// Button Collision detection
+			for(int i = 0; i < buttons.length; i++)
+			{
+				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{
+					System.out.println("Button Pressed");
+				}
+			}
 		}
 		else
 		{
