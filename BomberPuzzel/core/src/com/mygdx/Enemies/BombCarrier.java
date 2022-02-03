@@ -20,7 +20,7 @@ public class BombCarrier extends PlayerTrackingEnemy
         System.out.println("Bomb carrier hit player and placed bomb");
         if (bombsMax > 0) 
         {
-            new Bomb(board, x, y, this, explosionRange);
+            new Bomb(board, getX(), getY(), this, explosionRange);
             bombsMax--;   
         }
 

@@ -96,8 +96,8 @@ public abstract class Entity
      */
     public boolean move()
     {
-        float tempX = this.getX();
-        float tempY = this.getY();
+        float tempX = getX();
+        float tempY = getY();
 
         int imageHeight = 60;
         int imageWidth = 60;

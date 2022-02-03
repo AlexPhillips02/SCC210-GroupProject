@@ -3,7 +3,6 @@ package com.mygdx.Enemies;
 import com.mygdx.Board.AlgorithmSquares;
 import com.mygdx.Board.Board;
 import com.mygdx.Player.Player;
-import com.mygdx.TileTypes.Path;
 
 /**
  * @author Alex Phillips
@@ -182,7 +181,7 @@ public abstract class PlayerTrackingEnemy extends Enemies
 
 			//If can move in a direction. Move in that direction
 
-            AlgorithmSquares next = getNext(i, current);
+            AlgorithmSquares next = (AlgorithmSquares)getNext(i, current);
 			if (canMove(next)) 
 			{
 				if (next.visited == false) 
@@ -196,43 +195,4 @@ public abstract class PlayerTrackingEnemy extends Enemies
 		current.visited = false;
 		return;
     }
-
-    /**
-	 * A method that determines if there is a wall on the next possible tile
-	 * 
-	 * @param Next The next possible block to check
-     * @return True if the player can move there (is a path)
-	 */	
-	public boolean canMove(AlgorithmSquares next)
-	{
-		if ((next.getTile() instanceof Path)) 
-        {
-            return true;
-        }
-		else 
-        {
-            return false;
-        }
-	}
-
-    /**
-	 * A method that is invoked when a user clicks on this square.
-	 * 
-	 * @param n Direction in which to get the next square from
-     * @param current The current square the algorithm is using
-	 * @return Returns an AlgorithmSquare of the next square in that direction 
-	 */	
-	public AlgorithmSquares getNext(int n, AlgorithmSquares current)
-	{
-		int y = 0;
-		int x = 0;
-
-        if (n == 0) {x = -1;} //Left
-        if (n == 1) {y = -1;} //Bottom
-        if (n == 2) {x = 1;} //Right
-		if (n == 3) {y = 1;} //Top
-
-		AlgorithmSquares next = ((AlgorithmSquares) board.getGameSquare((current.getXLocation() + x), (current.getYLocation()) + y));
-		return next;
-	}
 }
