@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx.GameScreens.MainGameScreen;
+import com.mygdx.GameScreens.MenuScreen;
 
 public class Driver extends Game {
 
@@ -13,7 +14,8 @@ public class Driver extends Game {
 	public void create ()
 	{
 		batch = new SpriteBatch();
-		this.setScreen(new MainGameScreen(batch));
+		//this.setScreen(new MainGameScreen(batch));
+		this.setScreen(new MenuScreen(batch));
 	}
 
 	@Override
