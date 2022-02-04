@@ -1,5 +1,6 @@
 package com.mygdx.Player;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Tile;
+import com.mygdx.GameScreens.GameOverScreen;
 import com.mygdx.TileTypes.Path;
 
 /**
@@ -33,6 +35,8 @@ public abstract class Entity
     protected float elapsedTime = 0f;
 
     protected int health;
+
+    protected SpriteBatch batch; //for the Game Over screen
 
     /**
      * @param imageURL URL to an image to use for the entity (Stored as a Texture)
@@ -320,8 +324,13 @@ public abstract class Entity
      */
     public Boolean isAlive()
     {
+        batch = new SpriteBatch();
+
         if(health <= 0)
         {
+            //commented out until death blocks bug fixed
+            //System.out.println("Player is dead.");
+            //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen());
             return false;
         }
         else
