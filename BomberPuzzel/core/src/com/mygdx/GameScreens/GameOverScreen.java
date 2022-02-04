@@ -1,13 +1,13 @@
 package com.mygdx.GameScreens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.Driver;
 import com.mygdx.GameController;
 
-public class GameOverScreen extends Game implements Screen {
+public class GameOverScreen extends Driver implements Screen {
 
     private SpriteBatch batch;
     private GameController controller;
