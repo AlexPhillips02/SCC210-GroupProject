@@ -38,6 +38,7 @@ public class MenuScreen implements Screen {
     private Texture inActiveExitButton;
     private Texture activePlayButton;
     private Texture activeExitButton;
+    private Texture backGround;
 
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
@@ -50,6 +51,7 @@ public class MenuScreen implements Screen {
         inActiveExitButton = new Texture("core/assets/Screens/ExitUnActive.png");
         activePlayButton = new Texture("core/assets/Screens/PlayActive.png");
         activeExitButton = new Texture("core/assets/Screens/ExitActive.png");
+        backGround = new Texture("core/assets/Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
     }
 
     /**
@@ -71,10 +73,8 @@ public class MenuScreen implements Screen {
 
         //drawing the background photo
         batch.begin();
-
+        batch.draw(backGround, 0, 0, Driver.WIDTH, Driver.HEIGHT);
         playAndExit();
-        
-
         batch.end();
 
         //drawing the stage with the buttons
@@ -86,7 +86,8 @@ public class MenuScreen implements Screen {
         if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
             batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
-                
+                this.dispose();
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
             }
         }
         else {
