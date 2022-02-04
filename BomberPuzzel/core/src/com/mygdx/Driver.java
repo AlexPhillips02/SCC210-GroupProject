@@ -8,6 +8,10 @@ import com.mygdx.GameScreens.MenuScreen;
 
 public class Driver extends Game {
 
+	public static final int WIDTH = 928;
+	public static final int HEIGHT = 480;
+
+
 	private SpriteBatch batch;
 	
 	@Override

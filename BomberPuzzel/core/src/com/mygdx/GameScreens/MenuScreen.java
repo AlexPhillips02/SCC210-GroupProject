@@ -21,20 +21,35 @@ import com.mygdx.GameController;
 
 public class MenuScreen implements Screen {
 
-   private SpriteBatch batch;
-   private Sprite sprite;
-   private GameController controller;
-   private Stage stage;
-   private ImageButton playButton;
-   private ImageButton exitButton;
+    private static final int PLAY_BUTTON_WIDTH = 300;
+    private static final int PLAY_BUTTON_HEIGHT = 200;
+    private static final int EXIT_BUTTON_WIDTH = 300;
+    private static final int EXIT_BUTTON_HEIGHT = 200;
+    private static final int PLAY_BUTTON_Y = 90;
+    private static final int EXIT_BUTTON_Y = 10;
+    private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+    
+    
+
+    private SpriteBatch batch;
+    private GameController controller;
+   
+    private Texture inActivePlayButton;
+    private Texture inActiveExitButton;
+    private Texture activePlayButton;
+    private Texture activeExitButton;
 
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
      * @param batch SpriteBatch batch
      */
     public MenuScreen(SpriteBatch batch){
-       this.batch = batch;
-       controller = new GameController(batch);
+        this.batch = batch;
+        controller = new GameController(batch);
+        inActivePlayButton = new Texture("core/assets/Screens/PlayUnActive.png");
+        inActiveExitButton = new Texture("core/assets/Screens/ExitUnActive.png");
+        activePlayButton = new Texture("core/assets/Screens/PlayActive.png");
+        activeExitButton = new Texture("core/assets/Screens/ExitActive.png");
     }
 
     /**
@@ -42,7 +57,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void show() {
-        loadScreen(); //calling our function where everything is placed
+        
     }
 
     /**
@@ -56,17 +71,44 @@ public class MenuScreen implements Screen {
 
         //drawing the background photo
         batch.begin();
-        sprite.draw(batch);
+
+        playAndExit();
+        
+
         batch.end();
 
         //drawing the stage with the buttons
-        stage.act();
-        stage.draw();
+        //stage.act();
+        //stage.draw();
+    }
+
+    private void playAndExit(){
+        if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
+            batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+            if (Gdx.input.isTouched()){
+                
+            }
+        }
+        else {
+            batch.draw(inActivePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        }
+
+        if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
+            batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+            if (Gdx.input.isTouched()){
+                Gdx.app.exit();
+            }
+        }
+        else {
+            batch.draw(inActiveExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+        }
     }
 
     /**
      * Main Screen method that contains everything.
      */
+
+     /*
     private void loadScreen() {
         stage = new Stage();
         Table table = new Table(); //introducing the table within the stage
@@ -75,9 +117,8 @@ public class MenuScreen implements Screen {
         table.setPosition(0, Gdx.graphics.getHeight()); //setting position
 
         //introducing the play button
-        playButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/PlayActive.png")))));
-        playButton.addListener(new ClickListener(){
-
+        
+        inActivePlayButton.addListener(new ClickListener(){
             public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
                 System.out.println("CLICKED");
                 dispose();
@@ -86,9 +127,7 @@ public class MenuScreen implements Screen {
         });
 
         //introducing the exit button
-        exitButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/ExitActive.png")))));
-        exitButton.addListener(new ClickListener(){
-
+        inActiveExitButton.addListener(new ClickListener(){
             public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
                 System.out.println("Exited");
                 dispose();
@@ -97,9 +136,9 @@ public class MenuScreen implements Screen {
         });
 
         //adding buttons to table
-        table.add(playButton);
+        table.add(inActivePlayButton);
         //table.row(); could be added, but not needed for now
-        table.add(exitButton);
+        table.add(inActiveExitButton);
 
         //adding table to the stage
         stage.addActor(table);
@@ -111,7 +150,7 @@ public class MenuScreen implements Screen {
 
         Gdx.input.setInputProcessor(stage);
     }
-
+    */
     /**
      * @param width size of width
      * @param height size of height
