@@ -113,6 +113,11 @@ public class Player extends Entity
         walkLeft = new Animation<>(1/15f, frames);
     }
 
+    public void update()
+    {
+        increaseLastDamaged();
+    }
+
     /**
      * Increasing the number of the placed Bombs
      */

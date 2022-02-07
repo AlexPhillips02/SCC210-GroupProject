@@ -35,6 +35,8 @@ public abstract class Enemies extends Entity
      */
     public void update()
     {
+        increaseLastDamaged();
+        
         if(move() == false || movementDirection == null)
         {
             chooseNewDirection();

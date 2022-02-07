@@ -2,6 +2,8 @@ package com.mygdx;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +14,7 @@ import com.mygdx.Abilities.*;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
+import com.mygdx.GameScreens.GameOverScreen;
 import com.mygdx.Player.Player;
 import com.mygdx.Puzzles.Memory.ColourButton;
 import com.mygdx.Puzzles.Memory.Order;
@@ -47,7 +50,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(10, 20, 5);
+		CreateLevel(20, 10, 5);
     }
 
 	/**
@@ -201,11 +204,15 @@ public class GameController
 		enemyController.Update(batch);
 
 		player.checkInput();
+		player.update();
 		player.Draw(batch);		//Draws player
 
 		if (player.isAlive() == false) 
 		{
-			//System.out.println("Player is now dead");
+			System.out.println("Player is dead.");
+			System.out.println("Load game over screen from game controller");
+            //Stop the game from playing
+            //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
 		}
 		
 		moveCamera();
@@ -265,7 +272,6 @@ public class GameController
 			if(deathSquare.overlaps(player.getCollisionRectangle())) 
 			{
 				player.reduceHealth();
-				System.out.println("Player hit by bomb");
 			}
 
 			enemyController.checkForCollision(deathSquare);

@@ -81,15 +81,12 @@ public class EnemyController
 				if (enemy.getCollisionRectangle().overlaps(player.getCollisionRectangle())) //&& player.isAlive()) 
 				{
 					enemy.Attack(player);
-
-					//System.out.println("Player has had contact with enemy!");
 				}
 
 				if (!(enemy.isAlive())) 
 				{
 					enemies.remove(enemy);
 					i--;
-					//System.out.println("Enemy dead");
 				}
 			}
 		}

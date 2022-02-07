@@ -1,6 +1,5 @@
 package com.mygdx.Player;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Tile;
-import com.mygdx.GameScreens.GameOverScreen;
 import com.mygdx.TileTypes.Path;
 
 /**
@@ -32,9 +30,11 @@ public abstract class Entity
     protected Animation<TextureRegion> walkUp;
     protected Animation<TextureRegion> walkLeft;
     protected Animation<TextureRegion> walkRight;
-    protected float elapsedTime = 0f;
+    protected float animationTimer = 0f;
 
     protected int health;
+    protected float healthCooldown = 3f; //Seconds
+    protected float lastDamageTimer = healthCooldown + 1;
 
     protected SpriteBatch batch; //for the Game Over screen
 
@@ -305,8 +305,8 @@ public abstract class Entity
         else
         {
             //Draws the animation (gets the frame of the animation (elapsed time kinda like an index | true loops | x / y coordinates))
-            batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), this.getX(), this.getY());
-            elapsedTime += Gdx.graphics.getDeltaTime();
+            batch.draw(currentAnimation.getKeyFrame(animationTimer, true), this.getX(), this.getY());
+            animationTimer += Gdx.graphics.getDeltaTime();
         }
     }
 
@@ -315,7 +315,12 @@ public abstract class Entity
      */
     public void reduceHealth()
     {
-        this.health --;
+        if (lastDamageTimer >= healthCooldown) 
+        {
+            this.health--;
+            System.out.println("Damage Taken");
+            lastDamageTimer = 0f;   
+        }
     }
 
     /**
@@ -324,13 +329,8 @@ public abstract class Entity
      */
     public Boolean isAlive()
     {
-        batch = new SpriteBatch();
-
         if(health <= 0)
         {
-            //commented out until death blocks bug fixed
-            //System.out.println("Player is dead.");
-            //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen());
             return false;
         }
         else
@@ -341,6 +341,11 @@ public abstract class Entity
 
     public void setHealth (int health) {
         this.health = health;
+    }
+
+    public void increaseLastDamaged()
+    {
+        this.lastDamageTimer = lastDamageTimer + Gdx.graphics.getDeltaTime();
     }
 
     public void setMovementDirection(String direction)
