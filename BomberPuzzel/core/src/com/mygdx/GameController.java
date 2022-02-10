@@ -154,7 +154,11 @@ public class GameController
 			{
 				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{
-					System.out.println("Button Pressed");
+					if(buttons[i].active())
+					{
+						buttons[i].setActive(false);
+						buttonGame.Pressed(buttons[i]);
+					}
 				}
 			}
 		}
