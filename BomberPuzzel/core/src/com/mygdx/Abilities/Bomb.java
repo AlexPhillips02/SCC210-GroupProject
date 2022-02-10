@@ -36,8 +36,6 @@ public class Bomb extends Ability
 
     /**
      * Adds a bomb to the square tile at coordinate x y
-     * @param x X coordinate to place the bomb
-     * @param y Y coordinate to place the bomb
      */
     public void placeBomb()
     {

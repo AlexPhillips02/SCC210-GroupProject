@@ -14,7 +14,7 @@ import com.mygdx.TileTypes.Path;
  */
 public abstract class Enemies extends Entity
 {
-    String[] possibleDirections = {"UP", "DOWN", "LEFT", "RIGHT"};
+    String[] possibleDirections = {"LEFT", "DOWN", "RIGHT", "UP"};
 
     /**
      * 
@@ -35,6 +35,8 @@ public abstract class Enemies extends Entity
      */
     public void update()
     {
+        increaseLastDamaged();
+        
         if(move() == false || movementDirection == null)
         {
             chooseNewDirection();
@@ -42,13 +44,15 @@ public abstract class Enemies extends Entity
     }
 
     /**
-     * Sets a new movement direction of the enemy
+     * Calculates a new direction for the enemy to walk in
      */
     public void chooseNewDirection()
     {
         Squares currentSquare = board.getGameSquare((int)getX() / board.getTileSize(), (int)getY() / board.getTileSize());
         ArrayList<String> possibleMovements = new ArrayList<>();
 
+        //Calculates which directions the enemy can move in
+        //Which directions dont have walls
         for (int i = 0; i < possibleDirections.length; i++) 
         {
             Squares next = getNext(i, currentSquare);
@@ -59,11 +63,12 @@ public abstract class Enemies extends Entity
             }
         }
 
+        //If the enemy isnt trapped move in one of the possible directions
+        //Else the enemy just stands still
         if (possibleMovements.size() > 0) 
         {
-            int direction = (int)(Math.random() * 4);
-
-            movementDirection = possibleDirections[direction];
+            int direction = (int)(Math.random() * possibleMovements.size());
+            movementDirection = possibleMovements.get(direction);
         }
         else
         {
@@ -71,11 +76,6 @@ public abstract class Enemies extends Entity
             movementDirection = "STANDING";
         }
 
-        setAnimationDirection(movementDirection);
-
-        int direction = (int)(Math.random() * 4);
-
-        movementDirection = possibleDirections[direction];
         setAnimationDirection(movementDirection);
     }
 

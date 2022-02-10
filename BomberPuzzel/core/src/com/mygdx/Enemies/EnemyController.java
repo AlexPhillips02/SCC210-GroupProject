@@ -8,12 +8,21 @@ import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Player;
 
+/**
+ * @author Alex Phillips
+ * Controlls all of the enemies on the level
+ */
 public class EnemyController 
 {
     private ArrayList<Enemies> enemies;
     private Board board;
     private Player player;
     
+	/**
+	 * Loads the board and the player (For player tracking)
+	 * @param board Used to determine original spawn points
+	 * @param player Player used for certain types to track the player
+	 */
     public EnemyController(Board board, Player player)
     {
         this.board = board;
@@ -51,6 +60,10 @@ public class EnemyController
 		}
 	}
 
+	/**
+	 * Called within GameController to update enemey positions and status
+	 * @param batch Batch used to draw the enemies
+	 */
     public void Update(SpriteBatch batch)
     {
         //Draws and updates all enemeies created
@@ -68,20 +81,21 @@ public class EnemyController
 				if (enemy.getCollisionRectangle().overlaps(player.getCollisionRectangle())) //&& player.isAlive()) 
 				{
 					enemy.Attack(player);
-
-					//System.out.println("Player has had contact with enemy!");
 				}
 
 				if (!(enemy.isAlive())) 
 				{
 					enemies.remove(enemy);
 					i--;
-					//System.out.println("Enemy dead");
 				}
 			}
 		}
     }
 
+	/**
+	 * Checks for a collision between enemy and death square
+	 * @param deathSquare Board square that if touched by an enemy should die
+	 */
     public void checkForCollision(Rectangle deathSquare) 
     {
         if (enemies != null) 
@@ -99,6 +113,4 @@ public class EnemyController
             }
         }
     }
-
-    
 }

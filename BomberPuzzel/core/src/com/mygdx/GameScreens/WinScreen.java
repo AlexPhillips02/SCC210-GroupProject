@@ -19,22 +19,22 @@ import com.mygdx.GameController;
 
 /**
  * @author Alex Chalakov, Lincoln Delhomme
- * A class for the game over screen for whenever our player dies.
+ * A class for the win screen whenever the player beats the game.
  */
-public class GameOverScreen implements Screen {
+public class WinScreen implements Screen {
 
     private SpriteBatch batch;
     private Sprite sprite;
     private GameController controller;
     private Stage stage;
-    private ImageButton startButton;
+    private ImageButton startOverButton;
 
 
     /**
      * Constructor for the main Game Over Screen which appears at the end of the game, when the player dies.
      * @param batch SpriteBatch batch
      */
-    public GameOverScreen(SpriteBatch batch){
+    public WinScreen(SpriteBatch batch){
         this.batch = batch;
         controller = new GameController(batch);
     }
@@ -80,8 +80,8 @@ public class GameOverScreen implements Screen {
         table.setPosition(0, Gdx.graphics.getHeight()); //setting position
 
         //introducing the play button
-        startButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/PuzzleBomber.png")))));
-        startButton.addListener(new ClickListener(){
+        startOverButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/PuzzleBomber.png")))));
+        startOverButton.addListener(new ClickListener(){
 
             public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
                 System.out.println("CLICKED");
@@ -91,7 +91,7 @@ public class GameOverScreen implements Screen {
         });
 
         //adding buttons to table
-        table.add(startButton);
+        table.add(startOverButton);
         //table.row(); could be added, but not needed for now
 
         //adding table to the stage
@@ -141,3 +141,4 @@ public class GameOverScreen implements Screen {
 
     }
 }
+

@@ -1,5 +1,6 @@
 package com.mygdx.Puzzles.Memory;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -74,21 +75,69 @@ public class Order
             buttons[indexSwap] = buttons[i];
             buttons[i] = temp;
         }
-        System.out.println("Sequence: " + buttons[0].name + ", " + buttons[1].name + ", " + buttons[2].name + ", " + buttons[3].name + "\n");
+        displayOrder();
     }
 
     // Display the button sequence on screen
     public void displayOrder()
-    {}
+    {
+        System.out.println("Sequence: " + buttons[0].name + ", " + buttons[1].name + ", " + buttons[2].name + ", " + buttons[3].name + "\n");
+    }
+
+    // Add pressed button to sequenceInput array
+    public void add(ColourButton button)
+    {
+        for(int i = 0; i < sequenceInput.length; i++)
+        {
+            if(sequenceInput[i] == null)
+            {
+                sequenceInput[i] = button;
+                break;
+            }
+        }
+    }
 
     // Compare the buttons input by the player to the actual sequence
-    public void compareInput()
+    public void compareInput(ColourButton button)
     {
-        int i = sequenceInput.length;
-        if(buttons[i] != sequenceInput[i])
+        
+        int match = 0;
+        for(int i = 0; i < sequenceInput.length; i++)
         {
-            sequenceInput = null;
-            displayOrder();
+            if(sequenceInput[i] != buttons[i] && sequenceInput[i] != null)
+            {
+                System.out.println("Not match");
+                Arrays.fill(sequenceInput, null);
+                match = 0;
+                displayOrder();
+                R.setActive(true);
+                G.setActive(true);
+                B.setActive(true);
+                Y.setActive(true);
+                break;
+            }
+            else
+            {
+                if(sequenceInput[i] == buttons[i])
+                {
+                    match++;
+                }
+                if(match == 4)
+                {
+                    System.out.println("Sequence complete");
+                }
+            }
         }
+    }
+    
+    /**
+     * What happens when the player presses the button
+    */
+    public void Pressed(ColourButton button)
+    {
+        System.out.println(button.name + " Button Pressed");
+        button.setActive(false);
+        add(button);
+        compareInput(button);
     }
 }
