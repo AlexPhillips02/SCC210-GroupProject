@@ -18,6 +18,8 @@ public class ColourButton
     protected Board board;    
     protected Rectangle collisionRectangle;
 
+    protected boolean active = true;
+
     /**
      * Constructor for the button class
      * @param name
@@ -36,12 +38,6 @@ public class ColourButton
         
         collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), defaultImage.getHeight());
     }
-
-    /**
-     * What happens when the player presses the button
-    */
-    public void buttonPressed()
-    {}
 
     /**
      * Draws the entity on the board.
@@ -92,5 +88,15 @@ public class ColourButton
     public Rectangle getCollisionRectangle()
     {
         return collisionRectangle;
+    }
+
+    public void setActive(boolean TF)
+    {
+        active = TF;
+    }
+    
+    public boolean active()
+    {
+        return active;
     }
 }
