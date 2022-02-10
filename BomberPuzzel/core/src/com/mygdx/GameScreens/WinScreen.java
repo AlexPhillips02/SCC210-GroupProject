@@ -2,8 +2,8 @@ package com.mygdx.GameScreens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,32 +19,34 @@ import com.mygdx.GameController;
 
 /**
  * @author Alex Chalakov, Lincoln Delhomme
- * A class for the menu screen which adds all the options when the program is run.
+ * A class for the win screen whenever the player beats the game.
  */
-public class MenuScreen implements Screen {
+public class WinScreen implements Screen {
 
-   private SpriteBatch batch;
-   private Sprite sprite;
-   private GameController controller;
-   private Stage stage;
-   private ImageButton playButton;
-   private ImageButton exitButton;
+    private SpriteBatch batch;
+    private Sprite sprite;
+    private GameController controller;
+    private Stage stage;
+    private ImageButton startOverButton;
+
 
     /**
-     * Constructor for the main Menu Screen which appears at the start of the game.
+     * Constructor for the main Game Over Screen which appears at the end of the game, when the player dies.
      * @param batch SpriteBatch batch
      */
-    public MenuScreen(SpriteBatch batch){
-       this.batch = batch;
-       controller = new GameController(batch);
+    public WinScreen(SpriteBatch batch){
+        this.batch = batch;
+        controller = new GameController(batch);
     }
+
 
     /**
      * Called when this screen becomes the current screen for a Game.
      */
     @Override
-    public void show() {
-        loadScreen(); //calling our function where everything is placed
+    public void show()
+    {
+        loadScreen();
     }
 
     /**
@@ -52,18 +54,19 @@ public class MenuScreen implements Screen {
      * @param delta The time in seconds since the last render.
      */
     @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    public void render(float delta)
+    {
+        //If N is pressed a new game is started when this one is finished
+        if (Gdx.input.isKeyPressed(Input.Keys.N))
+        {
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) //If the escape button is clicked the game shuts down
+        {
+            dispose();
+            System.exit(0);
+        }
 
-        //drawing the background photo
-        batch.begin();
-        sprite.draw(batch);
-        batch.end();
-
-        //drawing the stage with the buttons
-        stage.act();
-        stage.draw();
     }
 
     /**
@@ -77,8 +80,8 @@ public class MenuScreen implements Screen {
         table.setPosition(0, Gdx.graphics.getHeight()); //setting position
 
         //introducing the play button
-        playButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/PlayActive.png")))));
-        playButton.addListener(new ClickListener(){
+        startOverButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/PuzzleBomber.png")))));
+        startOverButton.addListener(new ClickListener(){
 
             public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
                 System.out.println("CLICKED");
@@ -87,21 +90,9 @@ public class MenuScreen implements Screen {
             }
         });
 
-        //introducing the exit button
-        exitButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/ExitActive.png")))));
-        exitButton.addListener(new ClickListener(){
-
-            public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
-                System.out.println("Exited");
-                dispose();
-                System.exit(0); //exits and closes the screen
-            }
-        });
-
         //adding buttons to table
-        table.add(playButton);
+        table.add(startOverButton);
         //table.row(); could be added, but not needed for now
-        table.add(exitButton);
 
         //adding table to the stage
         stage.addActor(table);
@@ -114,13 +105,15 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+
     /**
      * @param width size of width
      * @param height size of height
      */
     @Override
-    public void resize(int width, int height) {
-
+    public void resize(int width, int height)
+    {
+        controller.resize(width, height);
     }
 
     @Override
@@ -128,10 +121,12 @@ public class MenuScreen implements Screen {
 
     }
 
+
     @Override
     public void resume() {
 
     }
+
 
     @Override
     public void hide() {
@@ -146,3 +141,4 @@ public class MenuScreen implements Screen {
 
     }
 }
+

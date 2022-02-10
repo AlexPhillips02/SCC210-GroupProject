@@ -15,9 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.mygdx.Driver;
 import com.mygdx.GameController;
 
+/**
+ * @author Alex Chalakov, Lincoln Delhomme
+ * A class for the game over screen for whenever our player dies.
+ */
 public class GameOverScreen implements Screen {
 
     private SpriteBatch batch;
