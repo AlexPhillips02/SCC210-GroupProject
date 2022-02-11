@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Sprite;  
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -24,11 +24,11 @@ import com.mygdx.GameController;
  */
 public class MenuScreen implements Screen {
 
-    private static final int PLAY_BUTTON_WIDTH = 300;
-    private static final int PLAY_BUTTON_HEIGHT = 200;
-    private static final int EXIT_BUTTON_WIDTH = 300;
-    private static final int EXIT_BUTTON_HEIGHT = 200;
-    private static final int PLAY_BUTTON_Y = 90;
+    private static final int PLAY_BUTTON_WIDTH = 200;
+    private static final int PLAY_BUTTON_HEIGHT = 150;
+    private static final int EXIT_BUTTON_WIDTH = 200;
+    private static final int EXIT_BUTTON_HEIGHT = 150;
+    private static final int PLAY_BUTTON_Y = 170;
     private static final int EXIT_BUTTON_Y = 10;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
     
@@ -50,10 +50,10 @@ public class MenuScreen implements Screen {
     public MenuScreen(SpriteBatch batch){
         this.batch = batch;
         controller = new GameController(batch);
-        inActivePlayButton = new Texture("core/assets/Screens/PlayUnActive.png");
-        inActiveExitButton = new Texture("core/assets/Screens/ExitUnActive.png");
-        activePlayButton = new Texture("core/assets/Screens/PlayActive.png");
-        activeExitButton = new Texture("core/assets/Screens/ExitActive.png");
+        inActivePlayButton = new Texture("core/assets/Screens/Play (Unactive)-1.png.png");
+        inActiveExitButton = new Texture("core/assets/Screens/Exit (unactive)-1.png.png");
+        activePlayButton = new Texture("core/assets/Screens/Play (Active).png");
+        activeExitButton = new Texture("core/assets/Screens/Exit (active).png");
         backGround = new Texture("core/assets/Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
     }
 
