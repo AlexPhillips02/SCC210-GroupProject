@@ -5,7 +5,9 @@ import java.util.Random;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,6 +29,7 @@ import com.mygdx.Puzzles.Memory.Order;
 public class GameController
 {
 	//private Boolean winStatus;
+	private GUI gui;
     private Board gameBoard;
 	private Player player;
 	private EnemyController enemyController;
@@ -61,6 +64,9 @@ public class GameController
 	 */
 	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount, int abilitiesAmount)
 	{
+		gui = new GUI();
+		//batch.setProjectionMatrix(gui.stage.getCamera().combined);
+
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 65, 65, 150);
 		enemyController = new EnemyController(gameBoard, player);
@@ -75,6 +81,7 @@ public class GameController
 	{
 		Random rand = new Random();
 		puzzle = rand.nextInt(3);
+		puzzle = 1;
 
 		if(puzzle == 0)
 		{
@@ -210,16 +217,18 @@ public class GameController
 		player.checkInput();
 		player.update();
 		player.Draw(batch);		//Draws player
+		moveCamera();
 
 		if (player.isAlive() == false) 
 		{
-			System.out.println("Player is dead.");
-			System.out.println("Load game over screen from game controller");
+			//System.out.println("Player is dead.");
+			//System.out.println("Load game over screen from game controller");
             //Stop the game from playing
             //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
 		}
-		
-		moveCamera();
+
+		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime());
+        gui.stage.draw();
 	}
 
 	/**
