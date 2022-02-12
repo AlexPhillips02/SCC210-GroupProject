@@ -18,8 +18,9 @@ import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
 import com.mygdx.GameScreens.GameOverScreen;
 import com.mygdx.Player.Player;
-import com.mygdx.Puzzles.Memory.ColourButton;
-import com.mygdx.Puzzles.Memory.Order;
+// import com.mygdx.Puzzles.Memory.ColourButton;
+// import com.mygdx.Puzzles.Memory.Order;
+import com.mygdx.Puzzles.PuzzleController;
 
 /**
  * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
@@ -33,13 +34,12 @@ public class GameController
     private Board gameBoard;
 	private Player player;
 	private EnemyController enemyController;
+	private PuzzleController puzzleController;
 	private ArrayList<Ability> boardAbilities;	//Abilities on the board
 	private ArrayList<Ability> activeAbilities;	//Abilities the player has picked up and currently using
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
-	private int puzzle;
-	private Order buttonGame;
 
 	/**
 	 * Creates the camera
@@ -73,40 +73,9 @@ public class GameController
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
 		enemyController.CreateEnemies(enemyAmount);
+		puzzleController = new PuzzleController(gameBoard, player);
+		puzzleController.SetPuzzle();
 		CreateAbilities(abilitiesAmount);
-		SetLevel();
-	}
-
-	public void SetLevel()
-	{
-		Random rand = new Random();
-		puzzle = rand.nextInt(3);
-		puzzle = 1;
-
-		if(puzzle == 0)
-		{
-			// Run colour match puzzle
-			System.out.println(puzzle + " ColourMatch");
-		}
-		else if(puzzle == 1)
-		{
-			// Run memory puzzle
-			System.out.println(puzzle + " Memory");
-			
-			// Choose 4 Random squares to place buttons on
-			Squares pathSquare1 = gameBoard.getRandomPath();
-			Squares pathSquare2 = gameBoard.getRandomPath();
-			Squares pathSquare3 = gameBoard.getRandomPath();
-			Squares pathSquare4 = gameBoard.getRandomPath();
-			// Puzzle set up
-			buttonGame = new Order(gameBoard, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
-			buttonGame.shuffleOrder();
-		}
-		else
-		{
-			// run object puzzle
-			System.out.println(puzzle + " Object");
-		}
 	}
 
 	/**
@@ -143,35 +112,6 @@ public class GameController
 		{
 			checkForSquareCollision(deathSquares);
 			gameBoard.resetDeathSquares();
-		}
-
-		// Draw puzzles on board
-		if(puzzle == 0)
-		{
-			// Draw colour tiles
-		}
-		else if(puzzle == 1)
-		{
-			// Draw buttons
-			buttonGame.Draw(batch);
-			ColourButton[] buttons = buttonGame.getButtons();
-			
-			// Button Collision detection
-			for(int i = 0; i < buttons.length; i++)
-			{
-				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
-				{
-					if(buttons[i].active())
-					{
-						buttons[i].setActive(false);
-						buttonGame.Pressed(buttons[i]);
-					}
-				}
-			}
-		}
-		else
-		{
-			// Draw Object & endpoint
 		}
 
 		//Draw abilities on the board
@@ -213,6 +153,7 @@ public class GameController
 		}
 
 		enemyController.Update(batch);
+		puzzleController.Update(batch);
 
 		player.checkInput();
 		player.update();
