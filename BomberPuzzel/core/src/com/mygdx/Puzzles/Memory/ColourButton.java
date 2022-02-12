@@ -7,6 +7,7 @@ import com.mygdx.Board.Board;
 
 /**
  * @author Kathryn Hurst
+ * ColourButton is the basis for the colour button entities
  */
 public class ColourButton
 {
@@ -22,8 +23,8 @@ public class ColourButton
 
     /**
      * Constructor for the button class
-     * @param name
-     * @param imageURL is is the URL to the image
+     * @param name is the string colour
+     * @param imageURL is the URL of the image
      * @param board is the game board
      * @param x is the x coordinates
      * @param y is the y coordinates

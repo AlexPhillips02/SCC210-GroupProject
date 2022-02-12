@@ -9,6 +9,7 @@ import com.mygdx.Board.Squares;
 
 /**
  * @author Kathryn Hurst
+ * Order creates and shuffles the buttons, it also controls what happens when the buttons are pressed
  */
 public class Order
 {
@@ -22,11 +23,19 @@ public class Order
     ColourButton[] buttons = new ColourButton[4];
     ColourButton[] sequenceInput = new ColourButton[4];
 
+    /**
+     * Constructor for the order class
+     * @param board is the gameboard
+     * @param Square1 is the random square for the red button to appear at
+     * @param Square2 is the random square for the green button to appear at
+     * @param Square3 is the random square for the blue button to appear at
+     * @param Square4 is the random square for the yellow button to appear at
+     */
     public Order(Board board, Squares Square1, Squares Square2, Squares Square3, Squares Square4)
     {
         this.board = board;
 
-        //Translates grid position to coordinate
+        // Translates squares to grid positions
         int x1 = Square1.getX();
         int y1 = Square1.getY();
 
@@ -59,12 +68,18 @@ public class Order
         Y.Draw(batch);
     }
 
+    /**
+     * // Accessor method for the buttons array
+     * @return the buttons array
+     */
     public ColourButton[] getButtons()
     {
         return buttons;
     }
 
-    // Randomly shuffle the order buttons need to be pressed in
+    /**
+     * Randomly shuffle the order buttons need to be pressed in
+     */
     public void shuffleOrder()
     {
         for(int i = 0; i < buttons.length; i++)
@@ -78,13 +93,18 @@ public class Order
         displayOrder();
     }
 
-    // Display the button sequence on screen
+    /**
+     * Display the correct sequence to press the buttons in
+     */
     public void displayOrder()
     {
         System.out.println("Sequence: " + buttons[0].name + ", " + buttons[1].name + ", " + buttons[2].name + ", " + buttons[3].name + "\n");
     }
 
-    // Add pressed button to sequenceInput array
+    /**
+     * Adds the pressed button to the sequenceInput 
+     * @param button is the button pressed
+     */
     public void add(ColourButton button)
     {
         for(int i = 0; i < sequenceInput.length; i++)
@@ -97,10 +117,11 @@ public class Order
         }
     }
 
-    // Compare the buttons input by the player to the actual sequence
-    public void compareInput(ColourButton button)
+    /**
+     * Compares the order of buttons pressed to the correct order
+     */
+    public void compareInput()
     {
-        
         int match = 0;
         for(int i = 0; i < sequenceInput.length; i++)
         {
@@ -131,13 +152,14 @@ public class Order
     }
     
     /**
-     * What happens when the player presses the button
+     * What happens when the player presses the button:
+     * @param button is the button pressed
     */
     public void Pressed(ColourButton button)
     {
         System.out.println(button.name + " Button Pressed");
         button.setActive(false);
         add(button);
-        compareInput(button);
+        compareInput();
     }
 }
