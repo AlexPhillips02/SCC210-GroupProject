@@ -21,10 +21,8 @@ public class PlayerController
     public PlayerController(Player player)
     {
         this.player = player; 
-        playerHeight = player.getImage().getHeight();
         playerWidth = player.getImage().getWidth();
         playerHeight = 60;
-        playerWidth = 60;
     }
 
     /**
