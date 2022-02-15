@@ -5,18 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;  
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
+
 import com.mygdx.Driver;
-import com.mygdx.GameController;
+
 
 /**
  * @author Alex Chalakov, Lincoln Delhomme
@@ -35,7 +27,7 @@ public class MenuScreen implements Screen {
     
 
     private SpriteBatch batch;
-    private GameController controller;
+
    
     private Texture inActivePlayButton;
     private Texture inActiveExitButton;
@@ -49,7 +41,7 @@ public class MenuScreen implements Screen {
      */
     public MenuScreen(SpriteBatch batch){
         this.batch = batch;
-        controller = new GameController(batch);
+        
         inActivePlayButton = new Texture("core/assets/Screens/Play (Unactive)-1.png.png");
         inActiveExitButton = new Texture("core/assets/Screens/Exit (unactive)-1.png.png");
         activePlayButton = new Texture("core/assets/Screens/Play (Active).png");

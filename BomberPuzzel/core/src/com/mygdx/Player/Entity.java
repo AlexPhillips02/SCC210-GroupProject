@@ -1,7 +1,5 @@
 package com.mygdx.Player;
 
-import javax.lang.model.util.ElementScanner14;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
