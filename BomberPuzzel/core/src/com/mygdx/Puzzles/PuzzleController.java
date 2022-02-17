@@ -3,6 +3,7 @@ package com.mygdx.Puzzles;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.GUI;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Player;
@@ -15,9 +16,10 @@ import com.mygdx.Puzzles.Memory.Order;
  */
 public class PuzzleController
 {
+	private GUI gui;
     private Board board;
     private Player player;
-    private int puzzelType;
+    private int puzzle;
 	private Puzzle puzzleGame;
 
     /**
@@ -25,8 +27,9 @@ public class PuzzleController
      * @param board used to select locations on board
      * @param player used for collision detection on puzzle interaction
      */
-    public PuzzleController(Board board, Player player)
+    public PuzzleController(GUI gui, Board board, Player player)
     {
+		this.gui = gui;
         this.board = board;
         this.player = player;
     }
@@ -37,26 +40,18 @@ public class PuzzleController
     public void SetPuzzle()
 	{
 		Random rand = new Random();
-		puzzelType = rand.nextInt(3);
+		puzzle = rand.nextInt(3);
+		puzzle = 1;
 
-		if(puzzelType == 0)
+		if(puzzle == 0)
 		{
-			// Run memory puzzle
-			System.out.println(puzzelType + " Memory");
-			
-			// Choose 4 Random squares to place buttons on
-			Squares pathSquare1 = board.getRandomPath();
-			Squares pathSquare2 = board.getRandomPath();
-			Squares pathSquare3 = board.getRandomPath();
-			Squares pathSquare4 = board.getRandomPath();
-			// Puzzle set up
-			puzzleGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
-			puzzleGame.createGame();
+			// Run colour match puzzle
+			gui.setPuzzle("Colour Match");
 		}
-		else if(puzzelType == 1)
+		else if(puzzle == 1)
 		{
 			// Run memory puzzle
-			System.out.println(puzzelType + " Memory");
+			gui.setPuzzle("Button Sequence");
 			
 			// Choose 4 Random squares to place buttons on
 			Squares pathSquare1 = board.getRandomPath();
@@ -64,29 +59,15 @@ public class PuzzleController
 			Squares pathSquare3 = board.getRandomPath();
 			Squares pathSquare4 = board.getRandomPath();
 			// Puzzle set up
-			puzzleGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
+			puzzleGame = new Order(gui, board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
 			puzzleGame.createGame();
 		}
 		else
 		{
-			// Run memory puzzle
-			System.out.println(puzzelType + " Memory");
-			
-			// Choose 4 Random squares to place buttons on
-			Squares pathSquare1 = board.getRandomPath();
-			Squares pathSquare2 = board.getRandomPath();
-			Squares pathSquare3 = board.getRandomPath();
-			Squares pathSquare4 = board.getRandomPath();
-			// Puzzle set up
-			puzzleGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
-			puzzleGame.createGame();
+			// Run object puzzle
+			gui.setPuzzle("Object");
 		}
 	}
-
-    public int getPuzzle()
-    {
-        return puzzelType;
-    }
 
     /**
      * Called within GameController to update puzzle pieces
@@ -95,11 +76,11 @@ public class PuzzleController
     public void Update(SpriteBatch batch)
     {
         // Draw puzzles on board
-		if(puzzelType == 0)
+		if(puzzle == 0)
 		{
 			// Draw colour tiles
 		}
-		else if(puzzelType == 1)
+		else if(puzzle == 1)
 		{
 			// Draw buttons
 			puzzleGame.Draw(batch);

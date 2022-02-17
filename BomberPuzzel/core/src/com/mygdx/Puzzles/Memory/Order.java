@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.GUI;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Puzzles.Puzzle;
@@ -22,6 +23,8 @@ public class Order extends Puzzle
     ColourButton[] buttons = new ColourButton[4];
     ColourButton[] sequenceInput = new ColourButton[4];
 
+    String sequence;
+
     /**
      * Constructor for the order class
      * @param board is the gameboard
@@ -30,9 +33,9 @@ public class Order extends Puzzle
      * @param Square3 is the random square for the blue button to appear at
      * @param Square4 is the random square for the yellow button to appear at
      */
-    public Order(Board board, Squares Square1, Squares Square2, Squares Square3, Squares Square4)
+    public Order(GUI gui, Board board, Squares Square1, Squares Square2, Squares Square3, Squares Square4)
     {
-        super(board);
+        super(gui, board);
 
         // Translates squares to grid positions
         int x1 = Square1.getX();
@@ -89,6 +92,7 @@ public class Order extends Puzzle
             buttons[indexSwap] = buttons[i];
             buttons[i] = temp;
         }
+        sequence = buttons[0].name + ", " + buttons[1].name + ", " + buttons[2].name + ", " + buttons[3].name;
         displayOrder();
     }
 
@@ -97,7 +101,8 @@ public class Order extends Puzzle
      */
     public void displayOrder()
     {
-        System.out.println("Sequence: " + buttons[0].name + ", " + buttons[1].name + ", " + buttons[2].name + ", " + buttons[3].name + "\n");
+        System.out.println(sequence);
+        gui.addTempLabel(sequence);
     }
 
     /**

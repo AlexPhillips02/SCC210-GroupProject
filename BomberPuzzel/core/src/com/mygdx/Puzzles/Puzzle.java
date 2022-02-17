@@ -1,6 +1,7 @@
 package com.mygdx.Puzzles;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.GUI;
 import com.mygdx.Board.Board;
 
 /**
@@ -8,11 +9,13 @@ import com.mygdx.Board.Board;
  */
 public class Puzzle 
 {
+    protected GUI gui;
     protected Board board;
     protected boolean winStatus = false;
     
-    public Puzzle(Board board)
+    public Puzzle(GUI gui, Board board)
     {
+        this.gui = gui;
         this.board = board;
     }
 

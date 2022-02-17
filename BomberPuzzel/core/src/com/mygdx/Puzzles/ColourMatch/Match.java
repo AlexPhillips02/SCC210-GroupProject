@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.GUI;
 import com.mygdx.Board.*;
 import com.mygdx.Player.Player;
 import com.mygdx.Puzzles.Puzzle;
@@ -30,8 +31,8 @@ public class Match extends Puzzle
     public static ColourTiles prev;
     public static ColourTiles current;
 
-    public Match(Board board, ArrayList<Rectangle> colourtileRectangles, ArrayList<ColourTiles> cTiles){
-        super(board);
+    public Match(GUI gui, Board board, ArrayList<Rectangle> colourtileRectangles, ArrayList<ColourTiles> cTiles){
+        super(gui, board);
         this.colourtileRectangles = colourtileRectangles;
         this.colourTiles = cTiles;
     }

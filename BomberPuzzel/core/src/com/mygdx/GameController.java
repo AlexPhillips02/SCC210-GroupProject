@@ -73,7 +73,7 @@ public class GameController
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
 		enemyController.CreateEnemies(enemyAmount);
-		puzzleController = new PuzzleController(gameBoard, player);
+		puzzleController = new PuzzleController(gui, gameBoard, player);
 		puzzleController.SetPuzzle();
 		CreateAbilities(abilitiesAmount);
 	}

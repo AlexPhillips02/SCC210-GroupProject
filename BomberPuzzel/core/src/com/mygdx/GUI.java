@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 /**
  * Displays the GUI with text to the user
- * @author Alex Phillips
+ * @author Alex Phillips, Kathryn Hurst
  */
 public class GUI 
 {
@@ -24,10 +24,13 @@ public class GUI
     private float timeCount;
     private int playerLives;
     private String puzzleType;
+    private float start = 0;
+    boolean text = false;
     // Now we create our widgets. Our widgets will be labels, essentially text, that allow us to display Game Information
     private Label timeLabel;
     private Label puzzelLabel;
     private Label livesLabel;
+    private Label displayLabel;
 
     private Label puzzelTypeLabel;
     private Label livesCountLabel;
@@ -37,7 +40,6 @@ public class GUI
     {
         levelTimer = 0;
         playerLives = 1;
-        puzzleType = "BUTTON PRESSY WESSY";
 
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport); // We must create order by creating a table in our stage
@@ -56,6 +58,7 @@ public class GUI
         timeCountLabel = new Label(String.format("%d", levelTimer), labelStyle);
         puzzelTypeLabel = new Label(puzzleType, labelStyle);
         livesCountLabel = new Label(String.format("%d", playerLives), labelStyle);
+        displayLabel = new Label(String.format(""), labelStyle);
 
         table.add(timeLabel).expandX().padTop(10); // This expand X makes everything in the row share the row equally
         table.add(puzzelLabel).expandX().padTop(10);
@@ -65,6 +68,9 @@ public class GUI
         table.add(timeCountLabel).expandX();
         table.add(puzzelTypeLabel).expandX();
         table.add(livesCountLabel).expandX();
+        table.row();
+        table.add();
+        table.add(displayLabel).expandX().padTop(100);
 
         // add table to our stage
         stage.addActor(table);
@@ -86,5 +92,29 @@ public class GUI
             timeCountLabel.setText(String.format("%d", levelTimer));
             timeCount = 0;
         }
+
+        if(levelTimer >= start + 5 && text == true)
+        {
+            removetempLabel();
+        }
+    }
+
+    public void setPuzzle(String puzzle)
+    {
+        puzzelLabel.setText(puzzle);
+    }
+
+    public void addTempLabel(String display)
+    {
+        displayLabel.setText(display);
+        text = true;
+        start = levelTimer;
+    }
+
+    public void removetempLabel()
+    {
+        displayLabel.setText("");
+        text = false;
+        start = 0;
     }
 }
