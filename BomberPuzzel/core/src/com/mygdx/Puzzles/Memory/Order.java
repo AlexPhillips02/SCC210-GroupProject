@@ -101,7 +101,6 @@ public class Order extends Puzzle
      */
     public void displayOrder()
     {
-        System.out.println(sequence);
         gui.addTempLabel(sequence);
     }
 
@@ -131,7 +130,7 @@ public class Order extends Puzzle
         {
             if(sequenceInput[i] != buttons[i] && sequenceInput[i] != null)
             {
-                System.out.println("Not match");
+                gui.addTempLabel("Not match");
                 Arrays.fill(sequenceInput, null);
                 match = 0;
                 displayOrder();
@@ -149,7 +148,7 @@ public class Order extends Puzzle
                 }
                 if(match == 4)
                 {
-                    System.out.println("Sequence complete");
+                    gui.addTempLabel("Sequence complete");
                     winStatus = true;
                 }
             }
@@ -162,7 +161,7 @@ public class Order extends Puzzle
     */
     public void Pressed(ColourButton button)
     {
-        System.out.println(button.name + " Button Pressed");
+        gui.addTempLabel(button.name + " Button Pressed");
         button.setActive(false);
         add(button);
         compareInput();
