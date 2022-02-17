@@ -107,6 +107,12 @@ public class GameController
 		gameBoard.Draw(batch);	//draws gameboard	
 		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
 
+		//If the game has been won
+		if (puzzleController.getWinStatus() == true) 
+		{
+			System.out.println("Puzzle won");
+		}
+
 		//If squares exist where damage should be inflicted
 		if (deathSquares.size() > 0) 
 		{

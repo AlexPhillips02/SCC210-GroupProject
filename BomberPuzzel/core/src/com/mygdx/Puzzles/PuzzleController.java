@@ -17,8 +17,8 @@ public class PuzzleController
 {
     private Board board;
     private Player player;
-    private int puzzle;
-	private Order buttonGame;
+    private int puzzelType;
+	private Puzzle puzzleGame;
 
     /**
      * Loads board and player
@@ -37,17 +37,12 @@ public class PuzzleController
     public void SetPuzzle()
 	{
 		Random rand = new Random();
-		puzzle = rand.nextInt(3);
+		puzzelType = rand.nextInt(3);
 
-		if(puzzle == 0)
-		{
-			// Run colour match puzzle
-			System.out.println(puzzle + " ColourMatch");
-		}
-		else if(puzzle == 1)
+		if(puzzelType == 0)
 		{
 			// Run memory puzzle
-			System.out.println(puzzle + " Memory");
+			System.out.println(puzzelType + " Memory");
 			
 			// Choose 4 Random squares to place buttons on
 			Squares pathSquare1 = board.getRandomPath();
@@ -55,19 +50,42 @@ public class PuzzleController
 			Squares pathSquare3 = board.getRandomPath();
 			Squares pathSquare4 = board.getRandomPath();
 			// Puzzle set up
-			buttonGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
-			buttonGame.shuffleOrder();
+			puzzleGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
+			puzzleGame.createGame();
+		}
+		else if(puzzelType == 1)
+		{
+			// Run memory puzzle
+			System.out.println(puzzelType + " Memory");
+			
+			// Choose 4 Random squares to place buttons on
+			Squares pathSquare1 = board.getRandomPath();
+			Squares pathSquare2 = board.getRandomPath();
+			Squares pathSquare3 = board.getRandomPath();
+			Squares pathSquare4 = board.getRandomPath();
+			// Puzzle set up
+			puzzleGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
+			puzzleGame.createGame();
 		}
 		else
 		{
-			// run object puzzle
-			System.out.println(puzzle + " Object");
+			// Run memory puzzle
+			System.out.println(puzzelType + " Memory");
+			
+			// Choose 4 Random squares to place buttons on
+			Squares pathSquare1 = board.getRandomPath();
+			Squares pathSquare2 = board.getRandomPath();
+			Squares pathSquare3 = board.getRandomPath();
+			Squares pathSquare4 = board.getRandomPath();
+			// Puzzle set up
+			puzzleGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
+			puzzleGame.createGame();
 		}
 	}
 
     public int getPuzzle()
     {
-        return puzzle;
+        return puzzelType;
     }
 
     /**
@@ -77,15 +95,15 @@ public class PuzzleController
     public void Update(SpriteBatch batch)
     {
         // Draw puzzles on board
-		if(puzzle == 0)
+		if(puzzelType == 0)
 		{
 			// Draw colour tiles
 		}
-		else if(puzzle == 1)
+		else if(puzzelType == 1)
 		{
 			// Draw buttons
-			buttonGame.Draw(batch);
-			ColourButton[] buttons = buttonGame.getButtons();
+			puzzleGame.Draw(batch);
+			ColourButton[] buttons = ((Order) puzzleGame).getButtons();
 			
 			// Button Collision detection
 			for(int i = 0; i < buttons.length; i++)
@@ -95,7 +113,7 @@ public class PuzzleController
 					if(buttons[i].active())
 					{
 						buttons[i].setActive(false);
-						buttonGame.Pressed(buttons[i]);
+						((Order) puzzleGame).Pressed(buttons[i]);
 					}
 				}
 			}
@@ -105,4 +123,9 @@ public class PuzzleController
 			// Draw Object & endpoint
 		}
     }
+
+	public boolean getWinStatus()
+	{
+		return puzzleGame.winStatus;
+	}
 }

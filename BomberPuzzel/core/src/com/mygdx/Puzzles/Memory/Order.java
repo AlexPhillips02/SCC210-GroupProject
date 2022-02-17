@@ -6,15 +6,14 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
+import com.mygdx.Puzzles.Puzzle;
 
 /**
  * @author Kathryn Hurst
  * Order creates and shuffles the buttons, it also controls what happens when the buttons are pressed
  */
-public class Order
+public class Order extends Puzzle
 {
-    Board board;
-
     ColourButton R;
     ColourButton G;
     ColourButton B;
@@ -33,7 +32,7 @@ public class Order
      */
     public Order(Board board, Squares Square1, Squares Square2, Squares Square3, Squares Square4)
     {
-        this.board = board;
+        super(board);
 
         // Translates squares to grid positions
         int x1 = Square1.getX();
@@ -80,7 +79,7 @@ public class Order
     /**
      * Randomly shuffle the order buttons need to be pressed in
      */
-    public void shuffleOrder()
+    public void createGame()
     {
         for(int i = 0; i < buttons.length; i++)
         {
@@ -146,6 +145,7 @@ public class Order
                 if(match == 4)
                 {
                     System.out.println("Sequence complete");
+                    winStatus = true;
                 }
             }
         }
