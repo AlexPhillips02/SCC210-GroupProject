@@ -1,0 +1,364 @@
+package com.mygdx;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.Abilities.*;
+import com.mygdx.Board.Board;
+import com.mygdx.Board.Squares;
+import com.mygdx.Enemies.EnemyController;
+import com.mygdx.GameScreens.GameOverScreen;
+import com.mygdx.Player.Player;
+import com.mygdx.Puzzles.ColourMatch.ColourTiles;
+import com.mygdx.Puzzles.ColourMatch.Match;
+import com.mygdx.Puzzles.Memory.ColourButton;
+import com.mygdx.Puzzles.Memory.Order;
+
+/**
+ * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
+ * Controls the games will create the board / player / enemies
+ * Creates and controls the camera
+ */
+public class GameController
+{
+	//private Boolean winStatus;
+    private Board gameBoard;
+	private Player player;
+	private EnemyController enemyController;
+	private ArrayList<Ability> boardAbilities;	//Abilities on the board
+	private ArrayList<Ability> activeAbilities;	//Abilities the player has picked up and currently using
+	public ArrayList<Rectangle> colourTileRectangles = new ArrayList<Rectangle>();
+	public ArrayList<ColourTiles> colourTiles = new ArrayList<ColourTiles>();
+	private SpriteBatch batch;
+	private OrthographicCamera camera;
+	private Viewport gamePort;
+	private int puzzle;
+	private Order buttonGame;
+	private Match match;
+
+	/**
+	 * Creates the camera
+	 * @param batch
+	 */
+    public GameController(SpriteBatch batch)
+    {
+        this.batch = batch;
+		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		//camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
+		camera = new OrthographicCamera();
+		gamePort = new FitViewport(928, 480, camera);
+
+		CreateLevel(20, 10, 5);
+    }
+
+	/**
+	 * Creates the level
+	 * @param percentageOfDestructableWalls Percentage of the map to be filled with walls (0 - 100)
+	 * @param enemyAmount amount of enemies that are going to be spawned on the map
+	 * @param abilitiesAmount amount of abilities that are going to be spawned on the map
+	 */
+	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount, int abilitiesAmount)
+	{
+		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
+		player = new Player(gameBoard, 65, 65, 150);
+		enemyController = new EnemyController(gameBoard, player);
+		boardAbilities = new ArrayList<Ability>();
+		activeAbilities = new ArrayList<Ability>();
+		enemyController.CreateEnemies(enemyAmount);
+		CreateAbilities(abilitiesAmount);
+		SetLevel();
+	}
+
+	public void SetLevel()
+	{
+		int colour = -1;
+		puzzle = 0;//rand.nextInt(3);
+
+		if(puzzle == 0)
+		{
+			match = new Match(gameBoard, colourTileRectangles, colourTiles);
+			// Run colour match puzzle
+			System.out.println(puzzle + " ColourMatch");
+
+			for(int i = 0; i<6; i++){
+				if(i % 2 == 0)
+				{
+					colour++;
+				}
+
+				Squares pathSquare = gameBoard.getRandomPath();
+				match.addColourTiles(pathSquare, colour);
+				System.out.print(colour);
+			}
+
+		}
+
+		else if(puzzle == 1)
+		{
+			// Run memory puzzle
+			System.out.println(puzzle + " Memory");
+			
+			// Choose 4 Random squares to place buttons on
+			Squares pathSquare1 = gameBoard.getRandomPath();
+			Squares pathSquare2 = gameBoard.getRandomPath();
+			Squares pathSquare3 = gameBoard.getRandomPath();
+			Squares pathSquare4 = gameBoard.getRandomPath();
+			// Puzzle set up
+			buttonGame = new Order(gameBoard, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
+			buttonGame.shuffleOrder();
+		}
+		else
+		{
+			// run object puzzle
+			System.out.println(puzzle + " Object");
+		}
+	}
+
+	/**
+	 * Creates an amount of abilities and spawns them randomly thought the map
+	 * @param amount Amount of abilities to spawn
+	 */
+	public void CreateAbilities(int amount)
+	{
+		for (int i = 0; i < amount; i++)
+		{
+			Squares pathSquare = gameBoard.getRandomPath();
+
+			//Translates grid position to coordinate
+			int xPosition = pathSquare.getX();
+			int yPosition = pathSquare.getY();
+
+			//Creates the abilities and adds them to the list
+			Ability newAbility = getRandomAbility(xPosition, yPosition);
+			boardAbilities.add(newAbility);
+		}
+	}
+
+	/**
+	 * Continuosly sends updates looking for player movement
+	 * Also calls the function to draw the player and the board
+	 */
+	public void Update() 
+	{
+		gameBoard.Draw(batch);	//draws gameboard	
+		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
+
+		//If squares exist where damage should be inflicted
+		if (deathSquares.size() > 0) 
+		{
+			checkForSquareCollision(deathSquares);
+			gameBoard.resetDeathSquares();
+		}
+
+		// Draw puzzles on board
+		if(puzzle == 0)
+		{
+			match.Draw(batch);
+
+			for(int i = 0; i<colourTiles.size(); i++)
+			{
+				if(colourTiles.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{	
+					
+					if(colourTiles.get(i).active == true){	
+					System.out.println("PLayer has stepped on a " + colourTiles.get(i).getColour(colourTiles.get(i).getselectedColourNumber()) +" Tile");
+					Match.setCurrent(colourTiles.get(i));
+				}
+				
+				colourTiles.get(i).setActive();
+				}			
+			}
+		}
+		
+
+		else if(puzzle == 1)
+		{
+			// Draw buttons
+			buttonGame.Draw(batch);
+			ColourButton[] buttons = buttonGame.getButtons();
+			
+			// Button Collision detection
+			for(int i = 0; i < buttons.length; i++)
+			{
+				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{
+					System.out.println(buttons[i].getCollisionRectangle());
+					System.out.println(player.getCollisionRectangle());
+					System.out.println("Button Pressed");
+				}
+			}
+		}
+		else
+		{
+			// Draw Object & endpoint
+		}
+
+		//Draw abilities on the board
+		if (boardAbilities != null)
+		{
+			for(int i = 0; i < boardAbilities.size(); i++ )
+			{	
+				Ability ability = boardAbilities.get(i);
+				ability.Draw(batch);
+
+				//If the player collides with an ability set the ability as active and add to active list
+				//Remove from the board abilities (No longer needs to be drawn)
+				if (ability.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{
+					ability.setActive();
+					activeAbilities.add(ability);
+					boardAbilities.remove(i);
+					i--;
+				}
+			}
+		}
+
+		//Loops through active abilites
+		if (activeAbilities != null) 
+		{
+			for(int i = 0; i < activeAbilities.size(); i++ )
+			{	
+				Ability ability = activeAbilities.get(i);
+
+				ability.update();
+					
+				//If the ability has deactivated (Remove from active ability list)
+				if (ability.isDeactivated()) 
+				{
+					activeAbilities.remove(i);
+					i--;
+				}
+			}
+		}
+
+		enemyController.Update(batch);
+
+		player.checkInput();
+		player.update();
+		player.Draw(batch);		//Draws player
+
+		if (player.isAlive() == false) 
+		{
+			System.out.println("Player is dead.");
+			System.out.println("Load game over screen from game controller");
+            //Stop the game from playing
+            //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
+		}
+		
+		moveCamera();
+	}
+
+	/**
+	 * A method that gets a random ability from the possible powerups and returns the ability
+	 * @param yPosition X coordinate of the ability
+	 * @param xPosition Y coordinate of the ability
+	 * @return The random ability
+	 */
+	public Ability getRandomAbility(int xPosition, int yPosition)
+	{
+		Random rand = new Random();
+		int randomIndex = rand.nextInt(6);
+		Ability newAbility;
+
+		if (randomIndex == 0) {
+			newAbility = new BombIncrement(gameBoard, xPosition, yPosition, player);
+		}
+		else if (randomIndex == 1)
+		{
+			newAbility = new BombRange(gameBoard, xPosition, yPosition, player);
+		}
+		else if (randomIndex == 2)
+		{
+			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
+		}
+		else if (randomIndex == 3)
+		{
+			newAbility = new SpeedDecrease(gameBoard, xPosition, yPosition, player);
+		}
+		else if (randomIndex == 4)
+		{
+			newAbility = new HealthIncrease(gameBoard, xPosition, yPosition, player);
+		}
+		else
+		{
+			newAbility = new Invincibility(gameBoard, xPosition, yPosition, player);
+		}
+
+		newAbility.setX(xPosition + (newAbility.getWidth()) / 2);
+		newAbility.setY(yPosition + (newAbility.getHeight() / 2));
+		return newAbility;
+	}
+
+	/**
+	 * Method that ensures that if there is a collision between an entity and a death square, the entity would take damage
+	 * @param deathSquares Squares that should inflict damage (E.g when a bomb exploads)
+	 */
+	public void checkForSquareCollision(ArrayList<Rectangle> deathSquares)
+	{
+		//Loops through all the death sqaures
+		for (Rectangle deathSquare : deathSquares) 
+		{
+			//If the player is in contact with a death square
+			if(deathSquare.overlaps(player.getCollisionRectangle())) 
+			{
+				player.reduceHealth();
+			}
+
+			enemyController.checkForCollision(deathSquare);
+		}
+	}
+
+	/**
+	 * Moves the camera along with the player movement
+	 */
+	public void moveCamera()
+	{
+		float startX = camera.viewportWidth / 2;
+		float startY = camera.viewportHeight / 2;
+		float width = Gdx.graphics.getWidth();
+		float height = Gdx.graphics.getHeight();
+
+		//Updates camera position with player
+		batch.setProjectionMatrix(camera.combined);
+		camera.position.set((player.getX() + player.getWidth() / 2), (player.getY() + player.getHeight() / 2), 0);
+
+		//Left wall and bottom wall (Prevents camera from showing past the wall)
+		if((player.getX() + player.getWidth() / 2) < startX)
+		{
+			camera.position.x = startX;
+		}  
+		if((player.getY() + player.getHeight() / 2) < startY)
+		{
+			camera.position.y = startY;
+		}
+
+		//Right wall and top wall
+		if((player.getX() + player.getWidth() / 2) > (width + startX))
+		{
+			camera.position.x = (width + startX);
+		} 
+		if((player.getY() + player.getHeight() / 2) > (height + startY))
+		{
+			camera.position.y = (height + startY);
+		}
+
+		camera.update();
+	}
+
+	/**
+	 * Window resizing method.
+	 * @param screenWidth width of the screen.
+	 * @param screenHeight height of the screen.
+	 */
+	public void resize(int screenWidth, int screenHeight)
+	{
+		gamePort.update(screenWidth, screenHeight);
+	}
+}
