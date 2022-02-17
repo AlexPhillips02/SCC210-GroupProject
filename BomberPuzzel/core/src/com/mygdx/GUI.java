@@ -95,15 +95,23 @@ public class GUI
 
         if(levelTimer >= start + 5 && text == true)
         {
-            removetempLabel();
+            removeTempLabel();
         }
     }
 
+    /**
+     * Set the puzzle label
+     * @param puzzle is the puzzle type
+     */
     public void setPuzzle(String puzzle)
     {
         puzzelLabel.setText(puzzle);
     }
 
+    /**
+     * Change the displayLabel value
+     * @param display the new value
+     */
     public void addTempLabel(String display)
     {
         displayLabel.setText(display);
@@ -111,7 +119,10 @@ public class GUI
         start = levelTimer;
     }
 
-    public void removetempLabel()
+    /**
+     * Clear displayLabel
+     */
+    public void removeTempLabel()
     {
         displayLabel.setText("");
         text = false;
