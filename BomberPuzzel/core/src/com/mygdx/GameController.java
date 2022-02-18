@@ -53,7 +53,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 10, 5);
+		CreateLevel(1, 10, 5);
     }
 
 	/**

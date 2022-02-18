@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
+import com.mygdx.Puzzles.ColourButton;
 import com.mygdx.Puzzles.Puzzle;
 
 /**
@@ -33,33 +34,9 @@ public class Order extends Puzzle
      * @param Square3 is the random square for the blue button to appear at
      * @param Square4 is the random square for the yellow button to appear at
      */
-    public Order(GUI gui, Board board, Squares Square1, Squares Square2, Squares Square3, Squares Square4)
+    public Order(GUI gui, Board board)
     {
         super(gui, board);
-
-        // Translates squares to grid positions
-        int x1 = Square1.getX();
-        int y1 = Square1.getY();
-
-        int x2 = Square2.getX();
-        int y2 = Square2.getY();
-
-        int x3 = Square3.getX();
-        int y3 = Square3.getY();
-
-        int x4 = Square4.getX();
-        int y4 = Square4.getY();
-
-        // Create buttons
-        R = new ColourButton("Red", "core/assets/Buttons/RedButton.png", board, x1, y1);
-        G = new ColourButton("Green", "core/assets/Buttons/GreenButton.png", board, x2, y2);
-        B = new ColourButton("Blue", "core/assets/Buttons/BlueButton.png", board, x3, y3);
-        Y = new ColourButton("Yellow", "core/assets/Buttons/YellowButton.png", board, x4, y4);
-
-        buttons[0] = R;
-        buttons[1] = G;
-        buttons[2] = B;
-        buttons[3] = Y;
     }
 
     public void Draw(SpriteBatch batch)
@@ -84,6 +61,36 @@ public class Order extends Puzzle
      */
     public void createGame()
     {
+        // Choose 4 Random squares to place buttons on
+        Squares square1 = board.getRandomPath();
+        Squares square2 = board.getRandomPath();
+        Squares square3 = board.getRandomPath();
+        Squares square4 = board.getRandomPath();
+
+        // Translates squares to grid positions
+        int x1 = square1.getX();
+        int y1 = square1.getY();
+
+        int x2 = square2.getX();
+        int y2 = square2.getY();
+
+        int x3 = square3.getX();
+        int y3 = square3.getY();
+
+        int x4 = square4.getX();
+        int y4 = square4.getY();
+
+        // Create buttons
+        R = new ColourButton("Red", "core/assets/Buttons/RedButton.png", board, x1, y1);
+        G = new ColourButton("Green", "core/assets/Buttons/GreenButton.png", board, x2, y2);
+        B = new ColourButton("Blue", "core/assets/Buttons/BlueButton.png", board, x3, y3);
+        Y = new ColourButton("Yellow", "core/assets/Buttons/YellowButton.png", board, x4, y4);
+
+        buttons[0] = R;
+        buttons[1] = G;
+        buttons[2] = B;
+        buttons[3] = Y;
+
         for(int i = 0; i < buttons.length; i++)
         {
             Random rand = new Random();
@@ -92,7 +99,8 @@ public class Order extends Puzzle
             buttons[indexSwap] = buttons[i];
             buttons[i] = temp;
         }
-        sequence = buttons[0].name + ", " + buttons[1].name + ", " + buttons[2].name + ", " + buttons[3].name;
+
+        sequence = buttons[0].getColour() + ", " + buttons[1].getColour() + ", " + buttons[2].getColour() + ", " + buttons[3].getColour();
         displayOrder();
     }
 
@@ -161,7 +169,7 @@ public class Order extends Puzzle
     */
     public void Pressed(ColourButton button)
     {
-        gui.addTempLabel(button.name + " Button Pressed");
+        gui.addTempLabel(button.getColour() + " Button Pressed");
         button.setActive(false);
         add(button);
         compareInput();

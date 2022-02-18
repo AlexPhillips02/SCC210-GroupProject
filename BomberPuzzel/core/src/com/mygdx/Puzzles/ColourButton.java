@@ -1,4 +1,4 @@
-package com.mygdx.Puzzles.Memory;
+package com.mygdx.Puzzles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,7 +11,7 @@ import com.mygdx.Board.Board;
  */
 public class ColourButton
 {
-    protected String name;
+    protected String colour;
     protected Texture defaultImage;
     protected float x;
     protected float y;
@@ -23,15 +23,15 @@ public class ColourButton
 
     /**
      * Constructor for the button class
-     * @param name is the string colour
+     * @param colour is the string colour
      * @param imageURL is the URL of the image
      * @param board is the game board
      * @param x is the x coordinates
      * @param y is the y coordinates
      */
-    public ColourButton(String name, String imageURL, Board board, float x, float y)
+    public ColourButton(String colour, String imageURL, Board board, float x, float y)
     {
-        this.name = name;
+        this.colour = colour;
         this.defaultImage = new Texture(imageURL);
         this.board = board;
         this.x = x;
@@ -99,5 +99,9 @@ public class ColourButton
     public boolean active()
     {
         return active;
+    }
+
+    public String getColour() {
+        return colour;
     }
 }

@@ -1,15 +1,11 @@
 package com.mygdx.Puzzles.ColourMatch;
 
 import java.util.ArrayList;
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.GUI;
 import com.mygdx.Board.*;
-import com.mygdx.Player.Player;
+import com.mygdx.Puzzles.ColourButton;
 import com.mygdx.Puzzles.Puzzle;
-import com.mygdx.TileTypes.*;
 
 
 /*
@@ -22,63 +18,86 @@ the colours will reset and the Player will have to start over.
 
 public class Match extends Puzzle
 {
-    ColourTiles selected_tile;
-    ArrayList<Rectangle> colourtileRectangles = new ArrayList<Rectangle>();
+    private ArrayList<ColourButton> buttons = new ArrayList<>();
+    
+    public ColourButton prev;
+    public ColourButton current;
 
-    private static ArrayList<ColourTiles> colourTiles = new ArrayList<ColourTiles>();
-    public static int count = 0; 
-    public static boolean hasMatched = false;
-    public static ColourTiles prev;
-    public static ColourTiles current;
-
-    public Match(GUI gui, Board board, ArrayList<Rectangle> colourtileRectangles, ArrayList<ColourTiles> cTiles){
+    public Match(GUI gui, Board board){
         super(gui, board);
-        this.colourtileRectangles = colourtileRectangles;
-        this.colourTiles = cTiles;
     }
 
-    public void addColourTiles(Squares pathSquare, int colour){
+    public void createGame()
+    {
+        for(int i = 0; i< 8; i++)
+        {
+            Squares pathSquare = board.getRandomPath();
+            addColourTiles(pathSquare, i);
+        }
+    }
+
+    public void addColourTiles(Squares pathSquare, int i)
+    {
         int x = pathSquare.getX();
         int y = pathSquare.getY();
 
-        selected_tile = new ColourTiles(colour, board, x, y);
-        colourTiles.add(selected_tile);
-        colourtileRectangles.add(selected_tile.getCollisionRectangle());
+        ColourButton temp;
+
+        if(i < 2)
+        {
+            temp = new ColourButton("Yellow", "core/assets/Buttons/YellowButton.png", board, x, y);
+        }
+        else if(i < 4)
+        {
+            temp = new ColourButton("Blue", "core/assets/Buttons/BlueButton.png", board, x, y);
+        }
+        else if(i < 6)
+        {
+            temp = new ColourButton("Green", "core/assets/Buttons/GreenButton.png", board, x, y);
+        }
+        else
+        {
+            temp = new ColourButton("Red", "core/assets/Buttons/RedButton.png", board, x, y);
+        }
+        
+        buttons.add(temp);
     }
 
-    public void Draw(SpriteBatch batch){
-        for(int i = 0; i<colourTiles.size(); i++)
+    public void Draw(SpriteBatch batch)
+    {
+        for(int i = 0; i< buttons.size(); i++)
         {
-            colourTiles.get(i).Draw(batch);
+            buttons.get(i).Draw(batch);
         }    
     }
 
-    public static void setCurrent(ColourTiles current_tile){
+    public void setCurrent(ColourButton newCurrent)
+    {
         prev = current;
-        current = current_tile;
+        current = newCurrent;
+        current.setActive(false);
         
         if(prev != null)
         {
-            System.out.println("pevious Coloured Tile number =" + prev.getselectedColourNumber());
-            System.out.println("current Coloured TIle number =" + current.getselectedColourNumber());
-            if(isMatch(prev, current) == true) 
+            if(prev.getColour().equals(current.getColour())) 
             {
-                colourTiles.remove(prev);
-                colourTiles.remove(current);
-            } else {
-                System.out.println("NO MATCH");
+                buttons.remove(prev);
+                buttons.remove(current);
+
+                if(buttons.size() <= 0) 
+                {
+                    winStatus = true;
+                }
+            } 
+            else 
+            {
+                prev.setActive(true);
             }
         }     
     }
 
-
-    public static boolean isMatch(ColourTiles prev, ColourTiles current) 
+    public ArrayList<ColourButton> getButtons()
     {
-        if(prev.getselectedColourNumber() == current.getselectedColourNumber())
-        {
-            return true;
-        } else {
-            return false; 
-        }
+        return buttons;
     }
 }
