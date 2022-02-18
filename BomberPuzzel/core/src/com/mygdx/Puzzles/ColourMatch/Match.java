@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;
 import com.mygdx.Board.*;
-import com.mygdx.Puzzles.ColourButton;
+import com.mygdx.Puzzles.Buttons.BlueButton;
+import com.mygdx.Puzzles.Buttons.ColourButton;
+import com.mygdx.Puzzles.Buttons.GreenButton;
+import com.mygdx.Puzzles.Buttons.RedButton;
+import com.mygdx.Puzzles.Buttons.YellowButton;
 import com.mygdx.Puzzles.Puzzle;
 
 
@@ -45,19 +49,19 @@ public class Match extends Puzzle
 
         if(i < 2)
         {
-            temp = new ColourButton("Yellow", "core/assets/Buttons/YellowButton.png", board, x, y);
+            temp = new YellowButton(board, x, y);
         }
         else if(i < 4)
         {
-            temp = new ColourButton("Blue", "core/assets/Buttons/BlueButton.png", board, x, y);
+            temp = new BlueButton(board, x, y);
         }
         else if(i < 6)
         {
-            temp = new ColourButton("Green", "core/assets/Buttons/GreenButton.png", board, x, y);
+            temp = new GreenButton(board, x, y);
         }
         else
         {
-            temp = new ColourButton("Red", "core/assets/Buttons/RedButton.png", board, x, y);
+            temp = new RedButton(board, x, y);
         }
         
         buttons.add(temp);

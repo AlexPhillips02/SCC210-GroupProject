@@ -7,7 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
-import com.mygdx.Puzzles.ColourButton;
+import com.mygdx.Puzzles.Buttons.BlueButton;
+import com.mygdx.Puzzles.Buttons.ColourButton;
+import com.mygdx.Puzzles.Buttons.GreenButton;
+import com.mygdx.Puzzles.Buttons.RedButton;
+import com.mygdx.Puzzles.Buttons.YellowButton;
 import com.mygdx.Puzzles.Puzzle;
 
 /**
@@ -81,10 +85,10 @@ public class Order extends Puzzle
         int y4 = square4.getY();
 
         // Create buttons
-        R = new ColourButton("Red", "core/assets/Buttons/RedButton.png", board, x1, y1);
-        G = new ColourButton("Green", "core/assets/Buttons/GreenButton.png", board, x2, y2);
-        B = new ColourButton("Blue", "core/assets/Buttons/BlueButton.png", board, x3, y3);
-        Y = new ColourButton("Yellow", "core/assets/Buttons/YellowButton.png", board, x4, y4);
+        R = new RedButton(board, x1, y1);
+        G = new GreenButton(board, x2, y2);
+        B = new BlueButton(board, x3, y3);
+        Y = new YellowButton(board, x4, y4);
 
         buttons[0] = R;
         buttons[1] = G;

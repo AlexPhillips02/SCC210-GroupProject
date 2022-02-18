@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;
 import com.mygdx.Board.Board;
 import com.mygdx.Player.Player;
+import com.mygdx.Puzzles.Buttons.ColourButton;
 import com.mygdx.Puzzles.ColourMatch.Match;
 import com.mygdx.Puzzles.Memory.Order;
 
@@ -81,7 +82,7 @@ public class PuzzleController
 			{
 				if(buttons.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{	
-					if(buttons.get(i).active)
+					if(buttons.get(i).getActiveStatus())
 					{	
 						((Match)puzzleGame).setCurrent(buttons.get(i));
 						i = 0;
@@ -100,7 +101,7 @@ public class PuzzleController
 			{
 				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{
-					if(buttons[i].active())
+					if(buttons[i].getActiveStatus())
 					{
 						buttons[i].setActive(false);
 						((Order) puzzleGame).Pressed(buttons[i]);

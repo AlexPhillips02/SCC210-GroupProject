@@ -1,4 +1,4 @@
-package com.mygdx.Puzzles;
+package com.mygdx.Puzzles.Buttons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,10 +6,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 
 /**
- * @author Kathryn Hurst
+ * @author Kathryn Hurst, Alex Phillips
  * ColourButton is the basis for the colour button entities
  */
-public class ColourButton
+public abstract class ColourButton
 {
     protected String colour;
     protected Texture defaultImage;
@@ -23,15 +23,13 @@ public class ColourButton
 
     /**
      * Constructor for the button class
-     * @param colour is the string colour
-     * @param imageURL is the URL of the image
      * @param board is the game board
+     * @param imageURL is the URL of the image
      * @param x is the x coordinates
      * @param y is the y coordinates
      */
-    public ColourButton(String colour, String imageURL, Board board, float x, float y)
+    public ColourButton(Board board, String imageURL, float x, float y)
     {
-        this.colour = colour;
         this.defaultImage = new Texture(imageURL);
         this.board = board;
         this.x = x;
@@ -96,7 +94,7 @@ public class ColourButton
         active = TF;
     }
     
-    public boolean active()
+    public boolean getActiveStatus()
     {
         return active;
     }
