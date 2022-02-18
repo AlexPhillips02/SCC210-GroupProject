@@ -17,7 +17,7 @@ public class HealthIncrease extends Ability { //also deemed as SHIELD in the spe
      * @param player   the player which gets the ability.
      */
     public HealthIncrease(Board board, float x, float y, Player player) {
-        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Powerups/HealthInc.png", board, x, y, player);
+        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/HealthInc.png", board, x, y, player);
     }
 
     public void ActivateAbility()

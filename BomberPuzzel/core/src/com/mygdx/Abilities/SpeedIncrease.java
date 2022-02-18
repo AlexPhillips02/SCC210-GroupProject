@@ -17,8 +17,7 @@ public class SpeedIncrease extends Ability{
      * @param player the player which gets the ability.
      */
     public SpeedIncrease(Board board, float x, float y, Player player) {
-        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Powerups/SpeedPowerup.png", board, x, y, player);
-        //player.setMovementSpeed(-0.25F); THIS IS WHAT WAS CAUSING THE PLAYER TO NOT MOVE WHEN IT SPAWNED. WHY WOULD YOU SET IT TO A NEGATIVE NUMBER YOU DUMMY
+        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/SpeedPowerup.png", board, x, y, player);
     }
 
     public void ActivateAbility() 

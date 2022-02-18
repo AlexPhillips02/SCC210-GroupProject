@@ -80,7 +80,7 @@ public class WinScreen implements Screen {
         table.setPosition(0, Gdx.graphics.getHeight()); //setting position
 
         //introducing the play button
-        startOverButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("core/assets/Screens/PuzzleBomber.png")))));
+        startOverButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("Screens/PuzzleBomber.png")))));
         startOverButton.addListener(new ClickListener(){
 
             public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
@@ -99,7 +99,7 @@ public class WinScreen implements Screen {
 
         //introducing our background and aligning it
         batch = new SpriteBatch();
-        sprite = new Sprite(new Texture(Gdx.files.internal("core/assets/Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg")));
+        sprite = new Sprite(new Texture(Gdx.files.internal("Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg")));
         sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         Gdx.input.setInputProcessor(stage);

@@ -18,7 +18,7 @@ public class Player extends Entity
 
     public Player(Board board, float x, float y, float movementSpeed)
     {
-        super("core/assets/Bomberman/BombermanDefault.png" , board, x, y, movementSpeed);
+        super("Bomberman/BombermanDefault.png" , board, x, y, movementSpeed);
         createAnimations();
 
         //providing a frame for the player with characteristics including bomb stash
@@ -40,7 +40,7 @@ public class Player extends Entity
     {
         //Walking up (Back of player)
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        Texture bombermanBack = new Texture("core/assets/Bomberman/BombermanBack.png");
+        Texture bombermanBack = new Texture("Bomberman/BombermanBack.png");
 
         for (int i = 0; i < 2; i++) 
         {
@@ -52,7 +52,7 @@ public class Player extends Entity
         frames.clear();
 
         //Walking Down (Front of player)
-        Texture bombermanFront = new Texture("core/assets/Bomberman/BombermanFront.png");
+        Texture bombermanFront = new Texture("Bomberman/BombermanFront.png");
         for (int i = 0; i < 2; i++) 
         {
             frames.add(new TextureRegion(bombermanFront, 52 * i, 0, 52, 90));
@@ -66,7 +66,7 @@ public class Player extends Entity
 
         //Standing Animation
 
-        Texture bombermanStanding = new Texture("core/assets/Bomberman/BombermanStanding.png");
+        Texture bombermanStanding = new Texture("Bomberman/BombermanStanding.png");
         for (int i = 0; i < 2; i++) 
         {
             frames.add(new TextureRegion(bombermanStanding, 52 * i, 0, 52, 90));
