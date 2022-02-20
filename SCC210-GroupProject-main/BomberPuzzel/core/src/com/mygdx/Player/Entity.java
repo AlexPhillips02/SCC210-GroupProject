@@ -16,7 +16,6 @@ import com.mygdx.TileTypes.Path;
  */
 public abstract class Entity 
 {
-    protected Texture defaultImage;
     protected float x;
     protected float y;
 
@@ -25,7 +24,9 @@ public abstract class Entity
     protected Board board;    
     protected Rectangle collisionRectangle;
 
+    protected Texture defaultImage = null;
     protected Animation<TextureRegion> currentAnimation;
+    protected Animation<TextureRegion> standingAnimation;
     protected Animation<TextureRegion> walkDown;
     protected Animation<TextureRegion> walkUp;
     protected Animation<TextureRegion> walkLeft;
@@ -47,7 +48,11 @@ public abstract class Entity
      */
     public Entity(String imageURL, Board board, float x, float y, float movementSpeed)
     {
-        defaultImage = new Texture(imageURL);
+        if (imageURL != null) 
+        {
+            defaultImage = new Texture(imageURL);   
+        }
+
         this.board = board;
         this.x = x;
         this.y = y;
@@ -89,7 +94,14 @@ public abstract class Entity
             break;
         
             default:
-                setAnimation(null);
+                if (standingAnimation != null) 
+                {
+                    setAnimation(standingAnimation);    
+                }
+                else
+                {
+                    setAnimation(null);
+                }
             break;
         }
     }

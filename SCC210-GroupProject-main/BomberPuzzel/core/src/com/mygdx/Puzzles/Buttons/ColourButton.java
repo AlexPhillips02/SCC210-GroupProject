@@ -1,4 +1,4 @@
-package com.mygdx.Puzzles.Memory;
+package com.mygdx.Puzzles.Buttons;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,11 +6,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 
 /**
- * @author Kathryn Hurst
+ * @author Kathryn Hurst, Alex Phillips
+ * ColourButton is the basis for the colour button entities
  */
-public class ColourButton
+public abstract class ColourButton
 {
-    protected String name;
+    protected String colour;
     protected Texture defaultImage;
     protected float x;
     protected float y;
@@ -18,17 +19,17 @@ public class ColourButton
     protected Board board;    
     protected Rectangle collisionRectangle;
 
+    protected boolean active = true;
+
     /**
      * Constructor for the button class
-     * @param name
-     * @param imageURL is is the URL to the image
      * @param board is the game board
+     * @param imageURL is the URL of the image
      * @param x is the x coordinates
      * @param y is the y coordinates
      */
-    public ColourButton(String name, String imageURL, Board board, float x, float y)
+    public ColourButton(Board board, String imageURL, float x, float y)
     {
-        this.name = name;
         this.defaultImage = new Texture(imageURL);
         this.board = board;
         this.x = x;
@@ -36,12 +37,6 @@ public class ColourButton
         
         collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), defaultImage.getHeight());
     }
-
-    /**
-     * What happens when the player presses the button
-    */
-    public void buttonPressed()
-    {}
 
     /**
      * Draws the entity on the board.
@@ -92,5 +87,19 @@ public class ColourButton
     public Rectangle getCollisionRectangle()
     {
         return collisionRectangle;
+    }
+
+    public void setActive(boolean TF)
+    {
+        active = TF;
+    }
+    
+    public boolean getActiveStatus()
+    {
+        return active;
+    }
+
+    public String getColour() {
+        return colour;
     }
 }

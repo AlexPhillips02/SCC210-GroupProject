@@ -17,7 +17,7 @@ public class Invincibility extends Ability {
      * @param player   the player which gets the ability.
      */
     public Invincibility(Board board, float x, float y, Player player) {
-        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Powerups/Invincibility.png", board, x, y, player);
+        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/Invincibility.png", board, x, y, player);
     }
 
     public void ActivateAbility() //will improve

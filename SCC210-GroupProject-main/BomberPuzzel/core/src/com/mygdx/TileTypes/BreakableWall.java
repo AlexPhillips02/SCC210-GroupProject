@@ -17,7 +17,7 @@ public abstract class BreakableWall extends Tile
      */
     public BreakableWall(String imageURL, int health)
     {
-        super(imageURL);
+        super("WALL-1.png (1) (1).png");
         this.health = health;
     }
 

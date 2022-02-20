@@ -5,6 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.GameController;
 
+/**
+ * @author Alex Chalakov, Lincoln Delhomme
+ * A class for the main game screen where the actual game is ran.
+ */
 public class MainGameScreen implements Screen {
 
 	private SpriteBatch batch;

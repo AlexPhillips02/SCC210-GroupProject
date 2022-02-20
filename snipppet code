@@ -1,0 +1,34 @@
+if(puzzle == 0)
+		{
+			match.Draw(batch);
+			
+			currentColourList = new ArrayList<ColourTiles>();	
+
+			for(int i = 0; i<colourTiles.size(); i++)
+			{
+				if(colourTiles.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{	
+					if(colourTiles.get(i).active == true){
+						currentColourList.add(colourTiles.get(i));
+						System.out.println("colour Tile has been stepped " + colourTiles.get(i).getColour(colourTiles.get(i).getselectedColourNumber()) + " Tile");
+
+						for(int x = 0; x<currentColourList.size(); x++){
+							for(int j = (currentColourList.size()-1); j<currentColourList.size(); j++){
+								if(currentColourList.get(x) == currentColourList.get(j)){
+									Match.count++; 
+								}
+							} 
+						}
+
+						if(Match.count == 2){
+							Match.isMatch = true;
+							System.out.println("Match found, unlock next level");
+							currentColourList.removeAll(currentColourList);
+							}
+						}
+
+						colourTiles.get(i).setActive();
+					}			
+				}
+			}
+

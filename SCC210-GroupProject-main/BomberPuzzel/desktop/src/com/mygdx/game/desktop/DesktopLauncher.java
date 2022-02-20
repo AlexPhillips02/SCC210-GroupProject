@@ -8,7 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("Puzzle Bomber");
-		config.setWindowedMode(928, 480);
+		config.setWindowedMode(Driver.WIDTH, Driver.HEIGHT);
+		config.setResizable(false);
 		
 
 		new Lwjgl3Application(new Driver(), config);	//platform specific problem - testing with Paul

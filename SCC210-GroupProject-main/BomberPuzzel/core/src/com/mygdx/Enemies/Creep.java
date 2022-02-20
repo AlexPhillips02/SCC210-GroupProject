@@ -21,7 +21,7 @@ public class Creep extends Enemies
      */
     public Creep(Board board, float x, float y, float movementSpeed)
     {
-        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f00.png", board, x, y, movementSpeed);
+        super("Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f00.png", board, x, y, movementSpeed);
         createAnimations();
         this.health = 1;
     }
@@ -32,12 +32,12 @@ public class Creep extends Enemies
     public void createAnimations()
     {
         //Walking downwards
-        String[] downIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f05.png"};
+        String[] downIcons = {"Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f00.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f01.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f02.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f03.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f04.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Front/Creep_F_f05.png"};
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
@@ -51,12 +51,12 @@ public class Creep extends Enemies
         frames.clear();
 
         //Walking Upwards (Back of player)
-        String[] upIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f05.png",};
+        String[] upIcons = {"Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f00.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f01.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f02.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f03.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f04.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Back/Creep_B_f05.png",};
 
         for (int i = 0; i < upIcons.length; i++) 
         {
@@ -67,13 +67,13 @@ public class Creep extends Enemies
         frames.clear();
 
         //Walking to the Right
-        String[] rightIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f06.png"};
+        String[] rightIcons = {"Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f00.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f01.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f02.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f03.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f04.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f05.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Right/Creep_R_f06.png"};
 
         for (int i = 0; i < rightIcons.length; i++) 
         {
@@ -84,13 +84,13 @@ public class Creep extends Enemies
         frames.clear();
 
         //Walking to the left
-        String[] leftIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f06.png"};
+        String[] leftIcons = {"Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f00.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f01.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f02.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f03.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f04.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f05.png",
+        "Bombing_Chap_Sprite_Set/Sprites/Creep/Left/Creep_L_f06.png"};
 
         for (int i = 0; i < leftIcons.length; i++) 
         {

@@ -324,10 +324,6 @@ public class Board
         return gameSquares[x][y];
     }
 
-    public Squares[][] getGameSquares(){
-        return gameSquares;
-    }
-
     public int getXLength()
     {
         return this.xLength;

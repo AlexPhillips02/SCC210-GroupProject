@@ -18,7 +18,7 @@ public class Player extends Entity
 
     public Player(Board board, float x, float y, float movementSpeed)
     {
-        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f00.png" , board, x, y, movementSpeed);
+        super("Bomberman/BombermanDefault.png" , board, x, y, movementSpeed);
         createAnimations();
 
         //providing a frame for the player with characteristics including bomb stash
@@ -38,79 +38,42 @@ public class Player extends Entity
      */
     public void createAnimations()
     {
-        //Walking downwards
-        String[] downIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f06.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Front/Bman_F_f07.png"};
-
+        //Walking up (Back of player)
         Array<TextureRegion> frames = new Array<TextureRegion>();
+        Texture bombermanBack = new Texture("Bomberman/BombermanBack.png");
 
-        for (int i = 0; i < downIcons.length; i++) 
+        for (int i = 0; i < 2; i++) 
         {
-            frames.add(new TextureRegion(new Texture(downIcons[i])));
+            frames.add(new TextureRegion(bombermanBack, 52 * i, 0, 52, 90));
         }
 
         //Number relates to speed of animation can be decreaed / sped up
-        walkDown = new Animation<>(1/15f, frames);
+        walkUp = new Animation<>(1/4f, frames);
         frames.clear();
 
-        //Walking Upwards (Back of player)
-        String[] upIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f06.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Back/Bman_B_f07.png"};
-
-        for (int i = 0; i < upIcons.length; i++) 
+        //Walking Down (Front of player)
+        Texture bombermanFront = new Texture("Bomberman/BombermanFront.png");
+        for (int i = 0; i < 2; i++) 
         {
-            frames.add(new TextureRegion(new Texture(upIcons[i])));
+            frames.add(new TextureRegion(bombermanFront, 52 * i, 0, 52, 90));
         }
 
-        walkUp = new Animation<>(1/15f, frames);
+        walkDown = new Animation<>(1/4f, frames);
         frames.clear();
 
-        //Walking to the Right
-        String[] rightIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f06.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Right/Bman_F_f07.png"};
+        walkLeft = walkDown;
+        walkRight = walkDown;
 
-        for (int i = 0; i < rightIcons.length; i++) 
+        //Standing Animation
+
+        Texture bombermanStanding = new Texture("Bomberman/BombermanStanding.png");
+        for (int i = 0; i < 2; i++) 
         {
-            frames.add(new TextureRegion(new Texture(rightIcons[i])));
+            frames.add(new TextureRegion(bombermanStanding, 52 * i, 0, 52, 90));
         }
 
-        walkRight = new Animation<>(1/15f, frames);
+        standingAnimation = new Animation<>(1/3f, frames);
         frames.clear();
-
-        //Walking to the left
-        String[] leftIcons = {"core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f00.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f01.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f02.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f03.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f04.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f05.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f06.png",
-        "core/assets/Bombing_Chap_Sprite_Set/Sprites/Bomberman/Left/Bman_F_f07.png"};
-
-        for (int i = 0; i < leftIcons.length; i++) 
-        {
-            frames.add(new TextureRegion(new Texture(leftIcons[i])));
-        }
-
-        walkLeft = new Animation<>(1/15f, frames);
     }
 
     public void update()

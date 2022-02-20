@@ -5,7 +5,9 @@ import java.util.Random;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -16,10 +18,9 @@ import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
 import com.mygdx.GameScreens.GameOverScreen;
 import com.mygdx.Player.Player;
-import com.mygdx.Puzzles.ColourMatch.ColourTiles;
-import com.mygdx.Puzzles.ColourMatch.Match;
-import com.mygdx.Puzzles.Memory.ColourButton;
-import com.mygdx.Puzzles.Memory.Order;
+// import com.mygdx.Puzzles.Memory.ColourButton;
+// import com.mygdx.Puzzles.Memory.Order;
+import com.mygdx.Puzzles.PuzzleController;
 
 /**
  * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
@@ -29,19 +30,16 @@ import com.mygdx.Puzzles.Memory.Order;
 public class GameController
 {
 	//private Boolean winStatus;
+	private GUI gui;
     private Board gameBoard;
 	private Player player;
 	private EnemyController enemyController;
+	private PuzzleController puzzleController;
 	private ArrayList<Ability> boardAbilities;	//Abilities on the board
 	private ArrayList<Ability> activeAbilities;	//Abilities the player has picked up and currently using
-	public ArrayList<Rectangle> colourTileRectangles = new ArrayList<Rectangle>();
-	public ArrayList<ColourTiles> colourTiles = new ArrayList<ColourTiles>();
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
-	private int puzzle;
-	private Order buttonGame;
-	private Match match;
 
 	/**
 	 * Creates the camera
@@ -55,7 +53,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 10, 5);
+		CreateLevel(1, 10, 5);
     }
 
 	/**
@@ -66,59 +64,18 @@ public class GameController
 	 */
 	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount, int abilitiesAmount)
 	{
+		gui = new GUI();
+		//batch.setProjectionMatrix(gui.stage.getCamera().combined);
+
 		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
 		player = new Player(gameBoard, 65, 65, 150);
 		enemyController = new EnemyController(gameBoard, player);
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
 		enemyController.CreateEnemies(enemyAmount);
+		puzzleController = new PuzzleController(gui, gameBoard, player);
+		puzzleController.SetPuzzle();
 		CreateAbilities(abilitiesAmount);
-		SetLevel();
-	}
-
-	public void SetLevel()
-	{
-		int colour = -1;
-		puzzle = 0;//rand.nextInt(3);
-
-		if(puzzle == 0)
-		{
-			match = new Match(gameBoard, colourTileRectangles, colourTiles);
-			// Run colour match puzzle
-			System.out.println(puzzle + " ColourMatch");
-
-			for(int i = 0; i<6; i++){
-				if(i % 2 == 0)
-				{
-					colour++;
-				}
-
-				Squares pathSquare = gameBoard.getRandomPath();
-				match.addColourTiles(pathSquare, colour);
-				System.out.print(colour);
-			}
-
-		}
-
-		else if(puzzle == 1)
-		{
-			// Run memory puzzle
-			System.out.println(puzzle + " Memory");
-			
-			// Choose 4 Random squares to place buttons on
-			Squares pathSquare1 = gameBoard.getRandomPath();
-			Squares pathSquare2 = gameBoard.getRandomPath();
-			Squares pathSquare3 = gameBoard.getRandomPath();
-			Squares pathSquare4 = gameBoard.getRandomPath();
-			// Puzzle set up
-			buttonGame = new Order(gameBoard, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
-			buttonGame.shuffleOrder();
-		}
-		else
-		{
-			// run object puzzle
-			System.out.println(puzzle + " Object");
-		}
 	}
 
 	/**
@@ -150,54 +107,17 @@ public class GameController
 		gameBoard.Draw(batch);	//draws gameboard	
 		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
 
+		//If the game has been won Spawn win screen here
+		if (puzzleController.getWinStatus() == true) 
+		{
+			//System.out.println("Puzzle won");
+		}
+
 		//If squares exist where damage should be inflicted
 		if (deathSquares.size() > 0) 
 		{
 			checkForSquareCollision(deathSquares);
 			gameBoard.resetDeathSquares();
-		}
-
-		// Draw puzzles on board
-		if(puzzle == 0)
-		{
-			match.Draw(batch);
-
-			for(int i = 0; i<colourTiles.size(); i++)
-			{
-				if(colourTiles.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
-				{	
-					
-					if(colourTiles.get(i).active == true){	
-					System.out.println("PLayer has stepped on a " + colourTiles.get(i).getColour(colourTiles.get(i).getselectedColourNumber()) +" Tile");
-					Match.setCurrent(colourTiles.get(i));
-				}
-				
-				colourTiles.get(i).setActive();
-				}			
-			}
-		}
-		
-
-		else if(puzzle == 1)
-		{
-			// Draw buttons
-			buttonGame.Draw(batch);
-			ColourButton[] buttons = buttonGame.getButtons();
-			
-			// Button Collision detection
-			for(int i = 0; i < buttons.length; i++)
-			{
-				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
-				{
-					System.out.println(buttons[i].getCollisionRectangle());
-					System.out.println(player.getCollisionRectangle());
-					System.out.println("Button Pressed");
-				}
-			}
-		}
-		else
-		{
-			// Draw Object & endpoint
 		}
 
 		//Draw abilities on the board
@@ -239,20 +159,23 @@ public class GameController
 		}
 
 		enemyController.Update(batch);
+		puzzleController.Update(batch);
 
 		player.checkInput();
 		player.update();
 		player.Draw(batch);		//Draws player
+		moveCamera();
 
 		if (player.isAlive() == false) 
 		{
-			System.out.println("Player is dead.");
-			System.out.println("Load game over screen from game controller");
+			//System.out.println("Player is dead.");
+			//System.out.println("Load game over screen from game controller");
             //Stop the game from playing
             //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
 		}
-		
-		moveCamera();
+
+		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime());
+        gui.stage.draw();
 	}
 
 	/**
