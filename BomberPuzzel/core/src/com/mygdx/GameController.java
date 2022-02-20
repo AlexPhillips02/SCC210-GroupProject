@@ -53,7 +53,7 @@ public class GameController
 		camera = new OrthographicCamera();
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(20, 10, 5);
+		CreateLevel(1, 10, 5);
     }
 
 	/**
@@ -73,7 +73,7 @@ public class GameController
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
 		enemyController.CreateEnemies(enemyAmount);
-		puzzleController = new PuzzleController(gameBoard, player);
+		puzzleController = new PuzzleController(gui, gameBoard, player);
 		puzzleController.SetPuzzle();
 		CreateAbilities(abilitiesAmount);
 	}
@@ -106,6 +106,12 @@ public class GameController
 	{
 		gameBoard.Draw(batch);	//draws gameboard	
 		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
+
+		//If the game has been won Spawn win screen here
+		if (puzzleController.getWinStatus() == true) 
+		{
+			//System.out.println("Puzzle won");
+		}
 
 		//If squares exist where damage should be inflicted
 		if (deathSquares.size() > 0) 

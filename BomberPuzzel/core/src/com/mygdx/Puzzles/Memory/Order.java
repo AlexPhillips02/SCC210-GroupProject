@@ -4,17 +4,22 @@ import java.util.Arrays;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.GUI;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
+import com.mygdx.Puzzles.Buttons.BlueButton;
+import com.mygdx.Puzzles.Buttons.ColourButton;
+import com.mygdx.Puzzles.Buttons.GreenButton;
+import com.mygdx.Puzzles.Buttons.RedButton;
+import com.mygdx.Puzzles.Buttons.YellowButton;
+import com.mygdx.Puzzles.Puzzle;
 
 /**
  * @author Kathryn Hurst
  * Order creates and shuffles the buttons, it also controls what happens when the buttons are pressed
  */
-public class Order
+public class Order extends Puzzle
 {
-    Board board;
-
     ColourButton R;
     ColourButton G;
     ColourButton B;
@@ -22,6 +27,8 @@ public class Order
 
     ColourButton[] buttons = new ColourButton[4];
     ColourButton[] sequenceInput = new ColourButton[4];
+
+    String sequence;
 
     /**
      * Constructor for the order class
@@ -31,33 +38,9 @@ public class Order
      * @param Square3 is the random square for the blue button to appear at
      * @param Square4 is the random square for the yellow button to appear at
      */
-    public Order(Board board, Squares Square1, Squares Square2, Squares Square3, Squares Square4)
+    public Order(GUI gui, Board board)
     {
-        this.board = board;
-
-        // Translates squares to grid positions
-        int x1 = Square1.getX();
-        int y1 = Square1.getY();
-
-        int x2 = Square2.getX();
-        int y2 = Square2.getY();
-
-        int x3 = Square3.getX();
-        int y3 = Square3.getY();
-
-        int x4 = Square4.getX();
-        int y4 = Square4.getY();
-
-        // Create buttons
-        R = new ColourButton("Red", "core/assets/Buttons/RedButton.png", board, x1, y1);
-        G = new ColourButton("Green", "core/assets/Buttons/GreenButton.png", board, x2, y2);
-        B = new ColourButton("Blue", "core/assets/Buttons/BlueButton.png", board, x3, y3);
-        Y = new ColourButton("Yellow", "core/assets/Buttons/YellowButton.png", board, x4, y4);
-
-        buttons[0] = R;
-        buttons[1] = G;
-        buttons[2] = B;
-        buttons[3] = Y;
+        super(gui, board);
     }
 
     public void Draw(SpriteBatch batch)
@@ -80,8 +63,38 @@ public class Order
     /**
      * Randomly shuffle the order buttons need to be pressed in
      */
-    public void shuffleOrder()
+    public void createGame()
     {
+        // Choose 4 Random squares to place buttons on
+        Squares square1 = board.getRandomPath();
+        Squares square2 = board.getRandomPath();
+        Squares square3 = board.getRandomPath();
+        Squares square4 = board.getRandomPath();
+
+        // Translates squares to grid positions
+        int x1 = square1.getX();
+        int y1 = square1.getY();
+
+        int x2 = square2.getX();
+        int y2 = square2.getY();
+
+        int x3 = square3.getX();
+        int y3 = square3.getY();
+
+        int x4 = square4.getX();
+        int y4 = square4.getY();
+
+        // Create buttons
+        R = new RedButton(board, x1, y1);
+        G = new GreenButton(board, x2, y2);
+        B = new BlueButton(board, x3, y3);
+        Y = new YellowButton(board, x4, y4);
+
+        buttons[0] = R;
+        buttons[1] = G;
+        buttons[2] = B;
+        buttons[3] = Y;
+
         for(int i = 0; i < buttons.length; i++)
         {
             Random rand = new Random();
@@ -90,6 +103,8 @@ public class Order
             buttons[indexSwap] = buttons[i];
             buttons[i] = temp;
         }
+
+        sequence = buttons[0].getColour() + ", " + buttons[1].getColour() + ", " + buttons[2].getColour() + ", " + buttons[3].getColour();
         displayOrder();
     }
 
@@ -98,7 +113,7 @@ public class Order
      */
     public void displayOrder()
     {
-        System.out.println("Sequence: " + buttons[0].name + ", " + buttons[1].name + ", " + buttons[2].name + ", " + buttons[3].name + "\n");
+        gui.addTempLabel(sequence);
     }
 
     /**
@@ -127,7 +142,7 @@ public class Order
         {
             if(sequenceInput[i] != buttons[i] && sequenceInput[i] != null)
             {
-                System.out.println("Not match");
+                gui.addTempLabel("Not match");
                 Arrays.fill(sequenceInput, null);
                 match = 0;
                 displayOrder();
@@ -145,7 +160,8 @@ public class Order
                 }
                 if(match == 4)
                 {
-                    System.out.println("Sequence complete");
+                    gui.addTempLabel("Sequence complete");
+                    winStatus = true;
                 }
             }
         }
@@ -157,7 +173,7 @@ public class Order
     */
     public void Pressed(ColourButton button)
     {
-        System.out.println(button.name + " Button Pressed");
+        gui.addTempLabel(button.getColour() + " Button Pressed");
         button.setActive(false);
         add(button);
         compareInput();

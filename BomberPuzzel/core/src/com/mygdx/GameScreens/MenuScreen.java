@@ -42,11 +42,11 @@ public class MenuScreen implements Screen {
     public MenuScreen(SpriteBatch batch){
         this.batch = batch;
         
-        inActivePlayButton = new Texture("core/assets/Screens/Play (Unactive)-1.png.png");
-        inActiveExitButton = new Texture("core/assets/Screens/Exit (unactive)-1.png.png");
-        activePlayButton = new Texture("core/assets/Screens/Play (Active).png");
-        activeExitButton = new Texture("core/assets/Screens/Exit (active).png");
-        backGround = new Texture("core/assets/Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
+        inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
+        inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
+        activePlayButton = new Texture("Screens/Play (Active).png");
+        activeExitButton = new Texture("Screens/Exit (active).png");
+        backGround = new Texture("Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
     }
 
     /**

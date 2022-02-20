@@ -1,12 +1,13 @@
 package com.mygdx.Puzzles;
 
+import java.util.ArrayList;
 import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.GUI;
 import com.mygdx.Board.Board;
-import com.mygdx.Board.Squares;
 import com.mygdx.Player.Player;
-import com.mygdx.Puzzles.Memory.ColourButton;
+import com.mygdx.Puzzles.Buttons.ColourButton;
+import com.mygdx.Puzzles.ColourMatch.Match;
 import com.mygdx.Puzzles.Memory.Order;
 
 /**
@@ -15,18 +16,20 @@ import com.mygdx.Puzzles.Memory.Order;
  */
 public class PuzzleController
 {
+	private GUI gui;
     private Board board;
     private Player player;
     private int puzzle;
-	private Order buttonGame;
+	private Puzzle puzzleGame;
 
     /**
      * Loads board and player
      * @param board used to select locations on board
      * @param player used for collision detection on puzzle interaction
      */
-    public PuzzleController(Board board, Player player)
+    public PuzzleController(GUI gui, Board board, Player player)
     {
+		this.gui = gui;
         this.board = board;
         this.player = player;
     }
@@ -37,38 +40,31 @@ public class PuzzleController
     public void SetPuzzle()
 	{
 		Random rand = new Random();
-		puzzle = rand.nextInt(3);
+		puzzle = rand.nextInt(2);
 
 		if(puzzle == 0)
 		{
 			// Run colour match puzzle
-			System.out.println(puzzle + " ColourMatch");
+			gui.setPuzzle("Colour Match");
+
+			puzzleGame = new Match(gui, board);
+			puzzleGame.createGame();
 		}
 		else if(puzzle == 1)
 		{
 			// Run memory puzzle
-			System.out.println(puzzle + " Memory");
-			
-			// Choose 4 Random squares to place buttons on
-			Squares pathSquare1 = board.getRandomPath();
-			Squares pathSquare2 = board.getRandomPath();
-			Squares pathSquare3 = board.getRandomPath();
-			Squares pathSquare4 = board.getRandomPath();
+			gui.setPuzzle("Button Sequence");
+		
 			// Puzzle set up
-			buttonGame = new Order(board, pathSquare1, pathSquare2, pathSquare3, pathSquare4);
-			buttonGame.shuffleOrder();
+			puzzleGame = new Order(gui, board);
+			puzzleGame.createGame();
 		}
 		else
 		{
-			// run object puzzle
-			System.out.println(puzzle + " Object");
+			// Run object puzzle
+			gui.setPuzzle("Object");
 		}
 	}
-
-    public int getPuzzle()
-    {
-        return puzzle;
-    }
 
     /**
      * Called within GameController to update puzzle pieces
@@ -79,23 +75,36 @@ public class PuzzleController
         // Draw puzzles on board
 		if(puzzle == 0)
 		{
-			// Draw colour tiles
+			puzzleGame.Draw(batch);
+			ArrayList<ColourButton> buttons = ((Match)puzzleGame).getButtons();
+
+			for(int i = 0; i < buttons.size(); i++)
+			{
+				if(buttons.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+				{	
+					if(buttons.get(i).getActiveStatus())
+					{	
+						((Match)puzzleGame).setCurrent(buttons.get(i));
+						i = 0;
+					}
+				}			
+			}
 		}
 		else if(puzzle == 1)
 		{
 			// Draw buttons
-			buttonGame.Draw(batch);
-			ColourButton[] buttons = buttonGame.getButtons();
+			puzzleGame.Draw(batch);
+			ColourButton[] buttons = ((Order) puzzleGame).getButtons();
 			
 			// Button Collision detection
 			for(int i = 0; i < buttons.length; i++)
 			{
 				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{
-					if(buttons[i].active())
+					if(buttons[i].getActiveStatus())
 					{
 						buttons[i].setActive(false);
-						buttonGame.Pressed(buttons[i]);
+						((Order) puzzleGame).Pressed(buttons[i]);
 					}
 				}
 			}
@@ -105,4 +114,9 @@ public class PuzzleController
 			// Draw Object & endpoint
 		}
     }
+
+	public boolean getWinStatus()
+	{
+		return puzzleGame.winStatus;
+	}
 }

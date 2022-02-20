@@ -10,6 +10,6 @@ public class SoftWall extends BreakableWall
      */
     public SoftWall()
     {
-        super("core/assets/Bombing_Chap_Sprite_Set/Sprites/Blocks/ExplodableBlock.png", 1);
+        super("Bombing_Chap_Sprite_Set/Sprites/Blocks/ExplodableBlock.png", 1);
     }
 }
