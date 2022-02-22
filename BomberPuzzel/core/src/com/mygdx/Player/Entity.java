@@ -116,7 +116,12 @@ public abstract class Entity
         float tempY = getY();
 
         float imageHeight = 60;
-        float imageWidth = 60;
+        float imageWidth = this.getWidth();
+
+        if (imageWidth > 60) 
+        {
+            imageWidth = 60;
+        }
 
         int tileHeight = 64;
         int tileWidth = 64;
