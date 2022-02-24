@@ -115,12 +115,17 @@ public abstract class Entity
         float tempX = getX();
         float tempY = getY();
 
-        float imageHeight = 60;
+        float imageHeight = this.getHeight();
         float imageWidth = this.getWidth();
 
         if (imageWidth > 60) 
         {
             imageWidth = 60;
+        }
+
+        if (imageHeight > 60) 
+        {
+            imageHeight = 60;    
         }
 
         int tileHeight = 64;
@@ -134,6 +139,7 @@ public abstract class Entity
 
         int xx = (int)(tempX / tileWidth);
         int yy = (int)((tempY) / tileHeight);
+        
         if (xx < 0 || yy < 0 || xx >= 29 || yy >= 15)   
         {
             System.out.println("ENTITY ERROR Attempted to get gamesquare x: " + xx + " y: " + yy);

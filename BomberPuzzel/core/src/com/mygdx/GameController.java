@@ -53,7 +53,7 @@ public class GameController
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(5, 20, 5);
+		CreateLevel(5, 10, 5);
     }
 
 	/**
@@ -105,6 +105,7 @@ public class GameController
 	public void Update() 
 	{
 		gameBoard.Draw(batch);	//draws gameboard	
+		puzzleController.Update(batch); 
 		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
 
 		//If the game has been won Spawn win screen here
@@ -159,7 +160,6 @@ public class GameController
 		}
 
 		enemyController.Update(batch);
-		puzzleController.Update(batch);
 
 		player.checkInput();
 		player.update();

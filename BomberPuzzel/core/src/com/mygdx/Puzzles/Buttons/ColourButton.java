@@ -72,18 +72,6 @@ public abstract class ColourButton
         return y;
     }
 
-    public void setX(float x)
-    {
-        this.x = x;
-        collisionRectangle.x = x;
-    }
-
-    public void setY(float y)
-    {
-        this.y = y;
-        collisionRectangle.y = y;
-    }
-
     public Rectangle getCollisionRectangle()
     {
         return collisionRectangle;
