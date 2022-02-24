@@ -104,49 +104,6 @@ public class MenuScreen implements Screen {
      * Main Screen method that contains everything.
      */
 
-     /*
-    private void loadScreen() {
-        stage = new Stage();
-        Table table = new Table(); //introducing the table within the stage
-        table.setWidth(stage.getWidth()); //aligning
-        table.align(Align.center|Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight()); //setting position
-
-        //introducing the play button
-        
-        inActivePlayButton.addListener(new ClickListener(){
-            public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
-                System.out.println("CLICKED");
-                dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch)); //send us to the game screen
-            }
-        });
-
-        //introducing the exit button
-        inActiveExitButton.addListener(new ClickListener(){
-            public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
-                System.out.println("Exited");
-                dispose();
-                System.exit(0); //exits and closes the screen
-            }
-        });
-
-        //adding buttons to table
-        table.add(inActivePlayButton);
-        //table.row(); could be added, but not needed for now
-        table.add(inActiveExitButton);
-
-        //adding table to the stage
-        stage.addActor(table);
-
-        //introducing our background and aligning it
-        batch = new SpriteBatch();
-        sprite = new Sprite(new Texture(Gdx.files.internal("core/assets/Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg")));
-        sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-        Gdx.input.setInputProcessor(stage);
-    }
-    */
     /**
      * @param width size of width
      * @param height size of height
