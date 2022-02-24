@@ -10,7 +10,6 @@ public class Path extends Tile
 {
     public Path()
     {
-        super("core/assets/TEST path-1.png.png");
-
+        super("core/assets/Bombing_Chap_Sprite_Set/BackgroundTile.png");
     }    
 }
