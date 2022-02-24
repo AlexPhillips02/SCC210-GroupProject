@@ -90,6 +90,7 @@ public class Match extends Puzzle
 
                 if(buttons.size() <= 0) 
                 {
+                    gui.addTempLabel("All Tiles Matched");
                     winStatus = true;
                 }
             } 
