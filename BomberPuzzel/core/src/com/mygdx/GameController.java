@@ -49,11 +49,11 @@ public class GameController
     {
         this.batch = batch;
 		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		//camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		camera = new OrthographicCamera();
+		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(1, 10, 5);
+		CreateLevel(5, 20, 5);
     }
 
 	/**

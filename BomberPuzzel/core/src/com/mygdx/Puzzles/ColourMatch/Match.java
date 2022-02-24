@@ -77,6 +77,7 @@ public class Match extends Puzzle
 
     public void setCurrent(ColourButton newCurrent)
     {
+        gui.addTempLabel(newCurrent.getColour() + " Button Pressed");
         prev = current;
         current = newCurrent;
         current.setActive(false);
@@ -90,6 +91,7 @@ public class Match extends Puzzle
 
                 if(buttons.size() <= 0) 
                 {
+                    gui.addTempLabel("All Tiles Matched");
                     winStatus = true;
                 }
             } 
