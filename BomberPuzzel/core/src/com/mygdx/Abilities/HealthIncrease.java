@@ -17,7 +17,7 @@ public class HealthIncrease extends Ability { //also deemed as SHIELD in the spe
      * @param player   the player which gets the ability.
      */
     public HealthIncrease(Board board, float x, float y, Player player) {
-        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/HealthInc.png", board, x, y, player);
+        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/HealthInc.png", board, x, y, player, "Extra Heart");
     }
 
     public void ActivateAbility()
@@ -28,7 +28,6 @@ public class HealthIncrease extends Ability { //also deemed as SHIELD in the spe
 
     public void DeactivateAbility()
     {
-        int currentHealth = ((Player) entity).getHealth();
-        entity.setHealth(currentHealth); //health stays the same after ability period expires
+        //health stays the same after ability period expires
     }
 }

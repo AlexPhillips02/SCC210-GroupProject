@@ -28,7 +28,7 @@ public class Bomb extends Ability
      */
     public Bomb(Board board, float x, float y, Entity entity, int explosionRange) 
     {
-        super("Bombing_Chap_Sprite_Set/Sprites/Bomb/Bomb_f01.png", board, x, y, entity);
+        super("Bombing_Chap_Sprite_Set/Sprites/Bomb/Bomb_f01.png", board, x, y, entity, "BOMB");
         this.explosionRange = explosionRange;
         createAnimations();
         placeBomb();

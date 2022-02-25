@@ -17,7 +17,7 @@ public class BombRange extends Ability {
      * @param player the player which gets the ability.
      */
     public BombRange(Board board, float x, float y, Player player) {
-        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/FlamePowerup.png", board, x, y, player);
+        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/FlamePowerup.png", board, x, y, player, "Increased Bomb Range");
     }
 
     public void ActivateAbility() 

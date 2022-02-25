@@ -17,6 +17,7 @@ import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
 import com.mygdx.GameScreens.GameOverScreen;
+import com.mygdx.GameScreens.MainGameScreen;
 import com.mygdx.Player.Player;
 // import com.mygdx.Puzzles.Memory.ColourButton;
 // import com.mygdx.Puzzles.Memory.Order;
@@ -40,6 +41,7 @@ public class GameController
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
+	private int levelNumber = 0;
 
 	/**
 	 * Creates the camera
@@ -51,9 +53,11 @@ public class GameController
 		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera = new OrthographicCamera();
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-		gamePort = new FitViewport(928, 480, camera);
+		//gamePort = new FitViewport(928, 480, camera);
 
-		CreateLevel(5, 10, 5);
+		gamePort = new FitViewport(1280, 720, camera);
+
+		CreateLevel();
     }
 
 	/**
@@ -62,20 +66,32 @@ public class GameController
 	 * @param enemyAmount amount of enemies that are going to be spawned on the map
 	 * @param abilitiesAmount amount of abilities that are going to be spawned on the map
 	 */
-	public void CreateLevel(float percentageOfDestructableWalls, int enemyAmount, int abilitiesAmount)
+	public void CreateLevel()
 	{
-		gui = new GUI();
-		//batch.setProjectionMatrix(gui.stage.getCamera().combined);
+		//Level number orginally set to 0
+		float basePercentageOfDestrctableWalls = 10;
+		int baseEnemyAmount = 10;
+		int baseAbilitesAmount = 10;
 
-		gameBoard = new Board(29, 15, percentageOfDestructableWalls);
+		//Increasing base amounts based on level (Increase difficulty)
+		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * basePercentageOfDestrctableWalls);
+		baseEnemyAmount = baseEnemyAmount + levelNumber;
+	    baseAbilitesAmount = baseAbilitesAmount - levelNumber;
+
+		levelNumber++;
+
+		gameBoard = new Board(27, 15, basePercentageOfDestrctableWalls);
 		player = new Player(gameBoard, 65, 65, 150);
 		enemyController = new EnemyController(gameBoard, player);
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
-		enemyController.CreateEnemies(enemyAmount);
+		enemyController.CreateEnemies(baseEnemyAmount);
+
+		gui = new GUI(levelNumber);
 		puzzleController = new PuzzleController(gui, gameBoard, player);
 		puzzleController.SetPuzzle();
-		CreateAbilities(abilitiesAmount);
+
+		CreateAbilities(baseAbilitesAmount);
 	}
 
 	/**
@@ -104,21 +120,24 @@ public class GameController
 	 */
 	public void Update() 
 	{
-		gameBoard.Draw(batch);	//draws gameboard	
-		puzzleController.Update(batch); 
-		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
-
-		//If the game has been won Spawn win screen here
-		if (puzzleController.getWinStatus() == true) 
-		{
-			//System.out.println("Puzzle won");
-		}
+		//Gameboard
+		gameBoard.Draw(batch);	//draws gameboard
+		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes	
 
 		//If squares exist where damage should be inflicted
 		if (deathSquares.size() > 0) 
 		{
 			checkForSquareCollision(deathSquares);
 			gameBoard.resetDeathSquares();
+		}
+
+		//Puzzle controller
+		puzzleController.Update(batch); 
+		//If the game has been won Spawn win screen here
+		if (puzzleController.getWinStatus() == true) 
+		{
+			//THIS IS WHAT HAPPENS WHEN THE GAME IS WON
+			CreateLevel();
 		}
 
 		//Draw abilities on the board
@@ -159,11 +178,15 @@ public class GameController
 			}
 		}
 
+		//Enemies
 		enemyController.Update(batch);
 
+		//Player
 		player.checkInput();
 		player.update();
-		player.Draw(batch);		//Draws player
+		player.Draw(batch);
+
+		//Camera
 		moveCamera();
 
 		if (player.isAlive() == false) 
@@ -174,7 +197,7 @@ public class GameController
             //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
 		}
 
-		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime());
+		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
         gui.stage.draw();
 	}
 
@@ -187,7 +210,7 @@ public class GameController
 	public Ability getRandomAbility(int xPosition, int yPosition)
 	{
 		Random rand = new Random();
-		int randomIndex = rand.nextInt(6);
+		int randomIndex = rand.nextInt(5);
 		Ability newAbility;
 
 		if (randomIndex == 0) {
@@ -205,13 +228,9 @@ public class GameController
 		{
 			newAbility = new SpeedDecrease(gameBoard, xPosition, yPosition, player);
 		}
-		else if (randomIndex == 4)
-		{
-			newAbility = new HealthIncrease(gameBoard, xPosition, yPosition, player);
-		}
 		else
 		{
-			newAbility = new Invincibility(gameBoard, xPosition, yPosition, player);
+			newAbility = new HealthIncrease(gameBoard, xPosition, yPosition, player);
 		}
 
 		newAbility.setX(xPosition + (newAbility.getWidth()) / 2);
@@ -245,31 +264,31 @@ public class GameController
 	{
 		float startX = camera.viewportWidth / 2;
 		float startY = camera.viewportHeight / 2;
-		float width = Gdx.graphics.getWidth();
-		float height = Gdx.graphics.getHeight();
+		float maxWidth = gameBoard.getXLength() * gameBoard.getTileSize();
+		float maxHeight = gameBoard.getYLength() * gameBoard.getTileSize();
 
 		//Updates camera position with player
 		batch.setProjectionMatrix(camera.combined);
 		camera.position.set((player.getX() + player.getWidth() / 2), (player.getY() + player.getHeight() / 2), 0);
 
 		//Left wall and bottom wall (Prevents camera from showing past the wall)
-		if((player.getX() + player.getWidth() / 2) < startX)
+		if(camera.position.x < startX)
 		{
 			camera.position.x = startX;
 		}  
-		if((player.getY() + player.getHeight() / 2) < startY)
+		if(camera.position.y < startY)
 		{
 			camera.position.y = startY;
 		}
 
 		//Right wall and top wall
-		if((player.getX() + player.getWidth() / 2) > (width + startX))
+		if(camera.position.x > (maxWidth - startX))
 		{
-			camera.position.x = (width + startX);
+			camera.position.x = (maxWidth - startX);
 		} 
-		if((player.getY() + player.getHeight() / 2) > (height + startY))
+		if(camera.position.y > (maxHeight - startY))
 		{
-			camera.position.y = (height + startY);
+			camera.position.y = (maxHeight - startY);
 		}
 
 		camera.update();

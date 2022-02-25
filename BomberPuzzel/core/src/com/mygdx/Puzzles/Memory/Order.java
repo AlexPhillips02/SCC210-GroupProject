@@ -113,7 +113,7 @@ public class Order extends Puzzle
      */
     public void displayOrder()
     {
-        gui.addTempLabel(sequence);
+        gui.addTempLabel("SEQUENCE: " + sequence);
     }
 
     /**

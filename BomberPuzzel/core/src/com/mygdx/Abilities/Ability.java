@@ -27,6 +27,8 @@ public abstract class Ability
     private float elapsedTime = 0f;
     protected float abilityLength = 4f; //In seconds
 
+    protected String name;
+
     /**
      * Constructor for the abstract class of Abilities, all of them should be extended by this.
      * @param imageURL URL to an image to use for the entity (Stored as a Texture)
@@ -34,13 +36,14 @@ public abstract class Ability
      * @param x X coordinate of the entity
      * @param y Y coordinate of the entity
      */
-    public Ability(String imageURL, Board board, float x, float y, Entity entity)
+    public Ability(String imageURL, Board board, float x, float y, Entity entity, String name)
     {
         defaultImage = new Texture(imageURL);
         this.board = board;
         this.x = x;
         this.y = y;
         this.entity = entity;
+        this.name = name;
 
         collisionRectangle = new Rectangle(x, y, defaultImage.getWidth(), defaultImage.getHeight());
     }
@@ -132,6 +135,11 @@ public abstract class Ability
 
     public boolean isDeactivated() {
         return deactivated;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     //Method overridden in child classes

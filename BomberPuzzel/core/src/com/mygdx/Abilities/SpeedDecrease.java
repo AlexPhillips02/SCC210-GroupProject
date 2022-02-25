@@ -17,7 +17,7 @@ public class SpeedDecrease extends Ability{ //also deemed as SLOWNESS in the spe
      * @param player   the player which gets the ability.
      */
     public SpeedDecrease(Board board, float x, float y, Player player) {
-        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/Slowness.png", board, x, y, player);
+        super("Bombing_Chap_Sprite_Set/Sprites/Powerups/Slowness.png", board, x, y, player, "Slowness");
     }
 
     public void ActivateAbility()

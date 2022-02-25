@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Abilities.Ability;
 
@@ -24,33 +26,32 @@ public class GUI
     public Stage stage;
     private FitViewport viewport;
     private Table table;
-    private Label.LabelStyle labelStyle;
 
-    private int levelCount;
     private int levelTimer;
     private float timeCount;
     private int playerLives;
     private String puzzleType;
     private float start = 0;
+    private String abilites = "";
 
-    boolean text = false;
+    private boolean text = false;
     // Now we create our widgets. Our widgets will be labels, essentially text, that allow us to display Game Information
     private Label levelCountLabel;
     private Label timeLabel;
-    private Label puzzelLabel;
     private Label livesLabel;
     private Label levelLabel;
 
-
-    private Label displayLabel;
+    private Label puzzelNameLabel;
     private Label puzzelTypeLabel;
     private Label livesCountLabel;
     private Label timeCountLabel;
 
-    public GUI()
+    private Label puzzelLabel;
+    private Label activeAbilites;
+
+    public GUI(int levelCount)
     {
         levelTimer = 0;
-        levelCount = 1;
         playerLives = 1;
 
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
@@ -60,42 +61,75 @@ public class GUI
         table.top(); // Will put it at the top of our stage
         table.setFillParent(true);
 
-        //white = new BitmapFont(Gdx.files.internal("font/white16.fnt"), false);
-        labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Text/GUI_Font.TTF"));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameters.size = 17;
 
-        timeLabel = new Label("TIME:", labelStyle);
-        puzzelLabel = new Label("PUZZLE TYPE:", labelStyle);
-        livesLabel = new Label("LIVES REMAINING:", labelStyle);
+        BitmapFont font = fontGenerator.generateFont(fontParameters);
+        
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
+        Label.LabelStyle puzzelStyle = new Label.LabelStyle(font, Color.RED);
+        
+
         levelLabel = new Label("CURRENT LEVEL:", labelStyle);
+        timeLabel = new Label("TIME:", labelStyle);
+        puzzelTypeLabel = new Label("PUZZLE TYPE:", labelStyle);
+        livesLabel = new Label("LIVES REMAINING:", labelStyle);
 
         levelCountLabel = new Label(String.format("%d", levelCount), labelStyle);
         timeCountLabel = new Label(String.format("%d", levelTimer), labelStyle);
-        puzzelTypeLabel = new Label(puzzleType, labelStyle);
+        puzzelNameLabel = new Label(puzzleType, labelStyle);
         livesCountLabel = new Label(String.format("%d", playerLives), labelStyle);
-        displayLabel = new Label(String.format(""), labelStyle);
+
+        puzzelLabel = new Label(String.format(""), puzzelStyle);
 
         table.add(levelLabel).expandX().pad(10); 
         table.add(timeLabel).expandX().padTop(10); // This expand X makes everything in the row share the row equally
-        table.add(puzzelLabel).expandX().padTop(10);
+        table.add(puzzelTypeLabel).expandX().padTop(10);
         table.add(livesLabel).expandX().padTop(10);   
 
         table.row(); // THIS CREATES A NEW ROW
         table.add(levelCountLabel);
         table.add(timeCountLabel);
-        table.add(puzzelTypeLabel);
+        table.add(puzzelNameLabel);
         table.add(livesCountLabel);
        
         table.row();
-        table.add();
-        table.add();
-        table.add(displayLabel).expandX().padTop(50);
+        table.add(puzzelLabel).colspan(4).padTop(10); //Colspan means it will combine the 4 columns above into one column for this row
+
+        table.row();
+        table.add(puzzelLabel).colspan(4).padTop(10);
+        
+        table.row();
+        table.add().fillY().expandY();
+
+        activeAbilites = new Label(String.format("Active Abilites: %s", abilites), labelStyle);
+        activeAbilites.setAlignment(Align.left);
+        table.row();
+        table.add(activeAbilites).colspan(4).padBottom(10).padRight((int)(Gdx.graphics.getWidth() / 1.35)).width(200);
 
         // add table to our stage
         stage.addActor(table);
     }
 
-    public void update(int playerHealth, float elapsedTime)
+    public void update(int playerHealth, float elapsedTime, ArrayList<Ability> activeAbilities)
     {      
+        abilites = "";
+
+        for (int i = 0; i < activeAbilities.size(); i++) 
+        {
+            String name = activeAbilities.get(i).getName();
+
+            if (!abilites.equals("")) 
+            {
+                name = (", " + name);
+            }
+            abilites = abilites.concat(name); 
+        }
+
+        activeAbilites.setText(String.format("Active Abilites: %s", abilites));
+
+
         if (playerHealth != playerLives) 
         {
             playerLives = playerHealth;
@@ -123,7 +157,7 @@ public class GUI
      */
     public void setPuzzle(String puzzle)
     {
-        puzzelTypeLabel.setText(puzzle);
+        puzzelNameLabel.setText(puzzle);
     }
 
     /**
@@ -132,7 +166,7 @@ public class GUI
      */
     public void addTempLabel(String display)
     {
-        displayLabel.setText("SEQUENCE: " + display);
+        puzzelLabel.setText(display);
         text = true;
         start = levelTimer;
     }
@@ -142,7 +176,7 @@ public class GUI
      */
     public void removeTempLabel()
     {
-        displayLabel.setText("");
+        puzzelLabel.setText("");
         text = false;
         start = 0;
     }
