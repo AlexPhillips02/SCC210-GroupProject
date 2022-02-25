@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx.Driver;
+import com.mygdx.GameController;
 
 
 /**
@@ -20,14 +21,17 @@ public class MenuScreen implements Screen {
     private static final int PLAY_BUTTON_HEIGHT = 150;
     private static final int EXIT_BUTTON_WIDTH = 200;
     private static final int EXIT_BUTTON_HEIGHT = 150;
+    private static final int OPTION_BUTTON_WIDTH = 200;
+    private static final int OPTION_BUTTON_HEIGHT = 150;
     private static final int PLAY_BUTTON_Y = 170;
     private static final int EXIT_BUTTON_Y = 10;
+    private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
     
     
 
     private SpriteBatch batch;
-
+    private GameController controller;
    
     private Texture inActivePlayButton;
     private Texture inActiveExitButton;
@@ -39,9 +43,10 @@ public class MenuScreen implements Screen {
      * Constructor for the main Menu Screen which appears at the start of the game.
      * @param batch SpriteBatch batch
      */
+
     public MenuScreen(SpriteBatch batch){
         this.batch = batch;
-        
+        controller = new GameController(batch);
         inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activePlayButton = new Texture("Screens/Play (Active).png");
@@ -80,7 +85,8 @@ public class MenuScreen implements Screen {
     private void playAndExit(){
         if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
             batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()){
+        
+        if (Gdx.input.isTouched()){
                 this.dispose();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
             }
@@ -98,6 +104,19 @@ public class MenuScreen implements Screen {
         else {
             batch.draw(inActiveExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         }
+
+        if(Gdx.input.getX() < BUTTON_X + OPTION_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < OPTION_BUTTON_Y + OPTION_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > OPTION_BUTTON_Y){
+            batch.draw(activeExitButton, BUTTON_X, OPTION_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+            if (Gdx.input.isTouched()){
+                //Gdx.app.exit();
+                this.dispose();
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen(batch));
+            }
+        }
+        else {
+            batch.draw(inActiveExitButton, BUTTON_X, OPTION_BUTTON_Y, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);
+        }
+
     }
 
     /**
