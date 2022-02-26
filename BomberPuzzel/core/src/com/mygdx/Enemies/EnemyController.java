@@ -9,7 +9,7 @@ import com.mygdx.Board.Squares;
 import com.mygdx.Player.Player;
 
 /**
- * @author Alex Phillips
+ * @author Alex Phillips, Kathryn Hurst
  * Controlls all of the enemies on the level
  */
 public class EnemyController 
@@ -113,4 +113,21 @@ public class EnemyController
             }
         }
     }
+
+	/**
+	 * Set the speed of all enemies
+	 * @param speed new speed of all enemies
+	 */
+	public void setMovementSpeed(int speed)
+	{
+		if (enemies != null) 
+		{
+			//Loops though all of the enemies
+			for(int i = 0; i < enemies.size(); i++ )
+			{
+				Enemies enemy = enemies.get(i);
+				enemy.setMovementSpeed(speed);
+			}
+		}				
+	}
 }

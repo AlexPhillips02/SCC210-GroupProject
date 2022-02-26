@@ -42,6 +42,7 @@ public class GameController
 	private OrthographicCamera camera;
 	private Viewport gamePort;
 	private int levelNumber = 0;
+	private float timeSinceDeath = 0;
 
 	/**
 	 * Creates the camera
@@ -191,10 +192,20 @@ public class GameController
 
 		if (player.isAlive() == false) 
 		{
-			//System.out.println("Player is dead.");
-			//System.out.println("Load game over screen from game controller");
-            //Stop the game from playing
-            //((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
+			// player.setMovementSpeed(0);
+			// enemyController.setMovementSpeed(0);
+			// timeSinceDeath = timeSinceDeath + Gdx.graphics.getDeltaTime();
+			// System.out.println("Player is dead.");
+			// System.out.println("Load game over screen from game controller");
+			// gui.addTempLabel("Player lives = 0");
+			// if(timeSinceDeath >= 4)
+			// {
+			// 	((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
+			// }
+			// else if(timeSinceDeath >= 2)
+			// {
+			// 	gui.addTempLabel("Game Over");
+			// }
 		}
 
 		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
