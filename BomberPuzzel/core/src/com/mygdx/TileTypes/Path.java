@@ -10,8 +10,9 @@ public class Path extends Tile
 {
     public Path()
     {
-       
-        super("Path fina-1.png.png");
+
+
+        super("TEST path-1.png.png");
 
     }    
 }
