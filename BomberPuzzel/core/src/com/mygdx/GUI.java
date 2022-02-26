@@ -83,7 +83,7 @@ public class GUI
 
         puzzelLabel = new Label(String.format(""), puzzelStyle);
 
-        table.add(levelLabel).expandX().pad(10); 
+        table.add(levelLabel).expandX().padTop(10); 
         table.add(timeLabel).expandX().padTop(10); // This expand X makes everything in the row share the row equally
         table.add(puzzelTypeLabel).expandX().padTop(10);
         table.add(livesLabel).expandX().padTop(10);   
@@ -120,11 +120,14 @@ public class GUI
         {
             String name = activeAbilities.get(i).getName();
 
-            if (!abilites.equals("")) 
+            if (!abilites.contains(name)) 
             {
-                name = (", " + name);
+                if (!abilites.equals("")) 
+                {
+                    name = (", " + name);
+                }
+                abilites = abilites.concat(name); 
             }
-            abilites = abilites.concat(name); 
         }
 
         activeAbilites.setText(String.format("Active Abilites: %s", abilites));

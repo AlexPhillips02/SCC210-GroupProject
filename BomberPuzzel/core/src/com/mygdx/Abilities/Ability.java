@@ -25,7 +25,7 @@ public abstract class Ability
 
     protected Animation<TextureRegion> currentAnimation;
     private float elapsedTime = 0f;
-    protected float abilityLength = 4f; //In seconds
+    protected float abilityLength; //In seconds
 
     protected String name;
 
@@ -36,7 +36,7 @@ public abstract class Ability
      * @param x X coordinate of the entity
      * @param y Y coordinate of the entity
      */
-    public Ability(String imageURL, Board board, float x, float y, Entity entity, String name)
+    public Ability(String imageURL, Board board, float x, float y, Entity entity, String name, float abilityLength)
     {
         defaultImage = new Texture(imageURL);
         this.board = board;
@@ -44,6 +44,7 @@ public abstract class Ability
         this.y = y;
         this.entity = entity;
         this.name = name;
+        this.abilityLength = abilityLength;
 
         collisionRectangle = new Rectangle(x, y, defaultImage.getWidth(), defaultImage.getHeight());
     }

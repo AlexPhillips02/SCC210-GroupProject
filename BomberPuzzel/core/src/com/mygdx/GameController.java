@@ -72,7 +72,7 @@ public class GameController
 		//Level number orginally set to 0
 		float basePercentageOfDestrctableWalls = 10;
 		int baseEnemyAmount = 10;
-		int baseAbilitesAmount = 10;
+		int baseAbilitesAmount = 30;
 
 		//Increasing base amounts based on level (Increase difficulty)
 		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * basePercentageOfDestrctableWalls);
