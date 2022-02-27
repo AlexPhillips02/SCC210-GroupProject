@@ -13,10 +13,13 @@ public class MainGameScreen implements Screen {
 
 	private SpriteBatch batch;
 	private GameController controller;
-	
-	public MainGameScreen (SpriteBatch batch)
+
+	/**
+	 * Constructor for the Main Game Screen, where the game takes place.
+	 */
+	public MainGameScreen ()
 	{
-		this.batch = batch;
+		batch = new SpriteBatch();
 		controller = new GameController(batch);
 	}
 

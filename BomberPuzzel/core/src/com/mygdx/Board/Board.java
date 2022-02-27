@@ -166,6 +166,18 @@ public class Board
                 //Draws the background tile for each square
                 Squares current = gameSquares[x][y].getSquare();
                 batch.draw(current.getTile().getTexture(), current.getX(), current.getY());
+            }
+        }
+    }
+
+    public void DrawBombs(SpriteBatch batch )
+    {
+        for (int x = 0; x < gameSquares.length; x++) 
+        {
+            for (int y = 0; y < gameSquares[x].length; y++) 
+            {
+                //Draws the background tile for each square
+                Squares current = gameSquares[x][y].getSquare();
 
                 //If the tile also has a animation, draws the animation ontop of the tile
                 if (current.getTile().getAnimation() != null) 

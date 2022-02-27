@@ -5,9 +5,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -16,11 +14,8 @@ import com.mygdx.Abilities.*;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
-import com.mygdx.GameScreens.GameOverScreen;
-import com.mygdx.GameScreens.MainGameScreen;
+import com.mygdx.GameScreens.MenuScreen;
 import com.mygdx.Player.Player;
-// import com.mygdx.Puzzles.Memory.ColourButton;
-// import com.mygdx.Puzzles.Memory.Order;
 import com.mygdx.Puzzles.PuzzleController;
 
 /**
@@ -42,7 +37,9 @@ public class GameController
 	private OrthographicCamera camera;
 	private Viewport gamePort;
 	private int levelNumber = 0;
-	private float timeSinceDeath = 0;
+	private float timeSinceGameStop = 0;
+
+	private boolean runGame = true;
 
 	/**
 	 * Creates the camera
@@ -62,17 +59,17 @@ public class GameController
     }
 
 	/**
-	 * Creates the level
-	 * @param percentageOfDestructableWalls Percentage of the map to be filled with walls (0 - 100)
-	 * @param enemyAmount amount of enemies that are going to be spawned on the map
-	 * @param abilitiesAmount amount of abilities that are going to be spawned on the map
+	 * Creates the level.
+	 * Every single part of the game is declared and initialised here.
 	 */
 	public void CreateLevel()
 	{
-		//Level number orginally set to 0
+		runGame = false;
+
+		//Level number originally set to 0
 		float basePercentageOfDestrctableWalls = 10;
 		int baseEnemyAmount = 10;
-		int baseAbilitesAmount = 30;
+		int baseAbilitesAmount = 10;
 
 		//Increasing base amounts based on level (Increase difficulty)
 		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * basePercentageOfDestrctableWalls);
@@ -116,29 +113,24 @@ public class GameController
 	}
 
 	/**
-	 * Continuosly sends updates looking for player movement
+	 * Continuously sends updates looking for player movement
 	 * Also calls the function to draw the player and the board
 	 */
 	public void Update() 
 	{
 		//Gameboard
 		gameBoard.Draw(batch);	//draws gameboard
-		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes	
+		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
+		
+		//Puzzle controller
+		puzzleController.Update(batch);	
+		gameBoard.DrawBombs(batch);
 
 		//If squares exist where damage should be inflicted
 		if (deathSquares.size() > 0) 
 		{
 			checkForSquareCollision(deathSquares);
 			gameBoard.resetDeathSquares();
-		}
-
-		//Puzzle controller
-		puzzleController.Update(batch); 
-		//If the game has been won Spawn win screen here
-		if (puzzleController.getWinStatus() == true) 
-		{
-			//THIS IS WHAT HAPPENS WHEN THE GAME IS WON
-			CreateLevel();
 		}
 
 		//Draw abilities on the board
@@ -179,36 +171,26 @@ public class GameController
 			}
 		}
 
-		//Enemies
-		enemyController.Update(batch);
-
-		//Player
-		player.checkInput();
-		player.update();
+		//Enemies and player drawing
+		enemyController.draw(batch);
 		player.Draw(batch);
 
-		//Camera
-		moveCamera();
-
-		if (player.isAlive() == false) 
+		//If the game has been won or the player has died
+		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame)
 		{
-			// player.setMovementSpeed(0);
-			// enemyController.setMovementSpeed(0);
-			// timeSinceDeath = timeSinceDeath + Gdx.graphics.getDeltaTime();
-			// System.out.println("Player is dead.");
-			// System.out.println("Load game over screen from game controller");
-			// gui.addTempLabel("Player lives = 0");
-			// if(timeSinceDeath >= 4)
-			// {
-			// 	((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
-			// }
-			// else if(timeSinceDeath >= 2)
-			// {
-			// 	gui.addTempLabel("Game Over");
-			// }
+			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
+			GamePauseOutput();
+		}
+		else
+		{
+			//If the game is still running, update the moving entities
+			gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
+			player.update();
+			enemyController.Update();
 		}
 
-		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
+		//Camera
+		moveCamera();		
         gui.stage.draw();
 	}
 
@@ -303,6 +285,57 @@ public class GameController
 		}
 
 		camera.update();
+	}
+
+	public void GamePauseOutput()
+	{
+		if (puzzleController.getWinStatus())
+		{
+			//THIS IS WHAT HAPPENS WHEN THE GAME IS WON
+			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
+			gui.puzzelCompleted();
+		
+			if(timeSinceGameStop >= 5)
+			{
+				timeSinceGameStop = 0;
+				CreateLevel();
+			}
+			else if(timeSinceGameStop >= 1.5)
+			{
+				gui.puzzelCompletedTime();
+			}
+		}
+		else if (!player.isAlive())
+		{
+			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
+			gui.gameOverLabel();
+		
+			if(timeSinceGameStop >= 5)
+			{
+				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+			}
+			else if(timeSinceGameStop >= 1.5)
+			{
+				gui.levelCompletionLabel();
+			}
+		}
+		else
+		{
+			//If the game is yet to start
+			int countDown = 4;
+			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
+			countDown = (int)(countDown - timeSinceGameStop);
+
+			gui.startGame();
+			gui.gameCountDown(countDown);
+		
+			if(countDown == 0)
+			{
+				gui.removeCountDown();
+				timeSinceGameStop = 0;
+				runGame = true;
+			}
+		}
 	}
 
 	/**

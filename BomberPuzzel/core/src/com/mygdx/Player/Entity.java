@@ -34,7 +34,7 @@ public abstract class Entity
     protected float animationTimer = 0f;
 
     protected int health;
-    protected float healthCooldown = 3f; //Seconds
+    protected float healthCooldown = 1.5f; //Seconds
     protected float lastDamageTimer = healthCooldown + 1;
 
     protected SpriteBatch batch; //for the Game Over screen

@@ -5,14 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Abilities.Ability;
@@ -28,10 +25,12 @@ public class GUI
     private Table table;
 
     private int levelTimer;
+    private int levelCount;
     private float timeCount;
     private int playerLives;
     private String puzzleType;
     private float start = 0;
+    private String gameOverText = "";
     private String abilites = "";
 
     private boolean text = false;
@@ -47,10 +46,19 @@ public class GUI
     private Label timeCountLabel;
 
     private Label puzzelLabel;
+
+    private Label gameOverLabel;
+    private Label levelCompletionLabel;
+
     private Label activeAbilites;
 
+    /**
+     * Constructor for the GUI around the Game Board, which displays all the player and game info.
+     * @param levelCount gets the level number.
+     */
     public GUI(int levelCount)
     {
+        this.levelCount = levelCount;
         levelTimer = 0;
         playerLives = 1;
 
@@ -67,8 +75,12 @@ public class GUI
 
         BitmapFont font = fontGenerator.generateFont(fontParameters);
         
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        Label.LabelStyle puzzelStyle = new Label.LabelStyle(font, Color.RED);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, null);
+        Label.LabelStyle puzzelStyle = new Label.LabelStyle(font, null);
+
+        fontParameters.size = 50;
+        font = fontGenerator.generateFont(fontParameters);
+        Label.LabelStyle gameOverStyle = new Label.LabelStyle(font, null);
         
 
         levelLabel = new Label("CURRENT LEVEL:", labelStyle);
@@ -82,6 +94,9 @@ public class GUI
         livesCountLabel = new Label(String.format("%d", playerLives), labelStyle);
 
         puzzelLabel = new Label(String.format(""), puzzelStyle);
+
+        gameOverLabel = new Label(String.format(""), gameOverStyle);
+        levelCompletionLabel = new Label(String.format(""), gameOverStyle);
 
         table.add(levelLabel).expandX().padTop(10); 
         table.add(timeLabel).expandX().padTop(10); // This expand X makes everything in the row share the row equally
@@ -99,7 +114,15 @@ public class GUI
 
         table.row();
         table.add(puzzelLabel).colspan(4).padTop(10);
+
+        table.row();
+        table.add(gameOverLabel).colspan(4);
+
+        table.row();
+        table.add(levelCompletionLabel).colspan(4);
         
+
+        //Fills the rest of the table (Goes to the bottom)
         table.row();
         table.add().fillY().expandY();
 
@@ -174,6 +197,30 @@ public class GUI
         start = levelTimer;
     }
 
+    public void gameOverLabel()
+    {
+        gameOverLabel.setColor(Color.RED);
+        gameOverLabel.setText("GAMEOVER");
+    }
+
+    public void levelCompletionLabel()
+    {
+        levelCompletionLabel.setColor(Color.RED);
+        levelCompletionLabel.setText("Completed " + (levelCount - 1) + " Levels");
+    }
+
+    public void puzzelCompleted()
+    {
+        gameOverLabel.setColor(Color.GREEN);
+        gameOverLabel.setText("PUZZLE COMPLETED");
+    }
+
+    public void puzzelCompletedTime()
+    {
+        levelCompletionLabel.setColor(Color.GREEN);
+        levelCompletionLabel.setText("Completed In " + levelTimer + " Seconds");
+    }
+
     /**
      * Clear displayLabel
      */
@@ -182,5 +229,33 @@ public class GUI
         puzzelLabel.setText("");
         text = false;
         start = 0;
+    }
+
+    public void startGame() 
+    {
+        gameOverLabel.setColor(Color.GREEN);
+        gameOverLabel.setText("LEVEL START:");
+    }
+
+    public void removeCountDown() 
+    {
+        gameOverLabel.setText("");
+        levelCompletionLabel.setText("");
+    }
+
+    public void gameCountDown(int countDown) 
+    {
+        levelCompletionLabel.setColor(Color.GREEN);
+        System.out.println(countDown);
+        levelCompletionLabel.setText("" + countDown);
+    }
+
+    public void setHealth(int playerHealth) 
+    {
+        if (playerHealth != playerLives) 
+        {
+            playerLives = playerHealth;
+            livesCountLabel.setText(String.format("%d", playerLives));
+        }
     }
 }

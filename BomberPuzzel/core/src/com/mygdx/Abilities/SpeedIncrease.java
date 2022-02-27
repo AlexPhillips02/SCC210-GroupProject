@@ -17,7 +17,7 @@ public class SpeedIncrease extends Ability{
      * @param player the player which gets the ability.
      */
     public SpeedIncrease(Board board, float x, float y, Player player) {
-        super("Speed-1.png.png", board, x, y, player, "Fast Feet");
+        super("Speed-1.png.png", board, x, y, player, "Fast Feet", 1);
     }
 
     public void ActivateAbility() 

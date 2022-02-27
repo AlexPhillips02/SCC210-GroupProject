@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx.Driver;
 import com.mygdx.GameController;
+import com.mygdx.Sound.SoundController;
+import com.mygdx.Sound.Musics.*;
+import com.mygdx.Sound.Sounds.*;
 
 
 /**
@@ -27,26 +30,27 @@ public class MenuScreen implements Screen {
     private static final int EXIT_BUTTON_Y = 10;
     private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
-    
-    
 
     private SpriteBatch batch;
     private GameController controller;
-   
-    private Texture inActivePlayButton;
-    private Texture inActiveExitButton;
-    private Texture activePlayButton;
-    private Texture activeExitButton;
-    private Texture backGround;
+    private SoundController soundController;
+
+    private final Texture inActivePlayButton;
+    private final Texture inActiveExitButton;
+    private final Texture activePlayButton;
+    private final Texture activeExitButton;
+    private final Texture backGround;
+
+    private IntroSong intro = new IntroSong();
+    private Click click = new Click();
 
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
-     * @param batch SpriteBatch batch
      */
-
-    public MenuScreen(SpriteBatch batch){
-        this.batch = batch;
+    public MenuScreen(){
+        batch = new SpriteBatch();
         controller = new GameController(batch);
+        soundController = new SoundController();
         inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activePlayButton = new Texture("Screens/Play (Active).png");
@@ -68,6 +72,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        soundController.playMusic(intro);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -87,8 +92,9 @@ public class MenuScreen implements Screen {
             batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         
         if (Gdx.input.isTouched()){
+                soundController.playSound(click);
                 this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
             }
         }
         else {
@@ -98,6 +104,7 @@ public class MenuScreen implements Screen {
         if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
+                soundController.playSound(click);
                 Gdx.app.exit();
             }
         }
@@ -108,9 +115,9 @@ public class MenuScreen implements Screen {
         if(Gdx.input.getX() < BUTTON_X + OPTION_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < OPTION_BUTTON_Y + OPTION_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > OPTION_BUTTON_Y){
             batch.draw(activeExitButton, BUTTON_X, OPTION_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
-                //Gdx.app.exit();
+                soundController.playSound(click);
                 this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen(batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen());
             }
         }
         else {
@@ -152,6 +159,6 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void dispose() {
-
+        soundController.music.dispose();
     }
 }

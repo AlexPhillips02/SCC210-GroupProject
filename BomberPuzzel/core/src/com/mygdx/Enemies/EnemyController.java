@@ -64,7 +64,7 @@ public class EnemyController
 	 * Called within GameController to update enemey positions and status
 	 * @param batch Batch used to draw the enemies
 	 */
-    public void Update(SpriteBatch batch)
+    public void Update()
     {
         //Draws and updates all enemeies created
 		if (enemies != null) 
@@ -75,7 +75,6 @@ public class EnemyController
 				Enemies enemy = enemies.get(i);
 
 				enemy.update();
-				enemy.Draw(batch);	
 
 				//Player contact with enemy
 				if (enemy.getCollisionRectangle().overlaps(player.getCollisionRectangle())) //&& player.isAlive()) 
@@ -91,6 +90,20 @@ public class EnemyController
 			}
 		}
     }
+
+	public void draw(SpriteBatch batch)
+	{
+		//Draws and updates all enemeies created
+		if (enemies != null) 
+		{
+			//Loops though all of the enemies
+			for(int i = 0; i < enemies.size(); i++ )
+			{
+				Enemies enemy = enemies.get(i);
+				enemy.Draw(batch);	
+			}
+		}
+	}
 
 	/**
 	 * Checks for a collision between enemy and death square

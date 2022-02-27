@@ -16,6 +16,13 @@ public class Player extends Entity
     private int bombsMax;
     private int bombsRange;
 
+    /**
+     * Constructor for the Player Model, the main character in the game.
+     * @param board the Game Board
+     * @param x X coordinate of the entity
+     * @param y Y coordinate of the entity
+     * @param movementSpeed Movement speed of the person
+     */
     public Player(Board board, float x, float y, float movementSpeed)
     {
         super("Bomberman/BombermanDefault.png" , board, x, y, movementSpeed);
@@ -79,6 +86,7 @@ public class Player extends Entity
     public void update()
     {
         increaseLastDamaged();
+        controller.checkInput();
     }
 
     /**
@@ -95,13 +103,6 @@ public class Player extends Entity
     public void decreasePlacedBombs()
     {
         this.bombsNumber--;
-    }
-
-    /**
-     * Checking the input of the controller
-     */
-    public void checkInput() {
-        controller.checkInput();
     }
 
     // Getters and Setters
