@@ -32,11 +32,8 @@ public class Order extends Puzzle
 
     /**
      * Constructor for the order class
+     * @param gui the GUI of the game
      * @param board is the gameboard
-     * @param Square1 is the random square for the red button to appear at
-     * @param Square2 is the random square for the green button to appear at
-     * @param Square3 is the random square for the blue button to appear at
-     * @param Square4 is the random square for the yellow button to appear at
      */
     public Order(GUI gui, Board board)
     {

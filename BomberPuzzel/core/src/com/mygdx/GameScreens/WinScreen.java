@@ -32,7 +32,6 @@ public class WinScreen implements Screen {
 
     /**
      * Constructor for the main Game Over Screen which appears at the end of the game, when the player dies.
-     * @param batch SpriteBatch batch
      */
     public WinScreen(){
         batch = new SpriteBatch();

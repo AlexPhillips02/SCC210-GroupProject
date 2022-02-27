@@ -13,16 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.Driver;
-import com.mygdx.GUI;
 import com.mygdx.GameController;
 import com.mygdx.Sound.SoundController;
 import com.mygdx.Sound.Sounds.Click;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.Game;
-import com.mygdx.GUI;
 
 public class TutorialScreen implements Screen{
 
@@ -36,17 +32,18 @@ public class TutorialScreen implements Screen{
     private GameController controller;
     private SoundController soundController;
     
-    private Texture inActiveExitButton;
-    private Texture activeExitButton;
-
+    private final Texture inActiveExitButton;
+    private final Texture activeExitButton;
 
     public Stage stage;
     private FitViewport viewport;
     private Table table;
-    
 
     private Label helpLabel;
 
+    /**
+     * Constructor for the Tutorial Screen which introduces players to how the game is played.
+     */
     public TutorialScreen ()
     {
         batch = new SpriteBatch();

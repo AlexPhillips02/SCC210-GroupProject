@@ -11,7 +11,6 @@ import com.mygdx.Puzzles.Buttons.RedButton;
 import com.mygdx.Puzzles.Buttons.YellowButton;
 import com.mygdx.Puzzles.Puzzle;
 
-
 /*
 In the colour coding mini-game, there will be various colours hidden within the walls. 
 The player must walk on two of the same colour in order to complete the task. 
@@ -20,6 +19,10 @@ If the Player gets into contact with another colour before completing a previous
 the colours will reset and the Player will have to start over.
 */
 
+/**
+ * @author
+ * Introduces a class for the colour matching of buttons.
+ */
 public class Match extends Puzzle
 {
     private ArrayList<ColourButton> buttons = new ArrayList<>();
@@ -27,10 +30,18 @@ public class Match extends Puzzle
     public ColourButton prev;
     public ColourButton current;
 
+    /**
+     * Constructor for the matching itself.
+     * @param gui the GUI of the game
+     * @param board the Game Board
+     */
     public Match(GUI gui, Board board){
         super(gui, board);
     }
 
+    /**
+     * Method for whenever the game is created so that it spawns the coloured tiles.
+     */
     public void createGame()
     {
         for(int i = 0; i< 8; i++)
@@ -40,6 +51,11 @@ public class Match extends Puzzle
         }
     }
 
+    /**
+     * Adding colours tiles to the board
+     * @param pathSquare the square which is gonna get coloured
+     * @param i number of it
+     */
     public void addColourTiles(Squares pathSquare, int i)
     {
         int x = pathSquare.getX();

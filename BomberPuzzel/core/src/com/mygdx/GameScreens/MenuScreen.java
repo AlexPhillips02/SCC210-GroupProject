@@ -30,26 +30,23 @@ public class MenuScreen implements Screen {
     private static final int EXIT_BUTTON_Y = 10;
     private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
-    
-    
 
     private SpriteBatch batch;
     private GameController controller;
     private SoundController soundController;
 
-    private Texture inActivePlayButton;
-    private Texture inActiveExitButton;
-    private Texture activePlayButton;
-    private Texture activeExitButton;
-    private Texture backGround;
+    private final Texture inActivePlayButton;
+    private final Texture inActiveExitButton;
+    private final Texture activePlayButton;
+    private final Texture activeExitButton;
+    private final Texture backGround;
 
     private IntroSong intro = new IntroSong();
     private Click click = new Click();
+
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
-     * @param batch SpriteBatch batch
      */
-
     public MenuScreen(){
         batch = new SpriteBatch();
         controller = new GameController(batch);

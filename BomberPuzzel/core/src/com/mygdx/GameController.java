@@ -3,13 +3,9 @@ package com.mygdx;
 import java.util.ArrayList;
 import java.util.Random;
 
-import javax.lang.model.util.ElementScanner14;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -18,12 +14,8 @@ import com.mygdx.Abilities.*;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
-import com.mygdx.GameScreens.GameOverScreen;
-import com.mygdx.GameScreens.MainGameScreen;
 import com.mygdx.GameScreens.MenuScreen;
 import com.mygdx.Player.Player;
-// import com.mygdx.Puzzles.Memory.ColourButton;
-// import com.mygdx.Puzzles.Memory.Order;
 import com.mygdx.Puzzles.PuzzleController;
 
 /**
@@ -67,16 +59,14 @@ public class GameController
     }
 
 	/**
-	 * Creates the level
-	 * @param percentageOfDestructableWalls Percentage of the map to be filled with walls (0 - 100)
-	 * @param enemyAmount amount of enemies that are going to be spawned on the map
-	 * @param abilitiesAmount amount of abilities that are going to be spawned on the map
+	 * Creates the level.
+	 * Every single part of the game is declared and initialised here.
 	 */
 	public void CreateLevel()
 	{
 		runGame = false;
 
-		//Level number orginally set to 0
+		//Level number originally set to 0
 		float basePercentageOfDestrctableWalls = 10;
 		int baseEnemyAmount = 10;
 		int baseAbilitesAmount = 10;
@@ -123,7 +113,7 @@ public class GameController
 	}
 
 	/**
-	 * Continuosly sends updates looking for player movement
+	 * Continuously sends updates looking for player movement
 	 * Also calls the function to draw the player and the board
 	 */
 	public void Update() 
@@ -186,7 +176,7 @@ public class GameController
 		player.Draw(batch);
 
 		//If the game has been won or the player has died
-		if (puzzleController.getWinStatus() || player.isAlive() == false || runGame == false) 
+		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame)
 		{
 			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
 			GamePauseOutput();
@@ -299,7 +289,7 @@ public class GameController
 
 	public void GamePauseOutput()
 	{
-		if (puzzleController.getWinStatus() == true)
+		if (puzzleController.getWinStatus())
 		{
 			//THIS IS WHAT HAPPENS WHEN THE GAME IS WON
 			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
@@ -315,7 +305,7 @@ public class GameController
 				gui.puzzelCompletedTime();
 			}
 		}
-		else if (player.isAlive() == false) 
+		else if (!player.isAlive())
 		{
 			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
 			gui.gameOverLabel();

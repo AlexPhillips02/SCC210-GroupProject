@@ -52,6 +52,10 @@ public class GUI
 
     private Label activeAbilites;
 
+    /**
+     * Constructor for the GUI around the Game Board, which displays all the player and game info.
+     * @param levelCount gets the level number.
+     */
     public GUI(int levelCount)
     {
         this.levelCount = levelCount;
