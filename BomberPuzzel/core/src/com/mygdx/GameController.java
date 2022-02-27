@@ -3,6 +3,8 @@ package com.mygdx;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.lang.model.util.ElementScanner14;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -43,7 +45,7 @@ public class GameController
 	private OrthographicCamera camera;
 	private Viewport gamePort;
 	private int levelNumber = 0;
-	private float timeSinceDeath = 0;
+	private float timeSinceGameStop = 0;
 
 	private boolean runGame = true;
 
@@ -72,10 +74,12 @@ public class GameController
 	 */
 	public void CreateLevel()
 	{
+		runGame = false;
+
 		//Level number orginally set to 0
 		float basePercentageOfDestrctableWalls = 10;
 		int baseEnemyAmount = 10;
-		int baseAbilitesAmount = 30;
+		int baseAbilitesAmount = 10;
 
 		//Increasing base amounts based on level (Increase difficulty)
 		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * basePercentageOfDestrctableWalls);
@@ -126,22 +130,17 @@ public class GameController
 	{
 		//Gameboard
 		gameBoard.Draw(batch);	//draws gameboard
-		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes	
+		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
+		
+		//Puzzle controller
+		puzzleController.Update(batch);	
+		gameBoard.DrawBombs(batch);
 
 		//If squares exist where damage should be inflicted
 		if (deathSquares.size() > 0) 
 		{
 			checkForSquareCollision(deathSquares);
 			gameBoard.resetDeathSquares();
-		}
-
-		//Puzzle controller
-		puzzleController.Update(batch); 
-		//If the game has been won Spawn win screen here
-		if (puzzleController.getWinStatus() == true) 
-		{
-			//THIS IS WHAT HAPPENS WHEN THE GAME IS WON
-			CreateLevel();
 		}
 
 		//Draw abilities on the board
@@ -182,39 +181,26 @@ public class GameController
 			}
 		}
 
-		//Enemies
+		//Enemies and player drawing
 		enemyController.draw(batch);
-
-		//Player
 		player.Draw(batch);
 
-		if (runGame == true) 
+		//If the game has been won or the player has died
+		if (puzzleController.getWinStatus() || player.isAlive() == false || runGame == false) 
 		{
+			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
+			GamePauseOutput();
+		}
+		else
+		{
+			//If the game is still running, update the moving entities
+			gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
 			player.update();
 			enemyController.Update();
-			gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
 		}
 
 		//Camera
-		moveCamera();
-
-		if (player.isAlive() == false) 
-		{
-			runGame = false;
-
-			timeSinceDeath = timeSinceDeath + Gdx.graphics.getDeltaTime();
-			gui.gameOverLabel();
-		
-			if(timeSinceDeath >= 5)
-			{
-				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
-			}
-			else if(timeSinceDeath >= 1.5)
-			{
-				gui.levelCompletionLabel();
-			}
-		}
-
+		moveCamera();		
         gui.stage.draw();
 	}
 
@@ -309,6 +295,57 @@ public class GameController
 		}
 
 		camera.update();
+	}
+
+	public void GamePauseOutput()
+	{
+		if (puzzleController.getWinStatus() == true)
+		{
+			//THIS IS WHAT HAPPENS WHEN THE GAME IS WON
+			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
+			gui.puzzelCompleted();
+		
+			if(timeSinceGameStop >= 5)
+			{
+				timeSinceGameStop = 0;
+				CreateLevel();
+			}
+			else if(timeSinceGameStop >= 1.5)
+			{
+				gui.puzzelCompletedTime();
+			}
+		}
+		else if (player.isAlive() == false) 
+		{
+			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
+			gui.gameOverLabel();
+		
+			if(timeSinceGameStop >= 5)
+			{
+				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+			}
+			else if(timeSinceGameStop >= 1.5)
+			{
+				gui.levelCompletionLabel();
+			}
+		}
+		else
+		{
+			//If the game is yet to start
+			int countDown = 4;
+			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
+			countDown = (int)(countDown - timeSinceGameStop);
+
+			gui.startGame();
+			gui.gameCountDown(countDown);
+		
+			if(countDown == 0)
+			{
+				gui.removeCountDown();
+				timeSinceGameStop = 0;
+				runGame = true;
+			}
+		}
 	}
 
 	/**

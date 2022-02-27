@@ -71,12 +71,12 @@ public class GUI
 
         BitmapFont font = fontGenerator.generateFont(fontParameters);
         
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        Label.LabelStyle puzzelStyle = new Label.LabelStyle(font, Color.RED);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, null);
+        Label.LabelStyle puzzelStyle = new Label.LabelStyle(font, null);
 
         fontParameters.size = 50;
         font = fontGenerator.generateFont(fontParameters);
-        Label.LabelStyle gameOverStyle = new Label.LabelStyle(font, Color.RED);
+        Label.LabelStyle gameOverStyle = new Label.LabelStyle(font, null);
         
 
         levelLabel = new Label("CURRENT LEVEL:", labelStyle);
@@ -195,12 +195,26 @@ public class GUI
 
     public void gameOverLabel()
     {
+        gameOverLabel.setColor(Color.RED);
         gameOverLabel.setText("GAMEOVER");
     }
 
     public void levelCompletionLabel()
     {
+        levelCompletionLabel.setColor(Color.RED);
         levelCompletionLabel.setText("Completed " + (levelCount - 1) + " Levels");
+    }
+
+    public void puzzelCompleted()
+    {
+        gameOverLabel.setColor(Color.GREEN);
+        gameOverLabel.setText("PUZZLE COMPLETED");
+    }
+
+    public void puzzelCompletedTime()
+    {
+        levelCompletionLabel.setColor(Color.GREEN);
+        levelCompletionLabel.setText("Completed In " + levelTimer + " Seconds");
     }
 
     /**
@@ -211,5 +225,33 @@ public class GUI
         puzzelLabel.setText("");
         text = false;
         start = 0;
+    }
+
+    public void startGame() 
+    {
+        gameOverLabel.setColor(Color.GREEN);
+        gameOverLabel.setText("LEVEL START:");
+    }
+
+    public void removeCountDown() 
+    {
+        gameOverLabel.setText("");
+        levelCompletionLabel.setText("");
+    }
+
+    public void gameCountDown(int countDown) 
+    {
+        levelCompletionLabel.setColor(Color.GREEN);
+        System.out.println(countDown);
+        levelCompletionLabel.setText("" + countDown);
+    }
+
+    public void setHealth(int playerHealth) 
+    {
+        if (playerHealth != playerLives) 
+        {
+            playerLives = playerHealth;
+            livesCountLabel.setText(String.format("%d", playerLives));
+        }
     }
 }
