@@ -79,6 +79,7 @@ public class Player extends Entity
     public void update()
     {
         increaseLastDamaged();
+        controller.checkInput();
     }
 
     /**
@@ -95,13 +96,6 @@ public class Player extends Entity
     public void decreasePlacedBombs()
     {
         this.bombsNumber--;
-    }
-
-    /**
-     * Checking the input of the controller
-     */
-    public void checkInput() {
-        controller.checkInput();
     }
 
     // Getters and Setters

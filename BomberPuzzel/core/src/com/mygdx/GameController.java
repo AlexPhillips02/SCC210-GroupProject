@@ -18,6 +18,7 @@ import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
 import com.mygdx.GameScreens.GameOverScreen;
 import com.mygdx.GameScreens.MainGameScreen;
+import com.mygdx.GameScreens.MenuScreen;
 import com.mygdx.Player.Player;
 // import com.mygdx.Puzzles.Memory.ColourButton;
 // import com.mygdx.Puzzles.Memory.Order;
@@ -43,6 +44,8 @@ public class GameController
 	private Viewport gamePort;
 	private int levelNumber = 0;
 	private float timeSinceDeath = 0;
+
+	private boolean runGame = true;
 
 	/**
 	 * Creates the camera
@@ -121,6 +124,11 @@ public class GameController
 	 */
 	public void Update() 
 	{
+		if(player.isAlive() == false)
+		{
+			runGame = false;
+		}
+
 		//Gameboard
 		gameBoard.Draw(batch);	//draws gameboard
 		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes	
@@ -180,32 +188,33 @@ public class GameController
 		}
 
 		//Enemies
-		enemyController.Update(batch);
+		enemyController.draw(batch);
 
 		//Player
-		player.checkInput();
-		player.update();
 		player.Draw(batch);
+
+		if (runGame == true) 
+		{
+			player.update();
+			enemyController.Update();
+		}
 
 		//Camera
 		moveCamera();
 
 		if (player.isAlive() == false) 
 		{
-			// player.setMovementSpeed(0);
-			// enemyController.setMovementSpeed(0);
-			// timeSinceDeath = timeSinceDeath + Gdx.graphics.getDeltaTime();
-			// System.out.println("Player is dead.");
-			// System.out.println("Load game over screen from game controller");
-			// gui.addTempLabel("Player lives = 0");
-			// if(timeSinceDeath >= 4)
-			// {
-			// 	((Game)Gdx.app.getApplicationListener()).setScreen(new GameOverScreen(batch));
-			// }
-			// else if(timeSinceDeath >= 2)
-			// {
-			// 	gui.addTempLabel("Game Over");
-			// }
+			timeSinceDeath = timeSinceDeath + Gdx.graphics.getDeltaTime();
+			gui.gameOverLabel();
+		
+			if(timeSinceDeath >= 5)
+			{
+				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen(batch));
+			}
+			else if(timeSinceDeath >= 1.5)
+			{
+				gui.levelCompletionLabel();
+			}
 		}
 
 		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
