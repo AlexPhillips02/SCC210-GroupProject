@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.Driver;
 import com.mygdx.GUI;
 import com.mygdx.GameController;
+import com.mygdx.Sound.SoundController;
+import com.mygdx.Sound.Sounds.Click;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.Game;
@@ -32,7 +34,7 @@ public class TutorialScreen implements Screen{
     
     private SpriteBatch batch;
     private GameController controller;
-    
+    private SoundController soundController;
     
     private Texture inActiveExitButton;
     private Texture activeExitButton;
@@ -49,6 +51,7 @@ public class TutorialScreen implements Screen{
     {
         batch = new SpriteBatch();
         controller = new GameController(batch);
+        soundController = new SoundController();
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activeExitButton = new Texture("Screens/Exit (active).png");
         
@@ -58,7 +61,7 @@ public class TutorialScreen implements Screen{
         
         LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
-        helpLabel = new Label("help",labelStyle);
+        helpLabel = new Label("In order to complete the game, the player must complete a Puzzle. The puzzle game is randomly selected and can either be colour match or colour sequence ordering. \n\n\n\n\n\n\n\n\n\n Colour Match: A colour Match is when two of the same colour buttons are pressed one after the other. all buttons must be matched\n Colour Ordering: A sequnce will appear on the screen, the buttons must be pressed in that sequence in order to complete the game",labelStyle);
         helpLabel.setAlignment(Align.center);
         
         table.top(); //qill put it at the top of stage
@@ -77,8 +80,8 @@ public class TutorialScreen implements Screen{
    @Override
    public void render (float delta)
    {	
-       Gdx.gl.glClearColor(1, 0, 0, 1);
-       Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f,0);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
        
        batch.begin();
        Exit();
@@ -90,6 +93,7 @@ public class TutorialScreen implements Screen{
         if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
+                soundController.playSound(new Click());
                 this.dispose();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
             }
