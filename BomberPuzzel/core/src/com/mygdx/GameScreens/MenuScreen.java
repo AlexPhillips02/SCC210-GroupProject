@@ -44,8 +44,8 @@ public class MenuScreen implements Screen {
      * @param batch SpriteBatch batch
      */
 
-    public MenuScreen(SpriteBatch batch){
-        this.batch = batch;
+    public MenuScreen(){
+        batch = new SpriteBatch();
         controller = new GameController(batch);
         inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
@@ -88,7 +88,7 @@ public class MenuScreen implements Screen {
         
         if (Gdx.input.isTouched()){
                 this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
             }
         }
         else {
@@ -110,7 +110,7 @@ public class MenuScreen implements Screen {
             if (Gdx.input.isTouched()){
                 //Gdx.app.exit();
                 this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen(batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen());
             }
         }
         else {

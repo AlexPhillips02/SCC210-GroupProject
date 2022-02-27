@@ -45,8 +45,9 @@ public class TutorialScreen implements Screen{
 
     private Label helpLabel;
 
-    public TutorialScreen (SpriteBatch batch){
-        this.batch = batch;
+    public TutorialScreen ()
+    {
+        batch = new SpriteBatch();
         controller = new GameController(batch);
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activeExitButton = new Texture("Screens/Exit (active).png");
@@ -90,7 +91,7 @@ public class TutorialScreen implements Screen{
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
                 this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen(batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
             }
         }
         else {

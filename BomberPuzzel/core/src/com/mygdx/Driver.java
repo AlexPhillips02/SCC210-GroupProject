@@ -20,9 +20,7 @@ public class Driver extends Game {
 	@Override
 	public void create ()
 	{
-		batch = new SpriteBatch();
-		//this.setScreen(new MainGameScreen(batch));
-		this.setScreen(new MenuScreen(batch));
+		this.setScreen(new MenuScreen());
 	}
 
 	@Override

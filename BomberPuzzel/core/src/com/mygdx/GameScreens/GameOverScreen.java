@@ -96,7 +96,7 @@ public class GameOverScreen implements Screen {
             batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
                 this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
             }
         }
         else {

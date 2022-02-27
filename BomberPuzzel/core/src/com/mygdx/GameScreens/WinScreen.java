@@ -34,8 +34,8 @@ public class WinScreen implements Screen {
      * Constructor for the main Game Over Screen which appears at the end of the game, when the player dies.
      * @param batch SpriteBatch batch
      */
-    public WinScreen(SpriteBatch batch){
-        this.batch = batch;
+    public WinScreen(){
+        batch = new SpriteBatch();
         controller = new GameController(batch);
     }
 
@@ -59,7 +59,7 @@ public class WinScreen implements Screen {
         //If N is pressed a new game is started when this one is finished
         if (Gdx.input.isKeyPressed(Input.Keys.N))
         {
-            ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) //If the escape button is clicked the game shuts down
         {
@@ -86,7 +86,7 @@ public class WinScreen implements Screen {
             public void clicked (InputEvent event, float x, float y){ //adding an action when clicked
                 System.out.println("CLICKED");
                 dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch)); //send us to the game screen
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen()); //send us to the game screen
             }
         });
 

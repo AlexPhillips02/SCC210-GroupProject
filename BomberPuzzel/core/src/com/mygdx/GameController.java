@@ -124,11 +124,6 @@ public class GameController
 	 */
 	public void Update() 
 	{
-		if(player.isAlive() == false)
-		{
-			runGame = false;
-		}
-
 		//Gameboard
 		gameBoard.Draw(batch);	//draws gameboard
 		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes	
@@ -197,6 +192,7 @@ public class GameController
 		{
 			player.update();
 			enemyController.Update();
+			gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
 		}
 
 		//Camera
@@ -204,12 +200,14 @@ public class GameController
 
 		if (player.isAlive() == false) 
 		{
+			runGame = false;
+
 			timeSinceDeath = timeSinceDeath + Gdx.graphics.getDeltaTime();
 			gui.gameOverLabel();
 		
 			if(timeSinceDeath >= 5)
 			{
-				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen(batch));
+				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 			}
 			else if(timeSinceDeath >= 1.5)
 			{
@@ -217,7 +215,6 @@ public class GameController
 			}
 		}
 
-		gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
         gui.stage.draw();
 	}
 
