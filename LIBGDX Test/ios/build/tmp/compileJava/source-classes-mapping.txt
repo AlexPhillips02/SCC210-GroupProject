@@ -1,2 +1,0 @@
-scc210/groupproject/IOSLauncher.java
- scc210.groupproject.IOSLauncher
