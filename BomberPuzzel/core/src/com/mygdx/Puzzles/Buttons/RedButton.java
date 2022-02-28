@@ -8,6 +8,9 @@ import com.mygdx.Board.Board;
  */
 public class RedButton extends ColourButton
 {
+    private String unclicked = "Buttons/RedButton.png";
+    private String clicked = "";
+
     public RedButton(Board board, float x, float y)
     {
         super(board, "Buttons/RedButton.png" , x, y);   
