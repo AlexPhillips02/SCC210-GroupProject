@@ -32,7 +32,7 @@ public class MenuScreen implements Screen {
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
 
     private SpriteBatch batch;
-    private GameController controller;
+    public GameController controller;
     private SoundController soundController;
 
     private final Texture inActivePlayButton;
@@ -74,7 +74,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        soundController.playMusic(introSong);
+        //soundController.playMusic(introSong);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

@@ -51,10 +51,7 @@ public class GameController
 		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		camera = new OrthographicCamera();
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
-		//gamePort = new FitViewport(928, 480, camera);
-
 		gamePort = new FitViewport(1280, 720, camera);
-
 		CreateLevel();
     }
 
@@ -101,7 +98,6 @@ public class GameController
 		for (int i = 0; i < amount; i++)
 		{
 			Squares pathSquare = gameBoard.getRandomPath();
-
 			//Translates grid position to coordinate
 			int xPosition = pathSquare.getX();
 			int yPosition = pathSquare.getY();
