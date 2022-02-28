@@ -3,6 +3,8 @@ package com.mygdx.GameScreens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,8 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.Driver;
 import com.mygdx.GameController;
 import com.mygdx.Sound.SoundController;
-import com.mygdx.Sound.Musics.*;
-import com.mygdx.Sound.Sounds.*;
 
 
 /**
@@ -41,21 +41,22 @@ public class MenuScreen implements Screen {
     private final Texture activeExitButton;
     private final Texture backGround;
 
-    private IntroSong intro = new IntroSong();
-    private Click click = new Click();
+    private Music introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
+    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
 
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
      */
     public MenuScreen(){
         batch = new SpriteBatch();
-        controller = new GameController(batch);
-        soundController = new SoundController();
         inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
         backGround = new Texture("Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
+
+        controller = new GameController(batch);
+        soundController = new SoundController();
     }
 
     /**
@@ -72,7 +73,7 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        soundController.playMusic(intro);
+        soundController.playMusic(introSong);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -87,12 +88,13 @@ public class MenuScreen implements Screen {
         //stage.draw();
     }
 
-    private void playAndExit(){
+    private void playAndExit()
+    {
         if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
             batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         
         if (Gdx.input.isTouched()){
-                soundController.playSound(click);
+                soundController.playMusic(buttonClick);
                 this.dispose();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
             }
@@ -103,8 +105,10 @@ public class MenuScreen implements Screen {
 
         if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+           
             if (Gdx.input.isTouched()){
-                soundController.playSound(click);
+                this.dispose();
+                soundController.playMusic(buttonClick);
                 Gdx.app.exit();
             }
         }
@@ -115,8 +119,8 @@ public class MenuScreen implements Screen {
         if(Gdx.input.getX() < BUTTON_X + OPTION_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < OPTION_BUTTON_Y + OPTION_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > OPTION_BUTTON_Y){
             batch.draw(activeExitButton, BUTTON_X, OPTION_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
-                soundController.playSound(click);
                 this.dispose();
+                soundController.playMusic(buttonClick);
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen());
             }
         }
@@ -159,6 +163,6 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void dispose() {
-        soundController.music.dispose();
+        introSong.dispose();
     }
 }
