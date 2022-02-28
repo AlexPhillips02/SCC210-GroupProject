@@ -2,6 +2,8 @@ package com.mygdx.Puzzles;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;
 import com.mygdx.Board.Board;
@@ -21,6 +23,8 @@ public class PuzzleController
     private Player player;
     private int puzzle;
 	private Puzzle puzzleGame;
+
+	private float lastButtonTime = 1;
 
     /**
      * Loads board and player
@@ -72,6 +76,8 @@ public class PuzzleController
      */
     public void Update(SpriteBatch batch)
     {
+		lastButtonTime = lastButtonTime + Gdx.graphics.getDeltaTime();
+
         // Draw puzzles on board
 		if(puzzle == 0)
 		{
@@ -82,8 +88,9 @@ public class PuzzleController
 			{
 				if(buttons.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{	
-					if(buttons.get(i).getActiveStatus())
+					if(buttons.get(i).getActiveStatus() && lastButtonTime > 1)
 					{	
+						lastButtonTime = 0;
 						((Match)puzzleGame).setCurrent(buttons.get(i));
 						i = 0;
 					}

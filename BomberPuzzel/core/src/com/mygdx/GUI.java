@@ -30,7 +30,6 @@ public class GUI
     private int playerLives;
     private String puzzleType;
     private float start = 0;
-    private String gameOverText = "";
     private String abilites = "";
 
     private boolean text = false;
@@ -45,6 +44,7 @@ public class GUI
     private Label livesCountLabel;
     private Label timeCountLabel;
 
+    private Label puzzelInfoLabel;
     private Label puzzelLabel;
 
     private Label gameOverLabel;
@@ -76,6 +76,9 @@ public class GUI
         BitmapFont font = fontGenerator.generateFont(fontParameters);
         
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, null);
+
+        fontParameters.size = 30;
+        font = fontGenerator.generateFont(fontParameters);
         Label.LabelStyle puzzelStyle = new Label.LabelStyle(font, null);
 
         fontParameters.size = 50;
@@ -93,6 +96,7 @@ public class GUI
         puzzelNameLabel = new Label(puzzleType, labelStyle);
         livesCountLabel = new Label(String.format("%d", playerLives), labelStyle);
 
+        puzzelInfoLabel = new Label(String.format(""), puzzelStyle);
         puzzelLabel = new Label(String.format(""), puzzelStyle);
 
         gameOverLabel = new Label(String.format(""), gameOverStyle);
@@ -110,7 +114,7 @@ public class GUI
         table.add(livesCountLabel);
        
         table.row();
-        table.add(puzzelLabel).colspan(4).padTop(10); //Colspan means it will combine the 4 columns above into one column for this row
+        table.add(puzzelInfoLabel).colspan(4).padTop(10); //Colspan means it will combine the 4 columns above into one column for this row
 
         table.row();
         table.add(puzzelLabel).colspan(4).padTop(10);
@@ -186,6 +190,18 @@ public class GUI
         puzzelNameLabel.setText(puzzle);
     }
 
+    public void setPuzzleInfoBad(String puzzle)
+    {
+        puzzelInfoLabel.setColor(Color.RED);
+        puzzelInfoLabel.setText(puzzle);
+    }
+
+    public void setPuzzleInfoGood(String puzzle)
+    {
+        puzzelInfoLabel.setColor(Color.LIME);
+        puzzelInfoLabel.setText(puzzle);
+    }
+
     /**
      * Change the displayLabel value
      * @param display the new value
@@ -227,6 +243,7 @@ public class GUI
     public void removeTempLabel()
     {
         puzzelLabel.setText("");
+        puzzelInfoLabel.setText("");
         text = false;
         start = 0;
     }

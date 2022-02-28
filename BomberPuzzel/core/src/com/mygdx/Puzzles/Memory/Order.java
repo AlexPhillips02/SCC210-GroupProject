@@ -139,7 +139,7 @@ public class Order extends Puzzle
         {
             if(sequenceInput[i] != buttons[i] && sequenceInput[i] != null)
             {
-                gui.addTempLabel("Not match");
+                gui.setPuzzleInfoBad("Sequence Incorrect");
                 Arrays.fill(sequenceInput, null);
                 match = 0;
                 displayOrder();
@@ -154,10 +154,12 @@ public class Order extends Puzzle
                 if(sequenceInput[i] == buttons[i])
                 {
                     match++;
+                    gui.removeTempLabel();
+                    gui.addTempLabel(sequenceInput[i].getColour() + " Button Pressed");
                 }
                 if(match == 4)
                 {
-                    gui.addTempLabel("Sequence complete");
+                    gui.setPuzzleInfoGood("Sequence Complete");
                     winStatus = true;
                 }
             }
