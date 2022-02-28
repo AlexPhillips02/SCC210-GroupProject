@@ -20,21 +20,27 @@ the colours will reset and the Player will have to start over.
 */
 
 /**
+<<<<<<< HEAD
+=======
+ * @author Alex Phillips, Victor
+>>>>>>> c19ad90e473d2dd0d42cdc541c732ab53ec44d7f
  * Introduces a class for the colour matching of buttons.
  */
 public class Match extends Puzzle
 {
     private ArrayList<ColourButton> buttons = new ArrayList<>();
     
-    public ColourButton prev;
-    public ColourButton current;
+    private ColourButton prev;
+    private ColourButton current;
+
 
     /**
      * Constructor for the matching itself.
      * @param gui the GUI of the game
      * @param board the Game Board
      */
-    public Match(GUI gui, Board board){
+    public Match(GUI gui, Board board)
+    {
         super(gui, board);
     }
 
@@ -104,14 +110,18 @@ public class Match extends Puzzle
                 buttons.remove(prev);
                 buttons.remove(current);
 
+                gui.setPuzzleInfoGood("MATCH!");
+                prev = null;
+                current = null;
+
                 if(buttons.size() <= 0) 
                 {
-                    gui.addTempLabel("All Tiles Matched");
                     winStatus = true;
                 }
             } 
             else 
             {
+                gui.setPuzzleInfoBad("No Match");
                 prev.setActive(true);
             }
         }     

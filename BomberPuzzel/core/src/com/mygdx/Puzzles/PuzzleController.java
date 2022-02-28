@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+<<<<<<< HEAD
 import com.badlogic.gdx.audio.Sound;
+=======
+>>>>>>> c19ad90e473d2dd0d42cdc541c732ab53ec44d7f
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;
 import com.mygdx.Board.Board;
@@ -27,10 +30,15 @@ public class PuzzleController
 	private Puzzle puzzleGame;
 	private SoundController soundController;
 
+<<<<<<< HEAD
 	private Sound redButton = Gdx.audio.newSound(Gdx.files.internal("Sounds/RedButtonSound.mp3"));
 	private Sound blueButton = Gdx.audio.newSound(Gdx.files.internal("sounds/BlueButtonSound.mp3"));
 	private Sound yellowButton = Gdx.audio.newSound(Gdx.files.internal("sounds/YellowButtonSound.mp3"));
 	private Sound greenButton = Gdx.audio.newSound(Gdx.files.internal("sounds/GreenButtonSound.mp3"));
+=======
+	private float lastButtonTime = 1;
+
+>>>>>>> c19ad90e473d2dd0d42cdc541c732ab53ec44d7f
     /**
      * Loads board and player
      * @param board used to select locations on board
@@ -82,6 +90,8 @@ public class PuzzleController
      */
     public void Update(SpriteBatch batch)
     {
+		lastButtonTime = lastButtonTime + Gdx.graphics.getDeltaTime();
+
         // Draw puzzles on board
 		if(puzzle == 0)
 		{
@@ -91,9 +101,15 @@ public class PuzzleController
 			for(int i = 0; i < buttons.size(); i++)
 			{
 				if(buttons.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+<<<<<<< HEAD
 				{
 					if(buttons.get(i).getActiveStatus())
+=======
+				{	
+					if(buttons.get(i).getActiveStatus() && lastButtonTime > 1)
+>>>>>>> c19ad90e473d2dd0d42cdc541c732ab53ec44d7f
 					{	
+						lastButtonTime = 0;
 						((Match)puzzleGame).setCurrent(buttons.get(i));
 						i = 0;
 					}
