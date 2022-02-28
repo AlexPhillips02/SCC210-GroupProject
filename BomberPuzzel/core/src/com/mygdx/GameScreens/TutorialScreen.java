@@ -2,6 +2,7 @@ package com.mygdx.GameScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,9 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.Driver;
-import com.mygdx.GameController;
 import com.mygdx.Sound.SoundController;
-import com.mygdx.Sound.Sounds.Click;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.Game;
 
@@ -29,8 +28,8 @@ public class TutorialScreen implements Screen{
     
     
     private SpriteBatch batch;
-    private GameController controller;
     private SoundController soundController;
+    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
     
     private final Texture inActiveExitButton;
     private final Texture activeExitButton;
@@ -47,7 +46,6 @@ public class TutorialScreen implements Screen{
     public TutorialScreen ()
     {
         batch = new SpriteBatch();
-        controller = new GameController(batch);
         soundController = new SoundController();
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activeExitButton = new Texture("Screens/Exit (active).png");
@@ -90,7 +88,7 @@ public class TutorialScreen implements Screen{
         if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
-                soundController.playSound(new Click());
+                soundController.playMusic(buttonClick);
                 this.dispose();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
             }
@@ -131,7 +129,8 @@ public class TutorialScreen implements Screen{
    }
 
    @Override
-   public void dispose () {
+   public void dispose () 
+   {
 
    }
 
