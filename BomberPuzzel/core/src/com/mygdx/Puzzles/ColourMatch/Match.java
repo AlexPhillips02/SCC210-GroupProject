@@ -20,7 +20,6 @@ the colours will reset and the Player will have to start over.
 */
 
 /**
- * @author
  * Introduces a class for the colour matching of buttons.
  */
 public class Match extends Puzzle

@@ -44,6 +44,7 @@ public class MenuScreen implements Screen {
     private Music introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
     private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
 
+    
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
      */

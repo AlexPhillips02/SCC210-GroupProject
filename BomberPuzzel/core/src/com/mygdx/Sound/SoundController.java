@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 
 
 /**
- * @author Victor
  * Where sounds and music can be played
  **/
 public class SoundController 
