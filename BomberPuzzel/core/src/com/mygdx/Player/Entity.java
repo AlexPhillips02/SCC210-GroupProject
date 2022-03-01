@@ -13,7 +13,7 @@ import com.mygdx.Sound.SoundController;
 import com.mygdx.TileTypes.Path;
 
 /**
- * @author Alex Phillips
+ * @author Alex Phillips, Alex Chalakov - Sounds only
  * Entitiy class creates basis for players and enimies (Entity types)
  */
 public abstract class Entity 
@@ -42,7 +42,7 @@ public abstract class Entity
     protected SpriteBatch batch; //for the Game Over screen
 
     private final SoundController soundController;
-    private final Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/player_hit.mp3"));
+    private final Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
 
     /**
      * @param imageURL URL to an image to use for the entity (Stored as a Texture)
