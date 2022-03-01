@@ -206,7 +206,7 @@ public class GameController
 				}
 				else
 				{
-					gui.Pause(batch, this);
+					gui.Pause(this);
 				}
 			}
 			else
@@ -380,11 +380,24 @@ public class GameController
 
 	public void LoadMenu()
 	{
-		gui.dispose();
-		gameBoard.dispose();
+		dispose();
 		((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	}
 
 	public void dispose()
-	{}
+	{
+		System.out.println("MAIN GAME SCREEN DISPOSING");
+		/*
+		gui.dispose();
+		gameBoard.dispose();
+		player.dispose();
+
+		for (int i = 0; i < boardAbilities.size(); i++) 
+		{
+			boardAbilities.get(i).dispose();
+		}
+
+		*/
+		batch.dispose();
+	}
 }

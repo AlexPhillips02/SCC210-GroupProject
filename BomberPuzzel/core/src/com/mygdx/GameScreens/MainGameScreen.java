@@ -56,9 +56,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void hide () 
-	{
-		dispose();
-	}
+	{}
 
 	@Override
 	public void pause () {
@@ -70,8 +68,6 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void dispose () 
-	{
-		batch.dispose();
-	}
+	{}
 }
  

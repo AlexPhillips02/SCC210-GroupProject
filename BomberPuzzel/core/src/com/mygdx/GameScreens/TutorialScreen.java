@@ -14,11 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.mygdx.Driver;
-import com.mygdx.Sound.SoundController;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.Game;
 
@@ -224,8 +222,7 @@ public class TutorialScreen implements Screen
 
    @Override
    public void hide () 
-   {
-   }
+   {}
 
    @Override
    public void pause () {
@@ -238,6 +235,8 @@ public class TutorialScreen implements Screen
     @Override
     public void dispose()
     {
+        System.out.println("DISPOSING tutorial screen");
+        /*
         playerImage.dispose();
         enemyImage.dispose();
         enemyImage2.dispose();
@@ -247,6 +246,7 @@ public class TutorialScreen implements Screen
         GreenButton.dispose();
     
         stage.dispose();
+        */
         batch.dispose();
     }
 }

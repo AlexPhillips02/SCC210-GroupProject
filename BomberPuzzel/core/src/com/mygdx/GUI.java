@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,8 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Abilities.Ability;
-import com.mygdx.GameScreens.MenuScreen;
-import com.mygdx.GameScreens.TutorialScreen;
 
 /**
  * Displays the GUI with text to the user
@@ -57,22 +56,27 @@ public class GUI
 
     private Label activeAbilites;
 
-    private final Texture activePlayButton;
-    private final Texture activeExitButton;
+    private Texture activePlayButton;
+    private Texture activeExitButton;
 
-    private static final int PLAY_BUTTON_WIDTH = 200;
-    private static final int PLAY_BUTTON_HEIGHT = 150;
-    private static final int EXIT_BUTTON_WIDTH = 200;
-    private static final int EXIT_BUTTON_HEIGHT = 150;
-    private static final int PLAY_BUTTON_Y = 170;
-    private static final int EXIT_BUTTON_Y = 10;
-    private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+    private int PLAY_BUTTON_WIDTH = 200;
+    private int PLAY_BUTTON_HEIGHT = 150;
+    private int EXIT_BUTTON_WIDTH = 200;
+    private int EXIT_BUTTON_HEIGHT = 150;
+    private int PLAY_BUTTON_Y = 170;
+    private int EXIT_BUTTON_Y = 10;
+    private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+
+    private SpriteBatch batch;
+
     /**
      * Constructor for the GUI around the Game Board, which displays all the player and game info.
      * @param levelCount gets the level number.
      */
     public GUI(int levelCount)
     {
+        batch = new SpriteBatch();
+
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
 
@@ -292,10 +296,17 @@ public class GUI
         }
     }
 
-    public void Pause(SpriteBatch batch, GameController controller)
+    public void Pause(GameController controller)
     {
+        batch.begin();
         batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        batch.end();
+        
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
+        {
+            controller.LoadMenu();
+        }
 
         if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
         {
@@ -316,8 +327,11 @@ public class GUI
 
     public void dispose()
     {
+        /*
         activePlayButton.dispose();
         activeExitButton.dispose();
         stage.dispose();
+        */
+        batch.dispose();
     }
 }

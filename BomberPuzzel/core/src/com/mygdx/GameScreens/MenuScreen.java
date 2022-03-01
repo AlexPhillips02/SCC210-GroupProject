@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx.Driver;
-import com.mygdx.GameController;
 import com.mygdx.Sound.SoundController;
 
 
@@ -20,27 +19,27 @@ import com.mygdx.Sound.SoundController;
  */
 public class MenuScreen implements Screen 
 {
-    private static final int PLAY_BUTTON_WIDTH = 200;
-    private static final int PLAY_BUTTON_HEIGHT = 150;
-    private static final int EXIT_BUTTON_WIDTH = 200;
-    private static final int EXIT_BUTTON_HEIGHT = 150;
-    private static final int OPTION_BUTTON_WIDTH = 200;
-    private static final int OPTION_BUTTON_HEIGHT = 150;
-    private static final int PLAY_BUTTON_Y = 170;
-    private static final int EXIT_BUTTON_Y = 10;
-    private static final int OPTION_BUTTON_Y = 330;
-    private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+    private int PLAY_BUTTON_WIDTH = 200;
+    private int PLAY_BUTTON_HEIGHT = 150;
+    private int EXIT_BUTTON_WIDTH = 200;
+    private int EXIT_BUTTON_HEIGHT = 150;
+    private int OPTION_BUTTON_WIDTH = 200;
+    private int OPTION_BUTTON_HEIGHT = 150;
+    private int PLAY_BUTTON_Y = 170;
+    private int EXIT_BUTTON_Y = 10;
+    private int OPTION_BUTTON_Y = 330;
+    private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
 
     private SpriteBatch batch;
     private SoundController soundController;
 
-    private final Texture inActiveHelp;
-    private final Texture inActivePlayButton;
-    private final Texture inActiveExitButton;
-    private final Texture activeHelp;
-    private final Texture activePlayButton;
-    private final Texture activeExitButton;
-    private final Texture backGround;
+    private Texture inActiveHelp;
+    private Texture inActivePlayButton;
+    private Texture inActiveExitButton;
+    private Texture activeHelp;
+    private Texture activePlayButton;
+    private Texture activeExitButton;
+    private Texture backGround;
 
     private Music introSong;
     private Sound buttonClick;
@@ -78,7 +77,8 @@ public class MenuScreen implements Screen
      * @param delta The time in seconds since the last render.
      */
     @Override
-    public void render(float delta) {
+    public void render(float delta) 
+    {
         //soundController.playMusic(introSong);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -112,6 +112,7 @@ public class MenuScreen implements Screen
                 this.dispose();
                 soundController.playMusic(buttonClick);
                 Gdx.app.exit();
+                System.exit(0);
             }
         }
         else {
@@ -158,6 +159,8 @@ public class MenuScreen implements Screen
     @Override
     public void dispose() 
     {
+        System.out.println("DISPOSING MAIN MENU");
+        /*
         inActiveHelp.dispose();
         activeHelp.dispose();
         inActivePlayButton.dispose();
@@ -167,6 +170,8 @@ public class MenuScreen implements Screen
         backGround.dispose();
 
         introSong.dispose();
+        buttonClick.dispose();
+        */
         batch.dispose();
     }
 }
