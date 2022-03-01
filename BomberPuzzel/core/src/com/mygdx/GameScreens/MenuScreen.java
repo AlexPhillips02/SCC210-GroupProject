@@ -48,7 +48,8 @@ public class MenuScreen implements Screen
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
      */
-    public MenuScreen(){
+    public MenuScreen()
+    {
         batch = new SpriteBatch();
 
         introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
@@ -97,7 +98,7 @@ public class MenuScreen implements Screen
             if (Gdx.input.isTouched()){
                     soundController.playMusic(buttonClick);
                     this.dispose();
-                    ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(this));
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
                 }
             }
         else {
@@ -149,9 +150,7 @@ public class MenuScreen implements Screen
 
     @Override
     public void hide() 
-    {  
-
-    }
+    {}
 
     /**
      * Called when this screen should release all resources.

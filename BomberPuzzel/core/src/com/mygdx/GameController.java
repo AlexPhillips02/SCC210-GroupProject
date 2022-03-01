@@ -27,7 +27,6 @@ import com.mygdx.Puzzles.PuzzleController;
 public class GameController
 {
 	//private Boolean winStatus;
-	public MenuScreen menu;
 	private GUI gui;
     private Board gameBoard;
 	private Player player;
@@ -52,8 +51,6 @@ public class GameController
     public GameController(SpriteBatch batch)
     {
         this.batch = batch;
-		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		menu = new MenuScreen();
 		camera = new OrthographicCamera();
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		gamePort = new FitViewport(1280, 720, camera);
@@ -383,14 +380,11 @@ public class GameController
 
 	public void LoadMenu()
 	{
-		System.out.println("Hello");
 		gui.dispose();
 		gameBoard.dispose();
 		((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	}
 
 	public void dispose()
-	{
-		batch.dispose();
-	}
+	{}
 }

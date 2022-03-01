@@ -11,13 +11,13 @@ import com.mygdx.GameController;
  */
 public class MainGameScreen implements Screen {
 
-	private final SpriteBatch batch;
-	private final GameController controller;
+	private SpriteBatch batch;
+	private GameController controller;
 
 	/**
 	 * Constructor for the Main Game Screen, where the game takes place.
 	 */
-	public MainGameScreen(MenuScreen menu)
+	public MainGameScreen()
 	{
 		batch = new SpriteBatch();
 		controller = new GameController(batch);
@@ -55,7 +55,9 @@ public class MainGameScreen implements Screen {
 	}
 
 	@Override
-	public void hide () {
+	public void hide () 
+	{
+		dispose();
 	}
 
 	@Override
@@ -67,7 +69,8 @@ public class MainGameScreen implements Screen {
 	}
 
 	@Override
-	public void dispose () {
+	public void dispose () 
+	{
 		batch.dispose();
 	}
 }
