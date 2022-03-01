@@ -87,12 +87,12 @@ public class MenuScreen implements Screen {
         if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
             batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         
-        if (Gdx.input.isTouched()){
-                soundController.playMusic(buttonClick);
-                this.dispose();
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
+            if (Gdx.input.isTouched()){
+                    soundController.playMusic(buttonClick);
+                    this.dispose();
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
+                }
             }
-        }
         else {
             batch.draw(inActivePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
@@ -143,7 +143,7 @@ public class MenuScreen implements Screen {
     @Override
     public void hide() 
     {  
-        
+
     }
 
     /**

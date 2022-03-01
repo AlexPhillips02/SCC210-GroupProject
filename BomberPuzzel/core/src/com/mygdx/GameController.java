@@ -7,6 +7,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -15,6 +16,7 @@ import com.mygdx.Abilities.*;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
+import com.mygdx.GameScreens.MainGameScreen;
 import com.mygdx.GameScreens.MenuScreen;
 import com.mygdx.Player.Player;
 import com.mygdx.Puzzles.PuzzleController;
@@ -27,6 +29,7 @@ import com.mygdx.Puzzles.PuzzleController;
 public class GameController
 {
 	//private Boolean winStatus;
+	public MenuScreen menu;
 	private GUI gui;
     private Board gameBoard;
 	private Player player;
@@ -40,6 +43,22 @@ public class GameController
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
 
+	private final Texture inActivePlayButton;
+    private final Texture inActiveExitButton;
+    private final Texture activePlayButton;
+    private final Texture activeExitButton;
+
+    private static final int PLAY_BUTTON_WIDTH = 200;
+    private static final int PLAY_BUTTON_HEIGHT = 150;
+    private static final int EXIT_BUTTON_WIDTH = 200;
+    private static final int EXIT_BUTTON_HEIGHT = 150;
+    private static final int OPTION_BUTTON_WIDTH = 200;
+    private static final int OPTION_BUTTON_HEIGHT = 150;
+    private static final int PLAY_BUTTON_Y = 170;
+    private static final int EXIT_BUTTON_Y = 10;
+    private static final int OPTION_BUTTON_Y = 330;
+    private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+
 	private boolean runGame = true;
 	private boolean pause = false;
 
@@ -51,9 +70,14 @@ public class GameController
     {
         this.batch = batch;
 		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		menu = new MenuScreen();
 		camera = new OrthographicCamera();
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		gamePort = new FitViewport(1280, 720, camera);
+		inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
+        inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
+        activePlayButton = new Texture("Screens/Play (Active).png");
+        activeExitButton = new Texture("Screens/Exit (active).png");
 		CreateLevel();
     }
 
@@ -186,7 +210,29 @@ public class GameController
 			}
 			else
 			{
-				gui.Pause();
+				if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
+					batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+				
+					if (Gdx.input.isTouched()){
+							setPaused(false);
+						}
+					}
+				else {
+					batch.draw(inActivePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+				}
+		
+				if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
+					batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+				   
+					if (Gdx.input.isTouched()){ 
+						
+						((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+					}
+				}
+				else {
+					batch.draw(inActiveExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+				}
+
 			}
 		}
 		else
@@ -369,5 +415,9 @@ public class GameController
 	public void resize(int screenWidth, int screenHeight)
 	{
 		gamePort.update(screenWidth, screenHeight);
+	}
+
+	public void setPaused(boolean b) {
+		pause = b;
 	}
 }

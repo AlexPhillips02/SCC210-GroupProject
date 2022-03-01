@@ -17,6 +17,7 @@ public class Driver extends Game {
 	@Override
 	public void create ()
 	{
+		batch = new SpriteBatch();
 		this.setScreen(new MenuScreen());
 	}
 
