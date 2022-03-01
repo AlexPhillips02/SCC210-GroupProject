@@ -2,14 +2,17 @@ package com.mygdx.Enemies;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Player;
+import com.mygdx.Sound.SoundController;
 
 /**
- * @author Alex Phillips, Kathryn Hurst
+ * @author Alex Phillips, Kathryn Hurst, Alex Chalakov - Sounds only
  * Controlls all of the enemies on the level
  */
 public class EnemyController 
@@ -17,6 +20,10 @@ public class EnemyController
     private ArrayList<Enemies> enemies;
     private Board board;
     private Player player;
+
+	private final SoundController soundController;
+	private final Sound alienHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/alien_hit.mp3"));
+	private final Sound spiderHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/spider_hit.mp3"));
     
 	/**
 	 * Loads the board and the player (For player tracking)
@@ -28,6 +35,7 @@ public class EnemyController
         this.board = board;
         this.player = player;
         enemies = new ArrayList<>();
+        soundController = new SoundController();
     }    
 
     /**
@@ -60,8 +68,7 @@ public class EnemyController
 	}
 
 	/**
-	 * Called within GameController to update enemey positions and status
-	 * @param batch Batch used to draw the enemies
+	 * Called within GameController to update enemy positions and status
 	 */
     public void Update()
     {
@@ -92,7 +99,7 @@ public class EnemyController
 
 	public void draw(SpriteBatch batch)
 	{
-		//Draws and updates all enemeies created
+		//Draws and updates all enemies created
 		if (enemies != null) 
 		{
 			//Loops though all of the enemies
@@ -120,7 +127,12 @@ public class EnemyController
                 //If the enemy is in contact with the death square
                 if (enemy.getCollisionRectangle().overlaps(deathSquare)) 
                 {
-                    enemy.reduceHealth();				
+                	if (enemy instanceof Creep){
+						soundController.playMusic(alienHit);
+					} else if (enemy instanceof BombCarrier){
+						soundController.playMusic(spiderHit);
+					}
+                    enemy.reduceHealth();
                 }
             }
         }
