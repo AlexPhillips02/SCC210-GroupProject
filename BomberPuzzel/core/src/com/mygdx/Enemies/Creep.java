@@ -31,14 +31,14 @@ public class Creep extends Enemies
      */
     public void createAnimations()
     {
-        //Walking up (Back Of Creep)
         Array<TextureRegion> frames = new Array<TextureRegion>();
-
+ 
         //Standing Animation
         Texture creepStanding = new Texture("Enemies/Creep/Enemy Alien.png");
+        
         for (int i = 0; i < 2; i++) 
         {
-            frames.add(new TextureRegion(creepStanding, 52 * i, 0, 52, 90));
+            frames.add(new TextureRegion(creepStanding, 52 * i, 0, 52, 76));
         }
 
         standingAnimation = new Animation<>(1/3f, frames);

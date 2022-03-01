@@ -263,7 +263,6 @@ public class GUI
     public void gameCountDown(int countDown) 
     {
         levelCompletionLabel.setColor(Color.GREEN);
-        System.out.println(countDown);
         levelCompletionLabel.setText("" + countDown);
     }
 
@@ -274,5 +273,10 @@ public class GUI
             playerLives = playerHealth;
             livesCountLabel.setText(String.format("%d", playerLives));
         }
+    }
+
+    public void Pause()
+    {
+        
     }
 }
