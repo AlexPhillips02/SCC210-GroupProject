@@ -43,6 +43,7 @@ public class GameController
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
 
+<<<<<<< HEAD
 	private final Texture inActivePlayButton;
     private final Texture inActiveExitButton;
     private final Texture activePlayButton;
@@ -59,6 +60,9 @@ public class GameController
     private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
 
+=======
+	private boolean gameLoaded = false;
+>>>>>>> 485306a46946bcc2ae095f7a5c16d2a000b0f321
 	private boolean runGame = true;
 	private boolean pause = false;
 
@@ -87,6 +91,7 @@ public class GameController
 	 */
 	public void CreateLevel()
 	{
+		gameLoaded = false;
 		runGame = false;
 
 		//Level number originally set to 0
@@ -114,6 +119,7 @@ public class GameController
 
 		CreateAbilities(baseAbilitesAmount);
 		gameBoard.createStartingPath();
+		gameLoaded = true;
 	}
 
 	/**
@@ -141,125 +147,106 @@ public class GameController
 	 */
 	public void Update() 
 	{
-		//Gameboard
-		gameBoard.Draw(batch);	//draws gameboard
-		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
-		
-		//Puzzle controller
-		puzzleController.Update(batch);	
-		gameBoard.DrawBombs(batch);
-
-		//If squares exist where damage should be inflicted
-		if (deathSquares.size() > 0) 
+		if(gameLoaded == true)
 		{
-			checkForSquareCollision(deathSquares);
-			gameBoard.resetDeathSquares();
-		}
+			//Gameboard
+			gameBoard.Draw(batch);	//draws gameboard
+			ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
+			
+			//Puzzle controller
+			puzzleController.Update(batch);	
+			gameBoard.DrawBombs(batch);
 
-		//Draw abilities on the board
-		if (boardAbilities != null)
-		{
-			for(int i = 0; i < boardAbilities.size(); i++ )
-			{	
-				Ability ability = boardAbilities.get(i);
-				ability.Draw(batch);
-
-				//If the player collides with an ability set the ability as active and add to active list
-				//Remove from the board abilities (No longer needs to be drawn)
-				if (ability.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
-				{
-					ability.setActive();
-					activeAbilities.add(ability);
-					boardAbilities.remove(i);
-					i--;
-				}
-			}
-		}
-
-		//Loops through active abilites
-		if (activeAbilities != null) 
-		{
-			for(int i = 0; i < activeAbilities.size(); i++ )
-			{	
-				Ability ability = activeAbilities.get(i);
-
-				ability.update();
-					
-				//If the ability has deactivated (Remove from active ability list)
-				if (ability.isDeactivated()) 
-				{
-					activeAbilities.remove(i);
-					i--;
-				}
-			}
-		}
-
-		//Enemies and player drawing
-		enemyController.draw(batch);
-		player.Draw(batch);
-
-		//If the game has been won or the player has died
-		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
-		{
-			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
-
-			if(!pause)
+			//If squares exist where damage should be inflicted
+			if (deathSquares.size() > 0) 
 			{
-				gui.UnPause();
-				GamePauseOutput();
+				checkForSquareCollision(deathSquares);
+				gameBoard.resetDeathSquares();
 			}
-			else
+
+			//Draw abilities on the board
+			if (boardAbilities != null)
 			{
-				if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
-					batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-				
-					if (Gdx.input.isTouched()){
-							setPaused(false);
-						}
+				for(int i = 0; i < boardAbilities.size(); i++ )
+				{	
+					Ability ability = boardAbilities.get(i);
+					ability.Draw(batch);
+
+					//If the player collides with an ability set the ability as active and add to active list
+					//Remove from the board abilities (No longer needs to be drawn)
+					if (ability.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+					{
+						ability.setActive();
+						activeAbilities.add(ability);
+						boardAbilities.remove(i);
+						i--;
 					}
-				else {
-					batch.draw(inActivePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
 				}
-		
-				if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
-					batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-				   
-					if (Gdx.input.isTouched()){ 
+			}
+
+			//Loops through active abilites
+			if (activeAbilities != null) 
+			{
+				for(int i = 0; i < activeAbilities.size(); i++ )
+				{	
+					Ability ability = activeAbilities.get(i);
+
+					ability.update();
 						
-						((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+					//If the ability has deactivated (Remove from active ability list)
+					if (ability.isDeactivated()) 
+					{
+						activeAbilities.remove(i);
+						i--;
 					}
 				}
-				else {
-					batch.draw(inActiveExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-				}
-
 			}
-		}
-		else
-		{
-			//If the game is still running, update the moving entities
-			gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
-			player.update();
-			enemyController.Update();
-		}
 
-		//Camera
-		moveCamera();		
-        gui.stage.draw();
+			//Enemies and player drawing
+			enemyController.draw(batch);
+			player.Draw(batch);
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
-        {
-			//Pause game
-			System.out.println("Pause");
-			if(pause)
+			//If the game has been won or the player has died
+			if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
 			{
-				pause = false;
+				gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
+
+				if(!pause)
+				{
+					gui.UnPause();
+					GamePauseOutput();
+				}
+				else
+				{
+					gui.Pause();
+				}
 			}
 			else
 			{
-				pause = true;
+				//If the game is still running, update the moving entities
+				gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
+				player.update();
+				enemyController.Update();
 			}
-        }
+
+			//Camera
+			moveCamera();		
+			gui.stage.draw();
+
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+			{
+				//Pause game
+				System.out.println("Pause");
+				if(pause)
+				{
+					pause = false;
+				}
+				else
+				{
+					pause = true;
+				}
+			}
+		}
 	}
 
 	/**

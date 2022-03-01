@@ -13,7 +13,6 @@ import com.mygdx.Board.Board;
 public class Creep extends Enemies
 {
     /**
-     * 
      * @param board Gameboard
      * @param x Starting x position
      * @param y Starting y position

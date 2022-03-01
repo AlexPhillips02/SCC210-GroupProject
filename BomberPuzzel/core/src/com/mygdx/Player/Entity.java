@@ -41,9 +41,6 @@ public abstract class Entity
 
     protected SpriteBatch batch; //for the Game Over screen
 
-    private final SoundController soundController;
-    private final Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
-
     /**
      * @param imageURL URL to an image to use for the entity (Stored as a Texture)
      * @param board The gameboard
@@ -75,7 +72,6 @@ public abstract class Entity
         }
 
         collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), height);
-        soundController = new SoundController();
     }
 
     /**
@@ -359,7 +355,6 @@ public abstract class Entity
         {
             this.health--;
             System.out.println("Damage Taken");
-            soundController.playMusic(playerHit);
             lastDamageTimer = 0f;   
         }
     }

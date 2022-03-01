@@ -2,10 +2,13 @@ package com.mygdx.Enemies;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Entity;
 import com.mygdx.Player.Player;
+import com.mygdx.Sound.SoundController;
 import com.mygdx.TileTypes.Path;
 
 /**
@@ -15,11 +18,13 @@ import com.mygdx.TileTypes.Path;
 public abstract class Enemies extends Entity
 {
     String[] possibleDirections = {"LEFT", "DOWN", "RIGHT", "UP"};
+    private final SoundController soundController;
+    private final Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
 
     /**
      * 
      * @param imageURL URL of standing image
-     * @param board Gameboard
+     * @param board Game board
      * @param x Starting x position
      * @param y Starting y position
      * @param movementSpeed Speed at which the enemy can move
@@ -27,6 +32,7 @@ public abstract class Enemies extends Entity
     public Enemies(String imageURL, Board board, float x, float y, float movementSpeed)
     {
         super(imageURL, board, x, y, movementSpeed);
+        soundController = new SoundController();
     }
 
     /**
@@ -37,7 +43,7 @@ public abstract class Enemies extends Entity
     {
         increaseLastDamaged();
         
-        if(move() == false || movementDirection == null)
+        if(!move() || movementDirection == null)
         {
             chooseNewDirection();
         }
@@ -63,7 +69,7 @@ public abstract class Enemies extends Entity
             }
         }
 
-        //If the enemy isnt trapped move in one of the possible directions
+        //If the enemy isn't trapped move in one of the possible directions
         //Else the enemy just stands still
         if (possibleMovements.size() > 0) 
         {
@@ -101,8 +107,7 @@ public abstract class Enemies extends Entity
 
     /**
 	 * A method that determines if there is a wall on the next possible tile
-	 * 
-	 * @param Next The next possible block to check
+     * @param next checks the next square
      * @return True if the player can move there (is a path)
 	 */	
 	public boolean canMove(Squares next)
@@ -118,11 +123,12 @@ public abstract class Enemies extends Entity
 	}
 
     /**
-     * Basic function of enemies, can be overidden within specific enemy classes (e.g. BombCarrier)
+     * Basic function of enemies, can be overridden within specific enemy classes (e.g. BombCarrier)
      * @param player
      */
     public void Attack(Player player)
     {
         player.reduceHealth();
+        soundController.playMusic(playerHit);
     }
 }

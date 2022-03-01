@@ -8,11 +8,23 @@ import com.mygdx.Board.Board;
 import com.mygdx.Abilities.Bomb;
 import com.mygdx.Player.Player;
 
+/**
+ * @author Alex Phillips
+ * Bomb Carrier is a type of enemy. The PlayerTrackingEnemy class allows those bomb carries to follow the player.
+ */
 public class BombCarrier extends PlayerTrackingEnemy
 {
     private int explosionRange = 2;
     private int bombsMax = 1;
 
+    /**
+     * Constructor for the Bomb Carrier enemy type.
+     * @param board the Game Board
+     * @param x Starting x position
+     * @param y Starting y position
+     * @param movementSpeed Movement speed
+     * @param player Player which is being tracked
+     */
     public BombCarrier(Board board, float x, float y, float movementSpeed, Player player)
     {
         super("Enemies/Spider enemy/spider(single).png", board, x, y, movementSpeed, player, 10);
