@@ -1,6 +1,7 @@
 package com.mygdx.Player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Tile;
+import com.mygdx.Sound.SoundController;
 import com.mygdx.TileTypes.Path;
 
 /**
@@ -39,6 +41,9 @@ public abstract class Entity
 
     protected SpriteBatch batch; //for the Game Over screen
 
+    private final SoundController soundController;
+    private final Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/player_hit.mp3"));
+
     /**
      * @param imageURL URL to an image to use for the entity (Stored as a Texture)
      * @param board The gameboard
@@ -68,7 +73,9 @@ public abstract class Entity
         {
             height = defaultImage.getHeight();
         }
+
         collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), height);
+        soundController = new SoundController();
     }
 
     /**
@@ -352,6 +359,7 @@ public abstract class Entity
         {
             this.health--;
             System.out.println("Damage Taken");
+            soundController.playMusic(playerHit);
             lastDamageTimer = 0f;   
         }
     }
