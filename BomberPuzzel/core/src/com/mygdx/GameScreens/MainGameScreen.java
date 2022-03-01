@@ -17,7 +17,7 @@ public class MainGameScreen implements Screen {
 	/**
 	 * Constructor for the Main Game Screen, where the game takes place.
 	 */
-	public MainGameScreen ()
+	public MainGameScreen(MenuScreen menu)
 	{
 		batch = new SpriteBatch();
 		controller = new GameController(batch);
@@ -68,6 +68,7 @@ public class MainGameScreen implements Screen {
 
 	@Override
 	public void dispose () {
+		batch.dispose();
 	}
 }
  

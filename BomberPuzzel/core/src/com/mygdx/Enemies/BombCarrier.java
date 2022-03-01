@@ -1,5 +1,7 @@
 package com.mygdx.Enemies;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,6 +18,7 @@ public class BombCarrier extends PlayerTrackingEnemy
 {
     private int explosionRange = 2;
     private int bombsMax = 1;
+    private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
 
     /**
      * Constructor for the Bomb Carrier enemy type.
@@ -73,6 +76,7 @@ public class BombCarrier extends PlayerTrackingEnemy
             bombsMax--;   
         }
 
+        soundController.playMusic(playerHit);
         player.reduceHealth();
         this.reduceHealth();
     }

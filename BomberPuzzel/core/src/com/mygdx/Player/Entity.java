@@ -38,6 +38,9 @@ public abstract class Entity
     protected int health;
     protected float healthCooldown = 1.5f; //Seconds
     protected float lastDamageTimer = healthCooldown + 1;
+    private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
+
+    protected SoundController soundController;
 
     protected SpriteBatch batch; //for the Game Over screen
 
@@ -50,6 +53,7 @@ public abstract class Entity
      */
     public Entity(String imageURL, Board board, float x, float y, float movementSpeed)
     {
+        this.soundController = new SoundController();
         if (imageURL != null) 
         {
             defaultImage = new Texture(imageURL);   
@@ -153,7 +157,7 @@ public abstract class Entity
         int xx = (int)(tempX / tileWidth);
         int yy = (int)((tempY) / tileHeight);
         
-        if (xx < 0 || yy < 0 || xx >= 29 || yy >= 15)   
+        if (xx < 0 || yy < 0 || xx >= 27 || yy >= 15)   
         {
             System.out.println("ENTITY ERROR Attempted to get gamesquare x: " + xx + " y: " + yy);
         }
@@ -353,6 +357,11 @@ public abstract class Entity
     {
         if (lastDamageTimer >= healthCooldown) 
         {
+            if(this instanceof Player)
+            {
+                soundController.playMusic(playerHit);
+            }
+
             this.health--;
             System.out.println("Damage Taken");
             lastDamageTimer = 0f;   
@@ -440,5 +449,10 @@ public abstract class Entity
     }
 
     public void decreasePlacedBombs() {
+    }
+
+    public void dispose() 
+    {
+        defaultImage.dispose();
     }
 }

@@ -83,7 +83,7 @@ public class EnemyController
 				enemy.update();
 
 				//Player contact with enemy
-				if (enemy.getCollisionRectangle().overlaps(player.getCollisionRectangle())) //&& player.isAlive()) 
+				if (enemy.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{
 					enemy.Attack(player);
 				}
@@ -91,6 +91,7 @@ public class EnemyController
 				if (!(enemy.isAlive())) 
 				{
 					enemies.remove(enemy);
+					enemy.dispose();
 					i--;
 				}
 			}

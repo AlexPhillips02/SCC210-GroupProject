@@ -16,8 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Abilities.Ability;
-import com.mygdx.GameScreens.MainGameScreen;
 import com.mygdx.GameScreens.MenuScreen;
+import com.mygdx.GameScreens.TutorialScreen;
 
 /**
  * Displays the GUI with text to the user
@@ -26,7 +26,6 @@ import com.mygdx.GameScreens.MenuScreen;
 public class GUI 
 {
     public Stage stage;
-    private Stage stage2;
     private FitViewport viewport;
     private Table table;
 
@@ -58,8 +57,6 @@ public class GUI
 
     private Label activeAbilites;
 
-    private final Texture inActivePlayButton;
-    private final Texture inActiveExitButton;
     private final Texture activePlayButton;
     private final Texture activeExitButton;
 
@@ -67,11 +64,8 @@ public class GUI
     private static final int PLAY_BUTTON_HEIGHT = 150;
     private static final int EXIT_BUTTON_WIDTH = 200;
     private static final int EXIT_BUTTON_HEIGHT = 150;
-    private static final int OPTION_BUTTON_WIDTH = 200;
-    private static final int OPTION_BUTTON_HEIGHT = 150;
     private static final int PLAY_BUTTON_Y = 170;
     private static final int EXIT_BUTTON_Y = 10;
-    private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
     /**
      * Constructor for the GUI around the Game Board, which displays all the player and game info.
@@ -79,8 +73,6 @@ public class GUI
      */
     public GUI(int levelCount)
     {
-        inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
-        inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
 
@@ -90,7 +82,6 @@ public class GUI
 
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport); // We must create order by creating a table in our stage
-        stage2 = new Stage(viewport);
         table = new Table();
         table.top(); // Will put it at the top of our stage
         table.setFillParent(true);
@@ -303,35 +294,30 @@ public class GUI
 
     public void Pause(SpriteBatch batch, GameController controller)
     {
-        /*
-        if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
-            batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-        
-            if (Gdx.input.isTouched()){
-                    controller.setPaused(false);
-                }
+        batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+        batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+
+        if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
+        {
+            if (Gdx.input.isTouched())
+            {
+                controller.setPaused(false);
             }
-        else {
-            batch.draw(inActivePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
 
-        if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
-            batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-           
-            if (Gdx.input.isTouched()){ 
-                
-                ((Game)Gdx.app.getApplicationListener()).setScreen(controller.menu);
+        if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y)
+        {
+            if (Gdx.input.isTouched())
+            { 
+                controller.LoadMenu();
             }
         }
-        else {
-            batch.draw(inActiveExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        }
-        */
     }
 
-    public void UnPause()
+    public void dispose()
     {
-
+        activePlayButton.dispose();
+        activeExitButton.dispose();
+        stage.dispose();
     }
-
 }

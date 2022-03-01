@@ -18,8 +18,8 @@ import com.mygdx.Sound.SoundController;
  * @author Alex Chalakov, Lincoln Delhomme
  * A class for the menu screen which adds all the options when the program is run.
  */
-public class MenuScreen implements Screen {
-
+public class MenuScreen implements Screen 
+{
     private static final int PLAY_BUTTON_WIDTH = 200;
     private static final int PLAY_BUTTON_HEIGHT = 150;
     private static final int EXIT_BUTTON_WIDTH = 200;
@@ -34,7 +34,6 @@ public class MenuScreen implements Screen {
     private SpriteBatch batch;
     private SoundController soundController;
 
-    
     private final Texture inActiveHelp;
     private final Texture inActivePlayButton;
     private final Texture inActiveExitButton;
@@ -43,15 +42,17 @@ public class MenuScreen implements Screen {
     private final Texture activeExitButton;
     private final Texture backGround;
 
-    private final Music introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
-    private final Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
-
+    private Music introSong;
+    private Sound buttonClick;
     
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
      */
     public MenuScreen(){
         batch = new SpriteBatch();
+
+        introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
 
         inActiveHelp = new Texture("Screens/Help.png");
         activeHelp = new Texture("Screens/Help(active).png");
@@ -96,7 +97,7 @@ public class MenuScreen implements Screen {
             if (Gdx.input.isTouched()){
                     soundController.playMusic(buttonClick);
                     this.dispose();
-                    ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(this));
                 }
             }
         else {
@@ -156,7 +157,17 @@ public class MenuScreen implements Screen {
      * Called when this screen should release all resources.
      */
     @Override
-    public void dispose() {
+    public void dispose() 
+    {
+        inActiveHelp.dispose();
+        activeHelp.dispose();
+        inActivePlayButton.dispose();
+        inActiveExitButton.dispose();
+        activePlayButton.dispose();
+        activeExitButton.dispose();
+        backGround.dispose();
+
         introSong.dispose();
+        batch.dispose();
     }
 }

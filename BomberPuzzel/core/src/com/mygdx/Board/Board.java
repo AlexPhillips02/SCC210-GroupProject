@@ -371,4 +371,15 @@ public class Board
     public void resetDeathSquares() {
         deathSquares = new ArrayList<>();
     }
+
+    public void dispose() 
+    {
+        for (int i = 0; i < gameSquares.length; i++) 
+        {
+            for (int j = 0; j < gameSquares[i].length; j++) 
+            {
+                gameSquares[i][j].getTile().dispose();
+            }
+        }
+    }
 }

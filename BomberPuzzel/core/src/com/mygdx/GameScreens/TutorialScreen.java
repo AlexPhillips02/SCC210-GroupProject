@@ -1,7 +1,6 @@
 package com.mygdx.GameScreens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -11,27 +10,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.badlogic.gdx.utils.Align;
 import com.mygdx.Driver;
-import com.mygdx.GameController;
-import com.mygdx.Enemies.BombCarrier;
 import com.mygdx.Sound.SoundController;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.Game;
 
 public class TutorialScreen implements Screen{
@@ -83,7 +71,6 @@ public class TutorialScreen implements Screen{
     private Label character; 
     private Label buttons;
 
-
     private TextButton button; 
     private TextButtonStyle textButtonStyle;
     
@@ -110,8 +97,6 @@ public class TutorialScreen implements Screen{
         stage = new Stage(viewport); // We must create order by creating a table in our stage
         Gdx.input.setInputProcessor(stage);
         table = new Table();
-        
-        
         
         FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Text/GUI_Font.TTF"));
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -199,9 +184,6 @@ public class TutorialScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
     }
     
-
-
-
     public float centreLable(float x, float y){
         float result = (x - y)/2;
         return result;
@@ -280,7 +262,6 @@ public class TutorialScreen implements Screen{
    @Override
    public void dispose () 
    {
-
+       batch.dispose();
    }
-
 }
