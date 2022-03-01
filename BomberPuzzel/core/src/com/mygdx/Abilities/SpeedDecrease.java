@@ -23,13 +23,13 @@ public class SpeedDecrease extends Ability{ //also deemed as SLOWNESS in the spe
     public void ActivateAbility()
     {
         float currentSpeed = entity.getMovementSpeed();
-        entity.setMovementSpeed(currentSpeed - 75);
+        entity.setMovementSpeed(currentSpeed - 50);
     }
 
     public void DeactivateAbility()
     {
         float currentSpeed = entity.getMovementSpeed();
-        entity.setMovementSpeed(currentSpeed + 75);
+        entity.setMovementSpeed(currentSpeed + 50);
     }
 }
 

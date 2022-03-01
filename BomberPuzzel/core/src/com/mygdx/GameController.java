@@ -66,12 +66,12 @@ public class GameController
 		runGame = false;
 
 		//Level number originally set to 0
-		float basePercentageOfDestrctableWalls = 15;
+		float basePercentageOfDestrctableWalls = 12;
 		int baseEnemyAmount = 6;
-		int baseAbilitesAmount = 10;
+		int baseAbilitesAmount = 7;
 
 		//Increasing base amounts based on level (Increase difficulty)
-		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * basePercentageOfDestrctableWalls);
+		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * 5);
 		baseEnemyAmount = baseEnemyAmount + levelNumber;
 	    baseAbilitesAmount = baseAbilitesAmount - levelNumber;
 
@@ -229,11 +229,11 @@ public class GameController
 		}
 		else if (randomIndex == 2)
 		{
-			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
+			newAbility = new SpeedDecrease(gameBoard, xPosition, yPosition, player);
 		}
 		else if (randomIndex == 3)
 		{
-			newAbility = new SpeedDecrease(gameBoard, xPosition, yPosition, player);
+			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
 		}
 		else
 		{
