@@ -10,7 +10,7 @@ public class GreenButton extends ColourButton
 {
     public GreenButton(Board board, float x, float y)
     {
-        super(board, "Buttons/GreenButton.png" , x, y);   
+        super(board, "Buttons/GreenButton.png", "Buttons/GreenButtonPushed.png", x, y);   
         colour = "GREEN";
     }
 }
