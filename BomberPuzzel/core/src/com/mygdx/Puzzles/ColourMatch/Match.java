@@ -1,5 +1,6 @@
 package com.mygdx.Puzzles.ColourMatch;
 
+import java.time.temporal.TemporalQuery;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;
@@ -91,6 +92,12 @@ public class Match extends Puzzle
         {
             temp = new RedButton(board, x, y);
         }
+
+        int tileWidth = pathSquare.getTile().getWidth();
+        int tileHeight = pathSquare.getTile().getHeight();
+
+        temp.setX(x + ((tileWidth - temp.getWidth()) / 2));
+		temp.setY(y + ((tileHeight - temp.getHeight()) / 2));
         
         buttons.add(temp);
     }

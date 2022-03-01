@@ -29,19 +29,20 @@ public class BombCarrier extends PlayerTrackingEnemy
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
         //Walking backwards
-        Texture bombCarrierBack = new Texture("Enemies/Spider enemy/Spider(moving Back).png.png");
-        for (int i = 0; i < 2; i++) 
+        Texture bombCarrierBack = new Texture("Enemies/Spider enemy/Spider(moving Back fixed.png");
+        for (int i = 0; i < 1; i++) 
         {
-            frames.add(new TextureRegion(bombCarrierBack, 0, 56 * i, 50, 56));
+            frames.add(new TextureRegion(bombCarrierBack, 56 * i, 0, 50, 56));
         }
         walkUp = new Animation<>(1/3f, frames);
         frames.clear();
 
         //Walking forwards
-        Texture bombCarrierFront = new Texture("Enemies/Spider enemy/Spider(moving).png");
-        for (int i = 0; i < 2; i++) 
+        Texture bombCarrierFront = new Texture("Enemies/Spider enemy/enemy( front).png");
+
+        for (int i = 0; i < 1; i++) 
         {
-            frames.add(new TextureRegion(bombCarrierFront, 0, 56 * i, 50, 56));
+            frames.add(new TextureRegion(bombCarrierFront, 50 * i, 0, 50, 56));
         }
 
         walkDown = new Animation<>(1/3f, frames);

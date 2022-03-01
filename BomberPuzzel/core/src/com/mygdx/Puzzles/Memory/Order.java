@@ -82,10 +82,24 @@ public class Order extends Puzzle
         int y4 = square4.getY();
 
         // Create buttons
+        int tileWidth = square1.getTile().getWidth();
+        int tileHeight = square1.getTile().getHeight();
+
         R = new RedButton(board, x1, y1);
+        R.setX(x1 + ((tileWidth - R.getWidth()) / 2));
+		R.setY(y1 + ((tileHeight - R.getHeight()) / 2));
+
         G = new GreenButton(board, x2, y2);
+        G.setX(x2 + ((tileWidth - G.getWidth()) / 2));
+		G.setY(y2 + ((tileHeight - G.getHeight()) / 2));
+
         B = new BlueButton(board, x3, y3);
+        B.setX(x3 + ((tileWidth - B.getWidth()) / 2));
+		B.setY(y3 + ((tileHeight - B.getHeight()) / 2));
+
         Y = new YellowButton(board, x4, y4);
+        Y.setX(x1 + ((tileWidth - Y.getWidth()) / 2));
+		Y.setY(y2 + ((tileHeight - Y.getHeight()) / 2));
 
         buttons[0] = R;
         buttons[1] = G;
