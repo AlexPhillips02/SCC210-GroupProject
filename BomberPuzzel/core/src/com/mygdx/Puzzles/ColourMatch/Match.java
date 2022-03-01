@@ -20,10 +20,7 @@ the colours will reset and the Player will have to start over.
 */
 
 /**
-<<<<<<< HEAD
-=======
- * @author Alex Phillips, Victor
->>>>>>> c19ad90e473d2dd0d42cdc541c732ab53ec44d7f
+ * @author Alex Phillips, Victor, Kathryn Hurst
  * Introduces a class for the colour matching of buttons.
  */
 public class Match extends Puzzle
@@ -49,10 +46,20 @@ public class Match extends Puzzle
      */
     public void createGame()
     {
+        ArrayList<Squares> usedSquares = new ArrayList<>();
         for(int i = 0; i< 8; i++)
         {
-            Squares pathSquare = board.getRandomPath();
-            addColourTiles(pathSquare, i);
+            boolean r = true;
+            while(r)
+            {
+                Squares pathSquare = board.getRandomPath();
+                if(!usedSquares.contains(pathSquare))
+                {
+                    usedSquares.add(pathSquare);
+                    addColourTiles(pathSquare, i);
+                    r = false;
+                }
+            }
         }
     }
 
