@@ -31,9 +31,9 @@ public class MenuScreen implements Screen {
     private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
 
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
     public GameController controller;
-    private SoundController soundController;
+    private final SoundController soundController;
 
     private final Texture inActivePlayButton;
     private final Texture inActiveExitButton;
@@ -41,8 +41,8 @@ public class MenuScreen implements Screen {
     private final Texture activeExitButton;
     private final Texture backGround;
 
-    private Music introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
-    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
+    private final Music introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
+    private final Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
 
     
     /**
@@ -65,7 +65,6 @@ public class MenuScreen implements Screen {
      */
     @Override
     public void show() {
-        
     }
 
     /**
@@ -83,10 +82,6 @@ public class MenuScreen implements Screen {
         batch.draw(backGround, 0, 0, Driver.WIDTH, Driver.HEIGHT);
         playAndExit();
         batch.end();
-
-        //drawing the stage with the buttons
-        //stage.act();
-        //stage.draw();
     }
 
     private void playAndExit()
@@ -132,31 +127,23 @@ public class MenuScreen implements Screen {
     }
 
     /**
-     * Main Screen method that contains everything.
-     */
-
-    /**
      * @param width size of width
      * @param height size of height
      */
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     /**
