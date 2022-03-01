@@ -65,6 +65,7 @@ public class Order extends Puzzle
     {
         // Choose 4 Random squares to place buttons on
         ArrayList<Squares> usedSquares = new ArrayList<>();
+
         for(int i = 0; i< 4; i++)
         {
             boolean r = true;
@@ -93,8 +94,8 @@ public class Order extends Puzzle
         int y4 = usedSquares.get(3).getY();
 
         // Create buttons
-        int tileWidth = square1.getTile().getWidth();
-        int tileHeight = square1.getTile().getHeight();
+        int tileWidth = usedSquares.get(0).getTile().getWidth();
+        int tileHeight = usedSquares.get(0).getTile().getHeight();
 
         R = new RedButton(board, x1, y1);
         R.setX(x1 + ((tileWidth - R.getWidth()) / 2));
