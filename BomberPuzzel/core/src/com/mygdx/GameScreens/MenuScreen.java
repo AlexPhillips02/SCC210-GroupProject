@@ -35,8 +35,11 @@ public class MenuScreen implements Screen {
     public GameController controller;
     private final SoundController soundController;
 
+    
+    private final Texture inActiveHelp;
     private final Texture inActivePlayButton;
     private final Texture inActiveExitButton;
+    private final Texture activeHelp;
     private final Texture activePlayButton;
     private final Texture activeExitButton;
     private final Texture backGround;
@@ -50,6 +53,9 @@ public class MenuScreen implements Screen {
      */
     public MenuScreen(){
         batch = new SpriteBatch();
+
+        inActiveHelp = new Texture("Screens/Help.png");
+        activeHelp = new Texture("Screens/Help(active).png");
         inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
         inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
         activePlayButton = new Texture("Screens/Play (Active).png");
@@ -113,7 +119,7 @@ public class MenuScreen implements Screen {
         }
 
         if(Gdx.input.getX() < BUTTON_X + OPTION_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < OPTION_BUTTON_Y + OPTION_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > OPTION_BUTTON_Y){
-            batch.draw(activeExitButton, BUTTON_X, OPTION_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+            batch.draw(activeHelp, BUTTON_X, OPTION_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
                 this.dispose();
                 soundController.playMusic(buttonClick);
@@ -121,7 +127,7 @@ public class MenuScreen implements Screen {
             }
         }
         else {
-            batch.draw(inActiveExitButton, BUTTON_X, OPTION_BUTTON_Y, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);
+            batch.draw(inActiveHelp, BUTTON_X, OPTION_BUTTON_Y, OPTION_BUTTON_WIDTH, OPTION_BUTTON_HEIGHT);
         }
 
     }
