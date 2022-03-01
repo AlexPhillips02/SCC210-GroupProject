@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -40,6 +41,7 @@ public class GameController
 	private float timeSinceGameStop = 0;
 
 	private boolean runGame = true;
+	private boolean pause = false;
 
 	/**
 	 * Creates the camera
@@ -172,10 +174,16 @@ public class GameController
 		player.Draw(batch);
 
 		//If the game has been won or the player has died
-		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame)
+		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
 		{
-			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
-			GamePauseOutput();
+			if (!runGame) {
+				gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
+				GamePauseOutput();
+			}
+			else if (pause)
+			{
+				gui.Pause();
+			}
 		}
 		else
 		{
@@ -188,6 +196,13 @@ public class GameController
 		//Camera
 		moveCamera();		
         gui.stage.draw();
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+        {
+			//Pause game
+			System.out.println("Hi");
+			pause = true;
+        }
 	}
 
 	/**

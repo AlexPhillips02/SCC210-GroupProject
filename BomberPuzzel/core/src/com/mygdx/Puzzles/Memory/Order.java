@@ -140,6 +140,13 @@ public class Order extends Puzzle
             if(sequenceInput[i] != buttons[i] && sequenceInput[i] != null)
             {
                 gui.setPuzzleInfoBad("Sequence Incorrect");
+                for(int j = 0; j < sequenceInput.length; j++)
+                {
+                    if(sequenceInput[j] != null)
+                    {
+                        sequenceInput[j].unclicked();
+                    }
+                }
                 Arrays.fill(sequenceInput, null);
                 match = 0;
                 displayOrder();
@@ -174,6 +181,7 @@ public class Order extends Puzzle
     {
         gui.addTempLabel(button.getColour() + " Button Pressed");
         button.setActive(false);
+        button.clicked();
         add(button);
         compareInput();
     }

@@ -58,7 +58,17 @@ public abstract class Entity
         this.y = y;
         this.movementSpeed = movementSpeed;
         //Collision rectangle to be used for collisions with other entities
-        collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), defaultImage.getHeight());
+        int height;
+
+        if(defaultImage.getHeight() > 55)
+        {
+            height = 55;
+        }
+        else
+        {
+            height = defaultImage.getHeight();
+        }
+        collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), height);
     }
 
     /**
