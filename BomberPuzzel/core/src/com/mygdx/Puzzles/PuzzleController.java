@@ -91,7 +91,7 @@ public class PuzzleController
 			{
 				if(buttons.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{	
-					if(buttons.get(i).getActiveStatus() && lastButtonTime > 1)
+					if(buttons.get(i).getActiveStatus() && lastButtonTime >= 1)
 					{	
 						lastButtonTime = 0;
 						((Match)puzzleGame).setCurrent(buttons.get(i));
