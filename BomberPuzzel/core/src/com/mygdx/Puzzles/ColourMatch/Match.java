@@ -102,6 +102,7 @@ public class Match extends Puzzle
         prev = current;
         current = newCurrent;
         current.setActive(false);
+        current.clicked();
         
         if(prev != null)
         {
@@ -123,6 +124,7 @@ public class Match extends Puzzle
             {
                 gui.setPuzzleInfoBad("No Match");
                 prev.setActive(true);
+                prev.unclicked();
             }
         }  
     }
