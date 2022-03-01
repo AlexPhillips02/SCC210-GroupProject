@@ -178,7 +178,16 @@ public class GameController
 		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
 		{
 			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
-			GamePauseOutput();
+
+			if(!pause)
+			{
+				gui.UnPause();
+				GamePauseOutput();
+			}
+			else
+			{
+				gui.Pause();
+			}
 		}
 		else
 		{
