@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -51,6 +52,17 @@ public class TutorialScreen implements Screen{
     private Table table;
     private Label helpLabel;
     private OrthographicCamera camera;
+   
+  
+    private Label information;  
+    private Label movement;
+    private Label enemy;
+    private Label player; 
+    private Label puzzles; 
+    private Label movementInfo;
+    private Label enemyInfo;
+    private Label playerInfo; 
+    private Label puzzlesInfo; 
     /**
      * Constructor for the Tutorial Screen which introduces players to how the game is played.
      * @param controller
@@ -68,27 +80,51 @@ public class TutorialScreen implements Screen{
         stage = new Stage(viewport); // We must create order by creating a table in our stage
         table = new Table();
         
-        LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-        helpLabel = new Label("In order to complete the game, the player must complete a a randomly selected Puzzle. The colour Match Puzzle the user must step on two of the same coloured button one after the other. ALl button must be Match in order to win. In Colour Sequencing the colour buttons must be stepped on, in the sequence given.",labelStyle); 
-            //(float)GAME_IMAGE_WIDTH, 
-            //(float)GAME_IMAGE_HEIGHT);
-        //helpLabel.setBounds(x, y, width, height);
-       // helpLabel.setWrap(true);
-        //helpLabel.setAlignment(Align.center);
-        
-        helpLabel.setPosition(340, 280);
-        helpLabel.setWidth(300);
-        helpLabel.setWrap(true);
-        //table.top(); //qill put it at the top of stage
-        stage.addActor(helpLabel);
-        //table.setFillParent(true);
-        //table.add(helpLabel).width(300).height(300);
+        FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Text/GUI_Font.TTF"));
+        FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        fontParameters.size = 25;
+        BitmapFont font = fontGenerator.generateFont(fontParameters);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, null);
+        information = new Label("Information",labelStyle);        
+        information.setPosition(centreLable(Driver.WIDTH, information.getWidth()), 680);
+        fontParameters.size = 15;
+        movement = new Label("Movement", labelStyle);
+        enemy = new Label("Enemy", labelStyle);
+        player = new Label("player",labelStyle);
+        puzzles = new Label("puzzles",labelStyle);
 
-        
+        labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        playerInfo = new Label("Player must avoid contact with enemy to survive that level. In order to complete the level player must complete a randomly selected puzzle. ", labelStyle);
+        enemyInfo = new Label("There are two types of enemies. There is a bomb carrier and enemy spawns. Bomb carrier enemy follows player around and drops bomb near player, " 
+         + "whilst enemy spawns reduce life of player with each contact with player", labelStyle);
+        movement.setPosition(70,600);
+        enemy.setPosition(70, 500);
+        player.setPosition(70, 300);
+        //puzzles.setPosition(70,200);
+        playerInfo.setPosition(350,300);
+        enemyInfo.setPosition(350,500);
+
+        enemyInfo.setWidth(700);
+        enemyInfo.setWrap(true);
+
+        stage.addActor(information);
+        stage.addActor(movement);
+        stage.addActor(enemy);
+        stage.addActor(player);
+        stage.addActor(puzzles);
+
+        stage.addActor(information);
+        //stage.addActor(movementInfo);
+        stage.addActor(enemyInfo);
+        stage.addActor(playerInfo);
+        //stage.addActor(puzzlesInfo);
     }
-
     
 
+    public float centreLable(float x, float y){
+        float result = (x - y)/2;
+        return result;
+    }
 	/**
     * Called when the screen should render itself.
     * @param delta The time in seconds since the last render.
@@ -98,45 +134,14 @@ public class TutorialScreen implements Screen{
    {	
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f,0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        int y = EXIT_BUTTON_Y, x = EXIT_BUTTON_Y, z = 180, n = 180;
+        //int y = EXIT_BUTTON_Y, x = EXIT_BUTTON_Y, z = 180, n = 180;
         batch.begin();
-
-                //x, y, width, length
-        batch.draw(gameImage, 340, 320, GAME_IMAGE_WIDTH, GAME_IMAGE_HEIGHT);
-
-        for(int i = 0; i<4; i++){
-            batch.draw(playerImage, 70, y , PLAYER_IMAGE_WIDTH ,PLAYER_IMAGE_HEIGHT ); 
-            y = y + PLAYER_IMAGE_HEIGHT + 30;
-        }
-
-        for(int i = 0; i<4; i++){
-            batch.draw(playerImage, 1120, x , PLAYER_IMAGE_WIDTH ,PLAYER_IMAGE_HEIGHT ); 
-            x = x + PLAYER_IMAGE_HEIGHT + 30;
-        }
-
-        for(int i = 0; i<4; i++){
-            batch.draw(enemyImage, 220, z, ENEMY_IMAGE_WIDTH ,ENEMY_IMAGE_HEIGHT ); 
-            z = z + ENEMY_IMAGE_HEIGHT + 30;
-        }
-  
-        for(int i = 0; i<4; i++){
-            batch.draw(enemyImage, 980, n , ENEMY_IMAGE_WIDTH ,ENEMY_IMAGE_HEIGHT ); 
-            n = n + ENEMY_IMAGE_HEIGHT + 30;
-        }
-  
-
-        batch.draw(playerImage, (70 + PLAYER_IMAGE_WIDTH + 70), 10, PLAYER_IMAGE_WIDTH ,PLAYER_IMAGE_HEIGHT ); 
-        batch.draw(playerImage, (70 + PLAYER_IMAGE_WIDTH + 70 + PLAYER_IMAGE_WIDTH + 70), 10, PLAYER_IMAGE_WIDTH ,PLAYER_IMAGE_HEIGHT ); 
-        batch.draw(playerImage, (1280 - PLAYER_IMAGE_WIDTH - 70 - PLAYER_IMAGE_WIDTH - 70), 10, PLAYER_IMAGE_WIDTH ,PLAYER_IMAGE_HEIGHT ); 
-        batch.draw(playerImage, (1280 - PLAYER_IMAGE_WIDTH - 70 - PLAYER_IMAGE_WIDTH - 70 - PLAYER_IMAGE_WIDTH - 70), 10, PLAYER_IMAGE_WIDTH ,PLAYER_IMAGE_HEIGHT ); 
-            
-        
-
-        Exit();
+        //x, y, width, length
+        //Exit();
         stage.draw();
         batch.end(); 
    }
-
+   /*
     private void Exit(){
         if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
@@ -150,7 +155,7 @@ public class TutorialScreen implements Screen{
             batch.draw(inActiveExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         }
    }
-
+   */
    /**
     * @param width size of width
     * @param height size of height
