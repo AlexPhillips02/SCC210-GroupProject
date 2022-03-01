@@ -11,6 +11,6 @@ public class ReinforcedWall extends BreakableWall
      */
     public ReinforcedWall(int health)
     {
-        super("Wall.jpg", health);
+        super("Wall/BrownWall (fixed).png", health);
     }
 }
