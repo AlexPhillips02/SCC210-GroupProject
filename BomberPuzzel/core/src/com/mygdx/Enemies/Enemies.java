@@ -2,10 +2,13 @@ package com.mygdx.Enemies;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Entity;
 import com.mygdx.Player.Player;
+import com.mygdx.Sound.SoundController;
 import com.mygdx.TileTypes.Path;
 
 /**
@@ -15,6 +18,8 @@ import com.mygdx.TileTypes.Path;
 public abstract class Enemies extends Entity
 {
     String[] possibleDirections = {"LEFT", "DOWN", "RIGHT", "UP"};
+    private final SoundController soundController;
+    private final Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
 
     /**
      * 
@@ -27,6 +32,7 @@ public abstract class Enemies extends Entity
     public Enemies(String imageURL, Board board, float x, float y, float movementSpeed)
     {
         super(imageURL, board, x, y, movementSpeed);
+        soundController = new SoundController();
     }
 
     /**
@@ -123,5 +129,6 @@ public abstract class Enemies extends Entity
     public void Attack(Player player)
     {
         player.reduceHealth();
+        soundController.playMusic(playerHit);
     }
 }
