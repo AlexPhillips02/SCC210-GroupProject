@@ -39,7 +39,7 @@ public class Board
         createBasicLevelLayout();
         addDestructableWalls(percentageOfDestructableWalls);
         addCenterUnbreakableWalls();
-        createStartingSquaresForPlayer();
+        createStartingSquaresWalls();
     }
 
     /**
@@ -69,6 +69,7 @@ public class Board
                 int ySize = tempTile.getHeight();
                 //Creates squares initially with coordinates (based on window coords not amount of tiles)
                 Squares tempSquare = new AlgorithmSquares((x * xSize), (y * ySize));
+
                 tempSquare.setTile(tempTile);
                 gameSquares[x][y] = tempSquare;
             }
@@ -125,7 +126,19 @@ public class Board
     /**
      * Creates area with no walls around the player spawn so they are guarranteed to be able to move
      */
-    private void createStartingSquaresForPlayer() 
+    public void createStartingSquaresWalls() 
+    {
+        for (int x = 1; x <= 2; x++) 
+        {
+            for (int y = 1; y <= 2; y++) 
+            {
+                gameSquares[x][y].setTile(new SoftWall());
+            }
+        }
+    }
+    
+
+    public void createStartingPath()
     {
         for (int x = 1; x <= 2; x++) 
         {

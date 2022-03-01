@@ -34,7 +34,7 @@ public class EnemyController
 	 * Creates the enemies and places them randomly around the map
 	 * @param amount Amount of enemys to spawn around the map
 	 */
-	public void CreateEnemies(int amount)
+	public void CreateEnemies(int amount, int level)
 	{
 		for (int i = 0; i < amount; i++) 
 		{
@@ -46,14 +46,13 @@ public class EnemyController
 
 			//Creates the enemy and adds to list of enemies
 			Enemies enemy;
-			if (i == 0) 
+			if (i < level) 
 			{
-				enemy = new BombCarrier(board, xPosition, yPosition, 100, player);
-				//enemy = new BombCarrier(board, 64, 400, 100, player);	
+				enemy = new BombCarrier(board, xPosition, yPosition, 80 + (5 * level), player);
 			}
 			else
 			{
-				enemy = new Creep(board, xPosition, yPosition, 100);
+				enemy = new Creep(board, xPosition, yPosition, 50 + (5 * level));
 			}
 
 			enemies.add(enemy);

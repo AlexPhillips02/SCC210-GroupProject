@@ -66,8 +66,8 @@ public class GameController
 		runGame = false;
 
 		//Level number originally set to 0
-		float basePercentageOfDestrctableWalls = 10;
-		int baseEnemyAmount = 10;
+		float basePercentageOfDestrctableWalls = 15;
+		int baseEnemyAmount = 6;
 		int baseAbilitesAmount = 10;
 
 		//Increasing base amounts based on level (Increase difficulty)
@@ -82,13 +82,14 @@ public class GameController
 		enemyController = new EnemyController(gameBoard, player);
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
-		enemyController.CreateEnemies(baseEnemyAmount);
+		enemyController.CreateEnemies(baseEnemyAmount, levelNumber);
 
 		gui = new GUI(levelNumber);
 		puzzleController = new PuzzleController(gui, gameBoard, player);
 		puzzleController.SetPuzzle();
 
 		CreateAbilities(baseAbilitesAmount);
+		gameBoard.createStartingPath();
 	}
 
 	/**
@@ -218,7 +219,8 @@ public class GameController
 		int randomIndex = rand.nextInt(5);
 		Ability newAbility;
 
-		if (randomIndex == 0) {
+		if (randomIndex == 0) 
+		{
 			newAbility = new BombIncrement(gameBoard, xPosition, yPosition, player);
 		}
 		else if (randomIndex == 1)
