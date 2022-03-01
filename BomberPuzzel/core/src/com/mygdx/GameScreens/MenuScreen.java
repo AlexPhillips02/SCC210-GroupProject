@@ -31,9 +31,8 @@ public class MenuScreen implements Screen {
     private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
 
-    private final SpriteBatch batch;
-    public GameController controller;
-    private final SoundController soundController;
+    private SpriteBatch batch;
+    private SoundController soundController;
 
     
     private final Texture inActiveHelp;
@@ -62,7 +61,6 @@ public class MenuScreen implements Screen {
         activeExitButton = new Texture("Screens/Exit (active).png");
         backGround = new Texture("Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
 
-        controller = new GameController(batch);
         soundController = new SoundController();
     }
 
@@ -149,7 +147,9 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void hide() {
+    public void hide() 
+    {  
+        
     }
 
     /**

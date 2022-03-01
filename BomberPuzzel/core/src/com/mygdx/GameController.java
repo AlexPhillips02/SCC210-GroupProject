@@ -66,12 +66,12 @@ public class GameController
 		runGame = false;
 
 		//Level number originally set to 0
-		float basePercentageOfDestrctableWalls = 10;
-		int baseEnemyAmount = 10;
-		int baseAbilitesAmount = 10;
+		float basePercentageOfDestrctableWalls = 12;
+		int baseEnemyAmount = 6;
+		int baseAbilitesAmount = 7;
 
 		//Increasing base amounts based on level (Increase difficulty)
-		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * basePercentageOfDestrctableWalls);
+		basePercentageOfDestrctableWalls = basePercentageOfDestrctableWalls + (levelNumber * 5);
 		baseEnemyAmount = baseEnemyAmount + levelNumber;
 	    baseAbilitesAmount = baseAbilitesAmount - levelNumber;
 
@@ -82,13 +82,14 @@ public class GameController
 		enemyController = new EnemyController(gameBoard, player);
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
-		enemyController.CreateEnemies(baseEnemyAmount);
+		enemyController.CreateEnemies(baseEnemyAmount, levelNumber);
 
 		gui = new GUI(levelNumber);
 		puzzleController = new PuzzleController(gui, gameBoard, player);
 		puzzleController.SetPuzzle();
 
 		CreateAbilities(baseAbilitesAmount);
+		gameBoard.createStartingPath();
 	}
 
 	/**
@@ -177,7 +178,16 @@ public class GameController
 		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
 		{
 			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
-			GamePauseOutput();
+
+			if(!pause)
+			{
+				gui.UnPause();
+				GamePauseOutput();
+			}
+			else
+			{
+				gui.Pause();
+			}
 		}
 		else
 		{
@@ -218,7 +228,8 @@ public class GameController
 		int randomIndex = rand.nextInt(5);
 		Ability newAbility;
 
-		if (randomIndex == 0) {
+		if (randomIndex == 0) 
+		{
 			newAbility = new BombIncrement(gameBoard, xPosition, yPosition, player);
 		}
 		else if (randomIndex == 1)
@@ -227,11 +238,11 @@ public class GameController
 		}
 		else if (randomIndex == 2)
 		{
-			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
+			newAbility = new SpeedDecrease(gameBoard, xPosition, yPosition, player);
 		}
 		else if (randomIndex == 3)
 		{
-			newAbility = new SpeedDecrease(gameBoard, xPosition, yPosition, player);
+			newAbility = new SpeedIncrease(gameBoard, xPosition, yPosition, player);
 		}
 		else
 		{

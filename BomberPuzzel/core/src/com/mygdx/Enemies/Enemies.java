@@ -19,7 +19,7 @@ public abstract class Enemies extends Entity
     /**
      * 
      * @param imageURL URL of standing image
-     * @param board Gameboard
+     * @param board Game board
      * @param x Starting x position
      * @param y Starting y position
      * @param movementSpeed Speed at which the enemy can move
@@ -37,7 +37,7 @@ public abstract class Enemies extends Entity
     {
         increaseLastDamaged();
         
-        if(move() == false || movementDirection == null)
+        if(!move() || movementDirection == null)
         {
             chooseNewDirection();
         }
@@ -63,7 +63,7 @@ public abstract class Enemies extends Entity
             }
         }
 
-        //If the enemy isnt trapped move in one of the possible directions
+        //If the enemy isn't trapped move in one of the possible directions
         //Else the enemy just stands still
         if (possibleMovements.size() > 0) 
         {
@@ -101,8 +101,7 @@ public abstract class Enemies extends Entity
 
     /**
 	 * A method that determines if there is a wall on the next possible tile
-	 * 
-	 * @param Next The next possible block to check
+     * @param next checks the next square
      * @return True if the player can move there (is a path)
 	 */	
 	public boolean canMove(Squares next)
@@ -118,7 +117,7 @@ public abstract class Enemies extends Entity
 	}
 
     /**
-     * Basic function of enemies, can be overidden within specific enemy classes (e.g. BombCarrier)
+     * Basic function of enemies, can be overridden within specific enemy classes (e.g. BombCarrier)
      * @param player
      */
     public void Attack(Player player)
