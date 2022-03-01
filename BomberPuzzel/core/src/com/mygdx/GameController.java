@@ -176,14 +176,8 @@ public class GameController
 		//If the game has been won or the player has died
 		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
 		{
-			if (!runGame || !player.isAlive()) {
-				gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
-				GamePauseOutput();
-			}
-			else if (pause)
-			{
-
-			}
+			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
+			GamePauseOutput();
 		}
 		else
 		{

@@ -110,8 +110,8 @@ public class Order extends Puzzle
 		B.setY(y3 + ((tileHeight - B.getHeight()) / 2));
 
         Y = new YellowButton(board, x4, y4);
-        Y.setX(x1 + ((tileWidth - Y.getWidth()) / 2));
-		Y.setY(y2 + ((tileHeight - Y.getHeight()) / 2));
+        Y.setX(x4 + ((tileWidth - Y.getWidth()) / 2));
+		Y.setY(y4 + ((tileHeight - Y.getHeight()) / 2));
 
         buttons[0] = R;
         buttons[1] = G;

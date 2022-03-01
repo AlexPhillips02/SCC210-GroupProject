@@ -46,7 +46,7 @@ public class EnemyController
 
 			//Creates the enemy and adds to list of enemies
 			Enemies enemy;
-			if (i >= 0) 
+			if (i == 0) 
 			{
 				enemy = new BombCarrier(board, xPosition, yPosition, 100, player);
 				//enemy = new BombCarrier(board, 64, 400, 100, player);	
