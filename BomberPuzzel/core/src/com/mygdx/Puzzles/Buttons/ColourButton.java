@@ -12,7 +12,9 @@ import com.mygdx.Board.Board;
 public abstract class ColourButton
 {
     protected String colour;
-    protected Texture defaultImage;
+    protected Texture currentImage;
+    protected Texture unclickedImage;
+    protected Texture clickedImage;
     protected float x;
     protected float y;
 
@@ -28,14 +30,17 @@ public abstract class ColourButton
      * @param x is the x coordinates
      * @param y is the y coordinates
      */
-    public ColourButton(Board board, String imageURL, float x, float y)
+    public ColourButton(Board board, String imageURL, String image2URL, float x, float y)
     {
-        this.defaultImage = new Texture(imageURL);
+        this.unclickedImage = new Texture(imageURL);
+        this.clickedImage = new Texture(image2URL);
         this.board = board;
         this.x = x;
         this.y = y;
+
+        this.currentImage = unclickedImage;
         
-        collisionRectangle = new Rectangle(this.x, this.y, defaultImage.getWidth(), defaultImage.getHeight());
+        collisionRectangle = new Rectangle(this.x, this.y, currentImage.getWidth(), currentImage.getHeight());
     }
 
     /**
@@ -44,22 +49,22 @@ public abstract class ColourButton
     */
     public void Draw(SpriteBatch batch)
     {
-        batch.draw(defaultImage , x, y);
+        batch.draw(currentImage , x, y);
     }
 
     public Texture getImage()
     {
-        return defaultImage;
+        return currentImage;
     }
 
     public int getHeight()
     {
-        return defaultImage.getHeight();
+        return currentImage.getHeight();
     }
 
     public int getWidth()
     {
-        return defaultImage.getWidth();
+        return currentImage.getWidth();
     }
 
     public float getX()
@@ -89,5 +94,15 @@ public abstract class ColourButton
 
     public String getColour() {
         return colour;
+    }
+
+    public void unclicked()
+    {
+        currentImage = unclickedImage;
+    }
+
+    public void clicked()
+    {
+        currentImage = clickedImage;
     }
 }
