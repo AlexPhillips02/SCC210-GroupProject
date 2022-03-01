@@ -1,5 +1,6 @@
 package com.mygdx.Puzzles.Memory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -63,23 +64,33 @@ public class Order extends Puzzle
     public void createGame()
     {
         // Choose 4 Random squares to place buttons on
-        Squares square1 = board.getRandomPath();
-        Squares square2 = board.getRandomPath();
-        Squares square3 = board.getRandomPath();
-        Squares square4 = board.getRandomPath();
+        ArrayList<Squares> usedSquares = new ArrayList<>();
+        for(int i = 0; i< 4; i++)
+        {
+            boolean r = true;
+            while(r)
+            {
+                Squares pathSquare = board.getRandomPath();
+                if(!usedSquares.contains(pathSquare))
+                {
+                    usedSquares.add(pathSquare);
+                    r = false;
+                }
+            }
+        }
 
         // Translates squares to grid positions
-        int x1 = square1.getX();
-        int y1 = square1.getY();
+        int x1 = usedSquares.get(0).getX();
+        int y1 = usedSquares.get(0).getY();
 
-        int x2 = square2.getX();
-        int y2 = square2.getY();
+        int x2 = usedSquares.get(1).getX();
+        int y2 = usedSquares.get(1).getY();
 
-        int x3 = square3.getX();
-        int y3 = square3.getY();
+        int x3 = usedSquares.get(2).getX();
+        int y3 = usedSquares.get(2).getY();
 
-        int x4 = square4.getX();
-        int y4 = square4.getY();
+        int x4 = usedSquares.get(3).getX();
+        int y4 = usedSquares.get(3).getY();
 
         // Create buttons
         R = new RedButton(board, x1, y1);
