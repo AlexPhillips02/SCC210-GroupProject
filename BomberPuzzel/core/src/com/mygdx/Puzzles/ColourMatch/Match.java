@@ -124,7 +124,7 @@ public class Match extends Puzzle
                 gui.setPuzzleInfoBad("No Match");
                 prev.setActive(true);
             }
-        }     
+        }  
     }
 
     public ArrayList<ColourButton> getButtons()
