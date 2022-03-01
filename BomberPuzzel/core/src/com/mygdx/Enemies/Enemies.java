@@ -72,7 +72,6 @@ public abstract class Enemies extends Entity
         }
         else
         {
-            movementDirection = null;
             movementDirection = "STANDING";
         }
 

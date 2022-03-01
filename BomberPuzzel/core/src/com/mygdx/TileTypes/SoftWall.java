@@ -10,6 +10,6 @@ public class SoftWall extends BreakableWall
      */
     public SoftWall()
     {
-        super("Bombing_Chap_Sprite_Set/Sprites/Blocks/ExplodableBlock.png", 1);
+        super("Wall/Box(better).png", 1);
     }
 }

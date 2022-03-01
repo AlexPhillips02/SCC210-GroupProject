@@ -105,4 +105,14 @@ public abstract class ColourButton
     {
         currentImage = clickedImage;
     }
+
+    public void setX(float x)
+    {
+        this.x = x;
+    }
+
+    public void setY(float y)
+    {
+        this.y = y;
+    }
 }

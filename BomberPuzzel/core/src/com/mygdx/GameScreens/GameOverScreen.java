@@ -26,18 +26,15 @@ public class GameOverScreen implements Screen {
     private static final int EXIT_BUTTON_Y = 10;
     private static final int GAMEOVER_X = Driver.WIDTH / 2 - GAMEOVER_WIDTH / 2;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
-    
-    
 
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
 
-    private Texture gameover;
-    private Texture inActivePlayButton;
-    private Texture inActiveExitButton;
-    private Texture activePlayButton;
-    private Texture activeExitButton;
-    private Texture backGround;
-
+    private final Texture gameover;
+    private final Texture inActivePlayButton;
+    private final Texture inActiveExitButton;
+    private final Texture activePlayButton;
+    private final Texture activeExitButton;
+    private final Texture backGround;
 
     /**
      * Constructor for the main Game Over Screen which appears at the end of the game, when the player dies.
@@ -53,7 +50,6 @@ public class GameOverScreen implements Screen {
         activeExitButton = new Texture("Screens/Exit (active).png");
         backGround = new Texture("Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
     }
-
 
     /**
      * Called when this screen becomes the current screen for a Game.
@@ -125,19 +121,16 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
 
     @Override
     public void resume() {
-
     }
 
 
     @Override
     public void hide() {
-
     }
 
     /**
@@ -145,6 +138,5 @@ public class GameOverScreen implements Screen {
      */
     @Override
     public void dispose() {
-
     }
 }

@@ -135,6 +135,7 @@ public abstract class PlayerTrackingEnemy extends Enemies
             movementDirection = "STANDING";
         }
 
+        setAnimationDirection(movementDirection);
     }
 
     /**
