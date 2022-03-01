@@ -1,6 +1,5 @@
 package com.mygdx.Puzzles.ColourMatch;
 
-import java.time.temporal.TemporalQuery;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.GUI;

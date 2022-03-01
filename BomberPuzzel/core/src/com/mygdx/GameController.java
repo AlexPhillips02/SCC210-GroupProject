@@ -176,13 +176,13 @@ public class GameController
 		//If the game has been won or the player has died
 		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
 		{
-			if (!runGame) {
+			if (!runGame || !player.isAlive()) {
 				gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
 				GamePauseOutput();
 			}
 			else if (pause)
 			{
-				gui.Pause();
+
 			}
 		}
 		else
@@ -200,8 +200,15 @@ public class GameController
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
         {
 			//Pause game
-			System.out.println("Hi");
-			pause = true;
+			System.out.println("Pause");
+			if(pause)
+			{
+				pause = false;
+			}
+			else
+			{
+				pause = true;
+			}
         }
 	}
 
