@@ -28,7 +28,7 @@ public class Bomb extends Ability
      */
     public Bomb(Board board, float x, float y, Entity entity, int explosionRange) 
     {
-        super("Bombing_Chap_Sprite_Set/Sprites/Bomb/Bomb_f01.png", board, x, y, entity, "BOMB", 4);
+        super("Bombs/bomb(single).png", board, x, y, entity, "BOMB", 4);
         this.explosionRange = explosionRange;
         createAnimations();
         placeBomb();
@@ -71,7 +71,7 @@ public class Bomb extends Ability
     {
         Array<TextureRegion> frames = new Array<>();
 
-        Texture bombs = new Texture("Bomb.png");
+        Texture bombs = new Texture("Bombs/Bomb.png");
 
         //Bomb placement 
         for (int y = 0; y < 4; y++)

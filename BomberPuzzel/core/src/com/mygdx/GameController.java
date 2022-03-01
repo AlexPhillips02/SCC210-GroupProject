@@ -40,6 +40,7 @@ public class GameController
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
 
+	private boolean gameLoaded = false;
 	private boolean runGame = true;
 	private boolean pause = false;
 
@@ -63,6 +64,7 @@ public class GameController
 	 */
 	public void CreateLevel()
 	{
+		gameLoaded = false;
 		runGame = false;
 
 		//Level number originally set to 0
@@ -90,6 +92,7 @@ public class GameController
 
 		CreateAbilities(baseAbilitesAmount);
 		gameBoard.createStartingPath();
+		gameLoaded = true;
 	}
 
 	/**
@@ -117,103 +120,106 @@ public class GameController
 	 */
 	public void Update() 
 	{
-		//Gameboard
-		gameBoard.Draw(batch);	//draws gameboard
-		ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
-		
-		//Puzzle controller
-		puzzleController.Update(batch);	
-		gameBoard.DrawBombs(batch);
-
-		//If squares exist where damage should be inflicted
-		if (deathSquares.size() > 0) 
+		if(gameLoaded == true)
 		{
-			checkForSquareCollision(deathSquares);
-			gameBoard.resetDeathSquares();
-		}
+			//Gameboard
+			gameBoard.Draw(batch);	//draws gameboard
+			ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
+			
+			//Puzzle controller
+			puzzleController.Update(batch);	
+			gameBoard.DrawBombs(batch);
 
-		//Draw abilities on the board
-		if (boardAbilities != null)
-		{
-			for(int i = 0; i < boardAbilities.size(); i++ )
-			{	
-				Ability ability = boardAbilities.get(i);
-				ability.Draw(batch);
-
-				//If the player collides with an ability set the ability as active and add to active list
-				//Remove from the board abilities (No longer needs to be drawn)
-				if (ability.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
-				{
-					ability.setActive();
-					activeAbilities.add(ability);
-					boardAbilities.remove(i);
-					i--;
-				}
-			}
-		}
-
-		//Loops through active abilites
-		if (activeAbilities != null) 
-		{
-			for(int i = 0; i < activeAbilities.size(); i++ )
-			{	
-				Ability ability = activeAbilities.get(i);
-
-				ability.update();
-					
-				//If the ability has deactivated (Remove from active ability list)
-				if (ability.isDeactivated()) 
-				{
-					activeAbilities.remove(i);
-					i--;
-				}
-			}
-		}
-
-		//Enemies and player drawing
-		enemyController.draw(batch);
-		player.Draw(batch);
-
-		//If the game has been won or the player has died
-		if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
-		{
-			gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
-
-			if(!pause)
+			//If squares exist where damage should be inflicted
+			if (deathSquares.size() > 0) 
 			{
-				gui.UnPause();
-				GamePauseOutput();
+				checkForSquareCollision(deathSquares);
+				gameBoard.resetDeathSquares();
+			}
+
+			//Draw abilities on the board
+			if (boardAbilities != null)
+			{
+				for(int i = 0; i < boardAbilities.size(); i++ )
+				{	
+					Ability ability = boardAbilities.get(i);
+					ability.Draw(batch);
+
+					//If the player collides with an ability set the ability as active and add to active list
+					//Remove from the board abilities (No longer needs to be drawn)
+					if (ability.getCollisionRectangle().overlaps(player.getCollisionRectangle()))
+					{
+						ability.setActive();
+						activeAbilities.add(ability);
+						boardAbilities.remove(i);
+						i--;
+					}
+				}
+			}
+
+			//Loops through active abilites
+			if (activeAbilities != null) 
+			{
+				for(int i = 0; i < activeAbilities.size(); i++ )
+				{	
+					Ability ability = activeAbilities.get(i);
+
+					ability.update();
+						
+					//If the ability has deactivated (Remove from active ability list)
+					if (ability.isDeactivated()) 
+					{
+						activeAbilities.remove(i);
+						i--;
+					}
+				}
+			}
+
+			//Enemies and player drawing
+			enemyController.draw(batch);
+			player.Draw(batch);
+
+			//If the game has been won or the player has died
+			if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
+			{
+				gui.setHealth(player.getHealth()); //Ensures gui is outputting correct health
+
+				if(!pause)
+				{
+					gui.UnPause();
+					GamePauseOutput();
+				}
+				else
+				{
+					gui.Pause();
+				}
 			}
 			else
 			{
-				gui.Pause();
+				//If the game is still running, update the moving entities
+				gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
+				player.update();
+				enemyController.Update();
+			}
+
+			//Camera
+			moveCamera();		
+			gui.stage.draw();
+
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+			{
+				//Pause game
+				System.out.println("Pause");
+				if(pause)
+				{
+					pause = false;
+				}
+				else
+				{
+					pause = true;
+				}
 			}
 		}
-		else
-		{
-			//If the game is still running, update the moving entities
-			gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
-			player.update();
-			enemyController.Update();
-		}
-
-		//Camera
-		moveCamera();		
-        gui.stage.draw();
-
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
-        {
-			//Pause game
-			System.out.println("Pause");
-			if(pause)
-			{
-				pause = false;
-			}
-			else
-			{
-				pause = true;
-			}
-        }
 	}
 
 	/**
