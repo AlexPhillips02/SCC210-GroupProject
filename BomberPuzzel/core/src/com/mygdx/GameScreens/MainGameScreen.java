@@ -11,8 +11,8 @@ import com.mygdx.GameController;
  */
 public class MainGameScreen implements Screen {
 
-	private SpriteBatch batch;
-	private GameController controller;
+	private final SpriteBatch batch;
+	private final GameController controller;
 
 	/**
 	 * Constructor for the Main Game Screen, where the game takes place.
@@ -52,7 +52,6 @@ public class MainGameScreen implements Screen {
 	 */
 	@Override
 	public void show () {
-
 	}
 
 	@Override
