@@ -29,6 +29,6 @@ public class BombIncrement extends Ability {
     public void DeactivateAbility()
     {
         int currentMaxBombs = ((Player) entity).getBombsMax();
-        ((Player) entity).setBombsMax(currentMaxBombs); //this isn't lowering the max whenever the duration of the ability expires
+        ((Player) entity).setBombsMax(currentMaxBombs - 1); //this isn't lowering the max whenever the duration of the ability expires
     }
 }

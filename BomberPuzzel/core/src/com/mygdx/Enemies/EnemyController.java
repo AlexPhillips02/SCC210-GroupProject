@@ -128,9 +128,11 @@ public class EnemyController
                 //If the enemy is in contact with the death square
                 if (enemy.getCollisionRectangle().overlaps(deathSquare)) 
                 {
-                	if (enemy instanceof Creep){
+                	if (enemy instanceof Creep)
+					{
 						soundController.playMusic(alienHit);
-					} else if (enemy instanceof BombCarrier){
+					} else if (enemy instanceof BombCarrier)
+					{
 						soundController.playMusic(spiderHit);
 					}
                     enemy.reduceHealth();

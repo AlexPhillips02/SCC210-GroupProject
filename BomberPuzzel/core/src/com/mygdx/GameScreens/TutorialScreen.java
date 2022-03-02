@@ -47,6 +47,10 @@ public class TutorialScreen implements Screen
     private Label bombCarrier;
     private Label character; 
     private Label buttons;
+    private Label walls;
+    private Label wallsInfo;
+    private Label abilities;
+    private Label abilitesInfo;
 
     private TextButton button; 
     private TextButtonStyle textButtonStyle;
@@ -84,20 +88,27 @@ public class TutorialScreen implements Screen
         control = new Label("Control", labelStyle);
         enemy = new Label("Enemy", labelStyle);
         enemySpawn = new Label("Creeps", labelStyle);
-        bombCarrier = new Label("bomb Carrier", labelStyle);
+        bombCarrier = new Label("Bomb\nCarrier", labelStyle);
         player = new Label("player",labelStyle);
-        character = new Label("character",labelStyle);
+        character = new Label("Player",labelStyle);
         puzzles = new Label("puzzles",labelStyle);
         buttons = new Label("Buttons",labelStyle);
+        walls = new Label("Walls", labelStyle);
+        abilities = new Label("Abilites", labelStyle);
     
 
         labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-        playerInfo = new Label("Player must avoid contact with enemy to survive that level. In order to complete the level player must complete a randomly selected puzzle. ", labelStyle);
-        enemyInfo = new Label("There are two types of enemies: Creeps will path randomly through the level and inflict damage on the player if touched. Bomb carriers track the player when they approch too close," 
+        abilitesInfo = new Label("Thoughout the level random abilities can spawn. These will have immediate positive or negative effects on the player. Speed increase, Speed decrease, Health increase (+1 life), Increase bomb range (+2), Increase bomb inventory (+1).\n" +
+        "Once collected, most will be active for a short period of time before exipring.", labelStyle);
+        wallsInfo = new Label("There are 3 types of walls: Soft, Reinforced and Indestructable. Soft and reinforced walls can loose health by placing a bomb in range of the wall." + 
+        " Reducing a walls health to 0 will destroy it. Soft walls have an initial health of 1, and reinforced walls have an initial health of 2.", labelStyle);
+        playerInfo = new Label("The player must avoid contact with enemies to survive that level. In order to progress to the next level the player must complete a randomly selected puzzle. Initially the player will have an inventory size of 2 and bombs will expload 3 tiles in each " +
+        "direction (this can be altered with abilities).", labelStyle);
+        enemyInfo = new Label("There are two types of enemies: Creeps will path randomly through the level and inflict damage on the player if touched. Bomb carriers track the player when they approch too close, " 
          + "reducing the life of the player and also placing a bomb", labelStyle);
-        controlInfo = new Label("Use the arrow keys to move, space key to drop a bomb and the esc key to pause the game. Dropping bombs next to destructable wall will lower its health. Soft walls have a health of 1, reinforced walls have a health of 2.",labelStyle);
-        puzzlesInfo = new Label("The player must complete a puzzle in order to complete the level. In pattern match the player must match the buttons by colour, by standing on consequitive colours. The level is completed when all buttons are matched." +
-        "In Colour Sequencing, a sequence will appear on the screen. The buttons must be stepped on in the sequence provided. An incorrect button press will cause the sequence to reset.",labelStyle);
+        controlInfo = new Label("Use the arrow keys to move, space key to drop a bomb and the esc key to pause the game.",labelStyle);
+        puzzlesInfo = new Label("The player must complete a puzzle in order to complete the level. In pattern match, the player must match the buttons by colour, by standing on the same colour consecutively. The level is completed when all buttons are matched." +
+        " In Colour Sequencing, a sequence will appear on the screen. The buttons must be stepped on in the sequence provided. An incorrect button press will cause the sequence to reset.",labelStyle);
         button = new TextButton("Back To Main Screen", textButtonStyle);
         button.addListener(new InputListener(){
             /*
@@ -117,26 +128,34 @@ public class TutorialScreen implements Screen
         control.setPosition(70,600);
         enemy.setPosition(70, 500);
         player.setPosition(70, 250);
+        walls.setPosition(70, 400);
+        wallsInfo.setPosition(250, 400);
         puzzles.setPosition(70,40);
         playerInfo.setPosition(250,250);
         enemyInfo.setPosition(250,500);
         controlInfo.setPosition(250, 600);
         puzzlesInfo.setPosition(250, 40);
-        character.setPosition(625, 100);
-        enemySpawn.setPosition(450, 320);
-        bombCarrier.setPosition(750,320);
+        character.setPosition(1125, 200);
+        enemySpawn.setPosition(1125, 550);
+        bombCarrier.setPosition(1125, 375);
         buttons.setPosition(1125, 20);
         button.setPosition(10, 690);
+        abilities.setPosition(70, 150);
+        abilitesInfo.setPosition(250, 150);
 
+        wallsInfo.setWidth(700);
         enemyInfo.setWidth(700); 
         playerInfo.setWidth(700); 
         controlInfo.setWidth(700);
         puzzlesInfo.setWidth(700);
+        abilitesInfo.setWidth(700);
 
         playerInfo.setWrap(true);
         enemyInfo.setWrap(true);
         controlInfo.setWrap(true);
         puzzlesInfo.setWrap(true);
+        wallsInfo.setWrap(true);
+        abilitesInfo.setWrap(true);
 
         stage.addActor(information);
         stage.addActor(control);
@@ -153,6 +172,10 @@ public class TutorialScreen implements Screen
         stage.addActor(puzzlesInfo);
         stage.addActor(buttons);
         stage.addActor(button);
+        stage.addActor(walls);
+        stage.addActor(wallsInfo);
+        stage.addActor(abilities);
+        stage.addActor(abilitesInfo);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -173,9 +196,9 @@ public class TutorialScreen implements Screen
         
         batch.begin();
         Exit();
-        batch.draw(enemyImage, 500, 370, 100, 100);
-        batch.draw(enemyImage2, 800, 370, 100, 100);
-        batch.draw(playerImage, 650, 140, 100, 100);
+        batch.draw(enemyImage, 1150, 600, 100, 100);
+        batch.draw(enemyImage2, 1150, 425, 100, 100);
+        batch.draw(playerImage, 1150, 250, 70, 110);
         batch.draw(RedButton, 1135, 55, 25, 25);
         batch.draw(GreenButton, 1165, 55, 25, 25);
         batch.draw(YellowButton, 1195, 55, 25, 25);

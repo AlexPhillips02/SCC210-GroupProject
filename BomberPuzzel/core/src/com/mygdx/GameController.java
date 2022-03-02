@@ -46,7 +46,7 @@ public class GameController
 	private boolean runGame = true;
 	private boolean pause = false;
 
-	private Sound playerHit =  Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
+	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
 	/**
 	 * Creates the camera
 	 * @param batch

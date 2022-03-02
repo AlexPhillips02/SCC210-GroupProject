@@ -95,13 +95,13 @@ public class Board
             yPosition = (int)(Math.random() * (yLength - 2)  + 1);
 
             //25% of breakable walls will be reinforced
-            if(i % 4 == 0)
+            if(i % 3 == 0)
             {
-                gameSquares[xPosition][yPosition].setTile(new SoftWall());
+                gameSquares[xPosition][yPosition].setTile(new ReinforcedWall(2));
             }
             else
             {
-                gameSquares[xPosition][yPosition].setTile(new ReinforcedWall(2));
+                gameSquares[xPosition][yPosition].setTile(new SoftWall());
             }
         }
     }

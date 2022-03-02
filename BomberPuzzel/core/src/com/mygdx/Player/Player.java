@@ -12,8 +12,8 @@ import com.mygdx.Board.Board;
 public class Player extends Entity
 {
     private PlayerController controller;
-    private int bombsNumber;
-    private int bombsMax;
+    private int bombsNumber;    //Current placed bombs
+    private int bombsMax;       //Max amount of bombs placed
     private int bombsRange;
 
     /**
@@ -30,8 +30,8 @@ public class Player extends Entity
 
         //providing a frame for the player with characteristics including bomb stash
         this.health = 3;
-        this.bombsNumber = 0;
-        this.bombsMax = 4;
+        this.bombsNumber = 0; 
+        this.bombsMax = 2;
         this.bombsRange = 2;
 
         controller = new PlayerController(this);

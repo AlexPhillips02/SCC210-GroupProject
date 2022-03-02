@@ -59,7 +59,8 @@ public class PlayerController
         //Places a bomb
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
         {
-            if (player.getBombsNumber() <= player.getBombsMax()) {
+            if (player.getBombsNumber() < player.getBombsMax()) 
+            {
                 player.increasePlacedBombs();
                 createBomb();
             }
