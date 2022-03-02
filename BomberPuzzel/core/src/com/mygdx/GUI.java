@@ -25,6 +25,7 @@ import com.mygdx.Abilities.Ability;
 public class GUI 
 {
     public Stage stage;
+    public Stage pauseStage;
     private FitViewport viewport;
     private Table table;
 
@@ -55,6 +56,7 @@ public class GUI
     private Label levelCompletionLabel;
 
     private Label activeAbilites;
+    private Label Pause;
 
     private Texture activePlayButton;
     private Texture activeExitButton;
@@ -87,6 +89,7 @@ public class GUI
 
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport); // We must create order by creating a table in our stage
+        pauseStage= new Stage(viewport);
         table = new Table();
         table.top(); // Will put it at the top of our stage
         table.setFillParent(true);
@@ -107,6 +110,12 @@ public class GUI
         font = fontGenerator.generateFont(fontParameters);
         Label.LabelStyle gameOverStyle = new Label.LabelStyle(font, null);
         
+        fontParameters.size = 100;
+        font = fontGenerator.generateFont(fontParameters);
+        Label.LabelStyle pauseStyle = new Label.LabelStyle(font, null);
+
+        Pause = new Label("paused",pauseStyle);
+        Pause.setPosition(((Driver.WIDTH - Pause.getWidth())/2), 450);
 
         levelLabel = new Label("CURRENT LEVEL:", labelStyle);
         timeLabel = new Label("TIME:", labelStyle);
@@ -159,6 +168,7 @@ public class GUI
 
         // add table to our stage
         stage.addActor(table);
+        pauseStage.addActor(Pause);
     }
 
     public void update(int playerHealth, float elapsedTime, ArrayList<Ability> activeAbilities)
@@ -302,7 +312,7 @@ public class GUI
         batch.begin();
         batch.draw(activeExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-    
+        pauseStage.draw();
         batch.end();
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
