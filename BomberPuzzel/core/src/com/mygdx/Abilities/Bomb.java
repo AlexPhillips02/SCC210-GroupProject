@@ -85,30 +85,32 @@ public class Bomb extends Ability
         bombExplosion = new Animation<>(1/6f, frames);
         frames.clear();
         
-        Texture explosions = new Texture("Explosions.png");
+        Texture center = new Texture("Explosion/Middle Explosion.png");
 
         //Explosion centre
         for (int x = 0; x < 7; x++) 
         {
-            frames.add(new TextureRegion(explosions, 64 * x, 64 * 0, 64, 64));
+            frames.add(new TextureRegion(center, 64 * x, 0, 64, 64));
         }
 
         explosionCenter = new Animation<>(1/10f, frames);
         frames.clear();
 
         //Horizontal Lines
+        Texture horizontal = new Texture("Explosion/Horizontal Explosion.png");
         for (int x = 0; x < 7; x++) 
         {
-            frames.add(new TextureRegion(explosions, 64 * x, 64 * 1, 64, 64));
+            frames.add(new TextureRegion(horizontal, 64 * x, 0, 64, 64));
         }
 
         explosionLinesHorizontal = new Animation<>(1/10f, frames);
         frames.clear();
 
         //Vertiacal lines
+        Texture vertical = new Texture("Explosion/Vertical Explosion.png");
         for (int x = 0; x < 7; x++) 
         {
-            TextureRegion image = new TextureRegion(explosions, 64 * x, 64 * 2, 64, 64);
+            TextureRegion image = new TextureRegion(vertical, 64 * x, 0, 64, 64);
             frames.add(image);
         }
 
