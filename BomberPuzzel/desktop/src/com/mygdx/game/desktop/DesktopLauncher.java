@@ -9,8 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("Puzzle Bomber");
 		config.setWindowedMode(Driver.WIDTH, Driver.HEIGHT);
-		config.setResizable(true);
-		
+		config.setResizable(true);	
 
 		new Lwjgl3Application(new Driver(), config);	//platform specific problem - testing with Paul
   }

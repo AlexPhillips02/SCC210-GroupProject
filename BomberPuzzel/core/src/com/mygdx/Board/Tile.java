@@ -73,4 +73,9 @@ public class Tile
     public Texture getTexture() {
         return image;
     }
+
+    public void dispose() 
+    {
+        image.dispose();
+    }
 }

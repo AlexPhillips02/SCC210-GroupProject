@@ -7,7 +7,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -16,7 +15,6 @@ import com.mygdx.Abilities.*;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Enemies.EnemyController;
-import com.mygdx.GameScreens.MainGameScreen;
 import com.mygdx.GameScreens.MenuScreen;
 import com.mygdx.Player.Player;
 import com.mygdx.Puzzles.PuzzleController;
@@ -29,7 +27,6 @@ import com.mygdx.Puzzles.PuzzleController;
 public class GameController
 {
 	//private Boolean winStatus;
-	public MenuScreen menu;
 	private GUI gui;
     private Board gameBoard;
 	private Player player;
@@ -43,22 +40,6 @@ public class GameController
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
 
-	private final Texture inActivePlayButton;
-    private final Texture inActiveExitButton;
-    private final Texture activePlayButton;
-    private final Texture activeExitButton;
-
-    private static final int PLAY_BUTTON_WIDTH = 200;
-    private static final int PLAY_BUTTON_HEIGHT = 150;
-    private static final int EXIT_BUTTON_WIDTH = 200;
-    private static final int EXIT_BUTTON_HEIGHT = 150;
-    private static final int OPTION_BUTTON_WIDTH = 200;
-    private static final int OPTION_BUTTON_HEIGHT = 150;
-    private static final int PLAY_BUTTON_Y = 170;
-    private static final int EXIT_BUTTON_Y = 10;
-    private static final int OPTION_BUTTON_Y = 330;
-    private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
-
 	private boolean gameLoaded = false;
 	private boolean runGame = true;
 	private boolean pause = false;
@@ -70,15 +51,9 @@ public class GameController
     public GameController(SpriteBatch batch)
     {
         this.batch = batch;
-		//camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		menu = new MenuScreen();
 		camera = new OrthographicCamera();
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		gamePort = new FitViewport(1280, 720, camera);
-		inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
-        inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
-        activePlayButton = new Texture("Screens/Play (Active).png");
-        activeExitButton = new Texture("Screens/Exit (active).png");
 		CreateLevel();
     }
 
@@ -146,6 +121,19 @@ public class GameController
 	{
 		if(gameLoaded == true)
 		{
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+			{
+				//Pause game
+				if(pause)
+				{
+					pause = false;
+				}
+				else
+				{
+					pause = true;
+				}
+			}
+
 			//Gameboard
 			gameBoard.Draw(batch);	//draws gameboard
 			ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
@@ -203,6 +191,10 @@ public class GameController
 			enemyController.draw(batch);
 			player.Draw(batch);
 
+			//Camera
+			moveCamera();		
+			gui.stage.draw();
+
 			//If the game has been won or the player has died
 			if (puzzleController.getWinStatus() || !player.isAlive() || !runGame || pause)
 			{
@@ -210,12 +202,11 @@ public class GameController
 
 				if(!pause)
 				{
-					gui.UnPause();
 					GamePauseOutput();
 				}
 				else
 				{
-					gui.Pause();
+					gui.Pause(this);
 				}
 			}
 			else
@@ -224,24 +215,6 @@ public class GameController
 				gui.update(player.getHealth(), Gdx.graphics.getDeltaTime(), activeAbilities);
 				player.update();
 				enemyController.Update();
-			}
-
-			//Camera
-			moveCamera();		
-			gui.stage.draw();
-
-			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
-			{
-				//Pause game
-				System.out.println("Pause");
-				if(pause)
-				{
-					pause = false;
-				}
-				else
-				{
-					pause = true;
-				}
 			}
 		}
 	}
@@ -365,7 +338,7 @@ public class GameController
 		
 			if(timeSinceGameStop >= 5)
 			{
-				((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+				LoadMenu();
 			}
 			else if(timeSinceGameStop >= 1.5)
 			{
@@ -403,5 +376,28 @@ public class GameController
 
 	public void setPaused(boolean b) {
 		pause = b;
+	}
+
+	public void LoadMenu()
+	{
+		dispose();
+		((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
+	}
+
+	public void dispose()
+	{
+		System.out.println("MAIN GAME SCREEN DISPOSING");
+		/*
+		gui.dispose();
+		gameBoard.dispose();
+		player.dispose();
+
+		for (int i = 0; i < boardAbilities.size(); i++) 
+		{
+			boardAbilities.get(i).dispose();
+		}
+
+		*/
+		batch.dispose();
 	}
 }

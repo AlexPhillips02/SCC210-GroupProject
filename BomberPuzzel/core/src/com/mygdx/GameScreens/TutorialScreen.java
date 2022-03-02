@@ -1,7 +1,6 @@
 package com.mygdx.GameScreens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -11,63 +10,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
-import com.badlogic.gdx.utils.Align;
 import com.mygdx.Driver;
-import com.mygdx.GameController;
-import com.mygdx.Enemies.BombCarrier;
-import com.mygdx.Sound.SoundController;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.Game;
 
-public class TutorialScreen implements Screen{
-
-    private static final int EXIT_BUTTON_WIDTH = 200;
-    private static final int EXIT_BUTTON_HEIGHT = 150;
-    private static final int PLAYER_IMAGE_HEIGHT = 150;
-    private static final int PLAYER_IMAGE_WIDTH = 100;
-    private static final int GAME_IMAGE_WIDTH = 600;
-    private static final int GAME_IMAGE_HEIGHT = 400;
-    private static final int EXIT_BUTTON_Y = 10;
-    private static final int ENEMY_IMAGE_WIDTH = 100;
-    private static final int ENEMY_IMAGE_HEIGHT = 100;
-    private static final int BUTTON_X = Driver.WIDTH / 2 - EXIT_BUTTON_WIDTH / 2;
-    
-    
+public class TutorialScreen implements Screen
+{
     private SpriteBatch batch;
-    private SoundController soundController;
-    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));  
-    private final Texture inActiveExitButton;
-    private final Texture activeExitButton;
-    private final Texture gameImage;
-    private final Texture playerImage;
-    private final Texture enemyImage;
-    private final Texture enemyImage2;
-    private final Texture RedButton;
-    private final Texture BlueButton;
-    private final Texture YellowButton;
-    private final Texture GreenButton;
+    private Texture playerImage;
+    private Texture enemyImage;
+    private Texture enemyImage2;
+    private Texture RedButton;
+    private Texture BlueButton;
+    private Texture YellowButton;
+    private Texture GreenButton;
     
     public Stage stage;
     private FitViewport viewport;
-    private Table table;
-    private Label helpLabel;
-    private OrthographicCamera camera;
-   
   
     private Label information;  
     private Label control;
@@ -83,7 +48,6 @@ public class TutorialScreen implements Screen{
     private Label character; 
     private Label buttons;
 
-
     private TextButton button; 
     private TextButtonStyle textButtonStyle;
     
@@ -95,10 +59,7 @@ public class TutorialScreen implements Screen{
     public TutorialScreen()
     {
         batch = new SpriteBatch();
-        soundController = new SoundController();
-        inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
-        activeExitButton = new Texture("Screens/Exit (active).png");
-        gameImage = new Texture("Screens/puzzleBombSS.png");
+        //soundController = new SoundController();
         playerImage = new Texture("Bomberman/BombermanDefault.png");
         enemyImage = new Texture("Alien enemy/Alien(single).png");
         enemyImage2 = new Texture("Enemies/Spider enemy/spider(single).png");
@@ -109,9 +70,6 @@ public class TutorialScreen implements Screen{
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport); // We must create order by creating a table in our stage
         Gdx.input.setInputProcessor(stage);
-        table = new Table();
-        
-        
         
         FreeTypeFontGenerator fontGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Text/GUI_Font.TTF"));
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -199,9 +157,6 @@ public class TutorialScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
     }
     
-
-
-
     public float centreLable(float x, float y){
         float result = (x - y)/2;
         return result;
@@ -266,8 +221,8 @@ public class TutorialScreen implements Screen{
    }
 
    @Override
-   public void hide () {
-   }
+   public void hide () 
+   {}
 
    @Override
    public void pause () {
@@ -277,10 +232,21 @@ public class TutorialScreen implements Screen{
    public void resume () {
    }
 
-   @Override
-   public void dispose () 
-   {
-
-   }
-
+    @Override
+    public void dispose()
+    {
+        System.out.println("DISPOSING tutorial screen");
+        /*
+        playerImage.dispose();
+        enemyImage.dispose();
+        enemyImage2.dispose();
+        RedButton.dispose();
+        BlueButton.dispose();
+        YellowButton.dispose();
+        GreenButton.dispose();
+    
+        stage.dispose();
+        */
+        batch.dispose();
+    }
 }
