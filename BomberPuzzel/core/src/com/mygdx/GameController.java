@@ -79,7 +79,7 @@ public class GameController
 		levelNumber++;
 
 		gameBoard = new Board(27, 15, basePercentageOfDestrctableWalls);
-		player = new Player(gameBoard, 65, 65, 150);
+		player = new Player(gameBoard, 65, 65, 175);
 		enemyController = new EnemyController(gameBoard, player);
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();

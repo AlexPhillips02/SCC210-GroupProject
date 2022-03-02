@@ -83,7 +83,7 @@ public class TutorialScreen implements Screen
         fontParameters.size = 15;
         control = new Label("Control", labelStyle);
         enemy = new Label("Enemy", labelStyle);
-        enemySpawn = new Label("Enemy Spawn", labelStyle);
+        enemySpawn = new Label("Creeps", labelStyle);
         bombCarrier = new Label("bomb Carrier", labelStyle);
         player = new Label("player",labelStyle);
         character = new Label("character",labelStyle);
@@ -93,11 +93,11 @@ public class TutorialScreen implements Screen
 
         labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         playerInfo = new Label("Player must avoid contact with enemy to survive that level. In order to complete the level player must complete a randomly selected puzzle. ", labelStyle);
-        enemyInfo = new Label("There are two types of enemies. There is a bomb carrier and enemy spawns. Bomb carrier enemy follows player around and drops bomb near player, " 
-         + "whilst enemy spawns reduce life of player with each contact with player", labelStyle);
-        controlInfo = new Label("Use up keys to move up, use right keys to move right, left keys to move left, down keys to move down, space key to drop bomb, esc key to pause the game",labelStyle);
-        puzzlesInfo = new Label("Player Must complete one of the follwing puzzles in order to complete the game. In Colour Match, there are a set of two coloured buttons that must be step on one " +
-        "after the other to achieve a colour match (All buttons must be matched). In Colour Sequencing, a sequence will appear on the screen. The buttons must be stepped on in the sequence provided",labelStyle);
+        enemyInfo = new Label("There are two types of enemies: Creeps will path randomly through the level and inflict damage on the player if touched. Bomb carriers track the player when they approch too close," 
+         + "reducing the life of the player and also placing a bomb", labelStyle);
+        controlInfo = new Label("Use the arrow keys to move, space key to drop a bomb and the esc key to pause the game. Dropping bombs next to destructable wall will lower its health. Soft walls have a health of 1, reinforced walls have a health of 2.",labelStyle);
+        puzzlesInfo = new Label("The player must complete a puzzle in order to complete the level. In pattern match the player must match the buttons by colour, by standing on consequitive colours. The level is completed when all buttons are matched." +
+        "In Colour Sequencing, a sequence will appear on the screen. The buttons must be stepped on in the sequence provided. An incorrect button press will cause the sequence to reset.",labelStyle);
         button = new TextButton("Back To Main Screen", textButtonStyle);
         button.addListener(new InputListener(){
             /*
@@ -118,12 +118,12 @@ public class TutorialScreen implements Screen
         enemy.setPosition(70, 500);
         player.setPosition(70, 250);
         puzzles.setPosition(70,40);
-        playerInfo.setPosition(400,250);
-        enemyInfo.setPosition(400,500);
-        controlInfo.setPosition(400, 600);
-        puzzlesInfo.setPosition(400, 40);
+        playerInfo.setPosition(250,250);
+        enemyInfo.setPosition(250,500);
+        controlInfo.setPosition(250, 600);
+        puzzlesInfo.setPosition(250, 40);
         character.setPosition(625, 100);
-        enemySpawn.setPosition(425, 320);
+        enemySpawn.setPosition(450, 320);
         bombCarrier.setPosition(750,320);
         buttons.setPosition(1125, 20);
         button.setPosition(10, 690);
