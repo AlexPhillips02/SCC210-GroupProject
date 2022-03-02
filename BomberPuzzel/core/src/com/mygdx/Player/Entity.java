@@ -38,7 +38,7 @@ public abstract class Entity
     protected int health;
     protected float healthCooldown = 1f; //Seconds
     protected float lastDamageTimer = healthCooldown + 1;
-    private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/damage.mp3"));
+    private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
 
     protected SoundController soundController;
 
