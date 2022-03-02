@@ -43,7 +43,6 @@ public class GameController
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
 
-<<<<<<< HEAD
 	private final Texture inActivePlayButton;
     private final Texture inActiveExitButton;
     private final Texture activePlayButton;
@@ -60,9 +59,7 @@ public class GameController
     private static final int OPTION_BUTTON_Y = 330;
     private static final int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
 
-=======
 	private boolean gameLoaded = false;
->>>>>>> 485306a46946bcc2ae095f7a5c16d2a000b0f321
 	private boolean runGame = true;
 	private boolean pause = false;
 
