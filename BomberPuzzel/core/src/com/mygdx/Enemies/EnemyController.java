@@ -56,11 +56,11 @@ public class EnemyController
 			Enemies enemy;
 			if (i < level) 
 			{
-				enemy = new BombCarrier(board, xPosition, yPosition, 80 + (5 * level), player);
+				enemy = new BombCarrier(board, xPosition, yPosition, 100 + (5 * level), player);
 			}
 			else
 			{
-				enemy = new Creep(board, xPosition, yPosition, 50 + (5 * level));
+				enemy = new Creep(board, xPosition, yPosition, 75 + (5 * level));
 			}
 
 			enemies.add(enemy);

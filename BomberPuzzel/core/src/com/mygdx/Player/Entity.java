@@ -36,7 +36,7 @@ public abstract class Entity
     protected float animationTimer = 0f;
 
     protected int health;
-    protected float healthCooldown = 1.5f; //Seconds
+    protected float healthCooldown = 1f; //Seconds
     protected float lastDamageTimer = healthCooldown + 1;
     private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
 

@@ -63,9 +63,10 @@ public class GUI
     private int PLAY_BUTTON_HEIGHT = 150;
     private int EXIT_BUTTON_WIDTH = 200;
     private int EXIT_BUTTON_HEIGHT = 150;
-    private int PLAY_BUTTON_Y = 170;
-    private int EXIT_BUTTON_Y = 10;
-    private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+    private int PLAY_BUTTON_Y = 200;
+    private int EXIT_BUTTON_Y = 200;
+    private int EXIT_BUTTON_X = 800;
+    private int PLAY_BUTTON_X = 300;
 
     private SpriteBatch batch;
 
@@ -299,8 +300,9 @@ public class GUI
     public void Pause(GameController controller)
     {
         batch.begin();
-        batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        batch.draw(activeExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+        batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+    
         batch.end();
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
@@ -308,7 +310,7 @@ public class GUI
             controller.LoadMenu();
         }
 
-        if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
+        if(Gdx.input.getX() < PLAY_BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
         {
             if (Gdx.input.isTouched())
             {
@@ -316,7 +318,7 @@ public class GUI
             }
         }
 
-        if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y)
+        if(Gdx.input.getX() < EXIT_BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > EXIT_BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y)
         {
             if (Gdx.input.isTouched())
             { 
