@@ -18,7 +18,7 @@ public class BombCarrier extends PlayerTrackingEnemy
 {
     private int explosionRange = 2;
     private int bombsMax = 1;
-    private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/player_hit.mp3"));
+    private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/damage.mp3"));
 
     /**
      * Constructor for the Bomb Carrier enemy type.

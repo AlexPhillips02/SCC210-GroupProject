@@ -302,6 +302,7 @@ public class GUI
         batch.begin();
         batch.draw(activeExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+    
         batch.end();
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
