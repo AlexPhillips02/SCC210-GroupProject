@@ -125,7 +125,6 @@ public class GameController
 	{
 		if(gameLoaded == true)
 		{
-			if(gui.getPauseable() == true){
 				if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
 				{
 					//Pause game
@@ -138,7 +137,7 @@ public class GameController
 						pause = true;
 					}
 				}
-			}
+			
 			
 
 			//Gameboard
