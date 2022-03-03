@@ -20,12 +20,18 @@ public class HealthIncrease extends Ability { //also deemed as SHIELD in the spe
         super("Abilties/Health-1.png (2).png", board, x, y, player, "Extra Heart", 0);
     }
 
+    /**
+     * Executed when the ability is activated
+     */
     public void ActivateAbility()
     {
         int currentHealth = ((Player) entity).getHealth();
         entity.setHealth(currentHealth + 1);
     }
 
+    /**
+     * Executed when the ability is deactivated
+     */
     public void DeactivateAbility()
     {
         //health stays the same after ability period expires

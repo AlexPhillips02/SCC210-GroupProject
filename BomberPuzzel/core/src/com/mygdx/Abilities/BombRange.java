@@ -20,6 +20,9 @@ public class BombRange extends Ability {
         super("Abilties/Range-1.png (1).png", board, x, y, player, "Increased Bomb Range", 5);
     }
 
+    /**
+     * Executed when the ability is activated
+     */
     public void ActivateAbility() 
     {
         int currentBombRange = ((Player) entity).getBombsRange();

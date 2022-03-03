@@ -20,12 +20,18 @@ public class BombIncrement extends Ability {
         super("Abilties/Up 1 explosion-1.png (1).png", board, x, y, player, "Increased Inventory Size", 5);
     }
 
+    /**
+     * Executed when the ability is activated
+     */
     public void ActivateAbility()
     {
         int currentMaxBombs = ((Player) entity).getBombsMax();
         ((Player) entity).setBombsMax(currentMaxBombs + 1);
     }
 
+    /**
+     * Executed when the ability is deactivated
+     */
     public void DeactivateAbility()
     {
         int currentMaxBombs = ((Player) entity).getBombsMax();

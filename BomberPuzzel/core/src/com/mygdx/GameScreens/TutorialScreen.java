@@ -240,7 +240,6 @@ public class TutorialScreen implements Screen
     @Override
     public void dispose()
     {
-        System.out.println("DISPOSING tutorial screen");
         batch.dispose();
     }
 }

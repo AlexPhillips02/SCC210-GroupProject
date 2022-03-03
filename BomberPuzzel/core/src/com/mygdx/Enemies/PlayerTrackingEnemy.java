@@ -43,7 +43,7 @@ public abstract class PlayerTrackingEnemy extends Enemies
         shortestRoute = -1;
         resetAlgorithm();
         targetSquare = (AlgorithmSquares)board.getGameSquare((int)player.getX() / board.getTileSize(), (int)player.getY() / board.getTileSize());
-        currentSquare = (AlgorithmSquares)board.getGameSquare((int)x / board.getTileSize(), (int)y / board.getTileSize());
+        currentSquare = (AlgorithmSquares)board.getGameSquare((int)(x + this.getWidth()) / board.getTileSize(), (int)y / board.getTileSize());
         findShortestPathToPlayer(0, currentSquare, null);
 
         //If they have found a route
@@ -139,7 +139,7 @@ public abstract class PlayerTrackingEnemy extends Enemies
     }
 
     /**
-	 * A method that finds the shortest route
+	 * A method that finds the shortest route recursivly
 	 * 
 	 * @param count Distance away from the start square
 	 * @param current Algorithm square of the current square

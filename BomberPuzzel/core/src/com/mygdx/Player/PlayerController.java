@@ -34,19 +34,19 @@ public class PlayerController
         String direction = "";
         
         //Use arrow keys for player sets direction of player movement
-		if(Gdx.input.isKeyPressed(Input.Keys.UP))
+		if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))
 		{
             direction = "UP";
 		}
-        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))
 		{
             direction = "RIGHT";
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))
 		{
             direction = "DOWN";
 		}
-        else if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
+        else if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))
 		{
             direction = "LEFT";
 		}
@@ -68,7 +68,7 @@ public class PlayerController
     }
 
     /**
-     * The sole method that creates and places bombs on the game board.
+     * Creates and places bombs on the game board.
      */
     public void createBomb()
     {

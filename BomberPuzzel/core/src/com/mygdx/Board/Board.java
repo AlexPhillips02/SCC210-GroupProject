@@ -20,10 +20,10 @@ import com.mygdx.TileTypes.UnbreakableWall;
  */
 public class Board 
 {    
-    Squares[][] gameSquares;
-    ArrayList<Rectangle> deathSquares = new ArrayList<>(); //squares that should inflict damage when a bomb explodes
-    int xLength;
-    int yLength;
+    Squares[][] gameSquares;                               //Holds game squares                          
+    ArrayList<Rectangle> deathSquares = new ArrayList<>(); //Squares that should inflict damage when a bomb explodes
+    int xLength;                                           //x length of tiles
+    int yLength;                                           //y length of tiles
     
     /**
      * Creates initial board
@@ -183,13 +183,13 @@ public class Board
         }
     }
 
-
     /**
-     * Draws the bomb unto the screen 
-     * @param batch spritebatch to output images
+     * Draws and updates the bombs on the gameboard
+     * @param batch Spritebatch to draw the images
      */
     public void DrawBombs(SpriteBatch batch )
     {
+        //Loops through the squares on the gameboard
         for (int x = 0; x < gameSquares.length; x++) 
         {
             for (int y = 0; y < gameSquares[x].length; y++) 
@@ -207,14 +207,17 @@ public class Board
                     }
                     else
                     {
+                        //Draws the explosions
                         float elapsedTime = current.getElapsedTime();
 
+                        //If the explosion has finished, remove the animation from the tile
                         if (current.getTile().getAnimation().isAnimationFinished(current.getElapsedTime())) 
                         {
                             current.removeAnimation();
                         }
                         else
                         {
+                            //Continues the animation
                             batch.draw(current.getTile().getAnimation().getKeyFrame(elapsedTime, false), current.getX(), current.getY());
                             current.setElapsedTime(elapsedTime + Gdx.graphics.getDeltaTime());
                         }
@@ -328,6 +331,9 @@ public class Board
 
     /**
      * Gets the next square in that direction
+     * @param current Current square 
+     * @param n Direction to get the next square in
+     * @return Squares (Next square)
      */
     public Squares GetNext(Squares current, int n)
     {
@@ -354,21 +360,37 @@ public class Board
         return gameSquares[x][y];
     }
 
+    /**
+     * Gets the x length of the board
+     * @return The length of the board x
+     */
     public int getXLength()
     {
         return this.xLength;
     }
 
+    /**
+     * Gets the y length of the board
+     * @return The length of the board y
+     */
     public int getYLength()
     {
         return this.yLength;
     }
 
+    /**
+     * Gets the size of the tile
+     * @return Size of tile 
+     */
     public int getTileSize()
     {
         return gameSquares[0][0].getTile().getHeight();
     }
 
+    /**
+     * Gets the death squares
+     * @return The squares that should damage entities
+     */
     public ArrayList<Rectangle> getDeathSquares() {
         return deathSquares;
     }
