@@ -45,7 +45,7 @@ public class Bomb extends Ability
 
         this.square = board.getGameSquare(tileX, tileY);
 
-        if(!square.addBomb(this))
+        if(!square.addBomb(this) && entity instanceof Player)
         {
             ((Player) entity).setBombsNumber((((Player) entity).getBombsNumber()) -1);
         }
