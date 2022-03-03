@@ -2,7 +2,6 @@ package com.mygdx.GameScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,6 +19,10 @@ import com.mygdx.Driver;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.Game;
 
+/**
+ * @author Victor Boateng
+ * The help menu screen which supports new players and gives info on the game
+ */
 public class TutorialScreen implements Screen
 {
     private SpriteBatch batch;
