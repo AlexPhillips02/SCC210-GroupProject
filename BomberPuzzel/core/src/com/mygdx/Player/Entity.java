@@ -52,7 +52,6 @@ public abstract class Entity
      */
     public Entity(String imageURL, Board board, float x, float y, float movementSpeed)
     {
-        this.soundController = new SoundController();
         if (imageURL != null) 
         {
             defaultImage = new Texture(imageURL);   
@@ -62,6 +61,8 @@ public abstract class Entity
         this.x = x;
         this.y = y;
         this.movementSpeed = movementSpeed;
+        this.soundController = new SoundController();
+        
         //Collision rectangle to be used for collisions with other entities
         int height;
 
