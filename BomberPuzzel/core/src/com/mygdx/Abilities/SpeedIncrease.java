@@ -20,12 +20,18 @@ public class SpeedIncrease extends Ability{
         super("Abilties/Speed UP-1.png (1) (1).png", board, x, y, player, "Fast Feet", 5);
     }
 
+    /**
+     * Executed when the ability is activated
+     */
     public void ActivateAbility() 
     {
         float currentSpeed = entity.getMovementSpeed();
         entity.setMovementSpeed(currentSpeed + 50);
     }
 
+    /**
+     * Executed when the ability is deactivated
+     */
     public void DeactivateAbility()
     {
         float currentSpeed = entity.getMovementSpeed();
