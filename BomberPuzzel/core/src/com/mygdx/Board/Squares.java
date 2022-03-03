@@ -34,10 +34,18 @@ public class Squares
      * Method for adding a bomb with an animation on the square.
      * @param bomb bomb that is added.
      */
-    public void addBomb(Bomb bomb)
+    public boolean addBomb(Bomb bomb)
     {
-        this.bomb = bomb;
-        setAnimation(bomb.getAnimation());
+        if(this.bomb != null)
+        {
+            return false;
+        }
+        else
+        {
+            this.bomb = bomb;
+            setAnimation(bomb.getAnimation());
+            return true;
+        }
     }
 
     /**

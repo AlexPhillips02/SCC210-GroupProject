@@ -90,6 +90,10 @@ public class MenuScreen implements Screen
         batch.end();
     }
 
+    /**
+     * Called when Window is set to menu Screen. Draws 
+     * the components of the menu screen unto the window.
+     */
     private void playAndExit()
     {
         if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
@@ -109,10 +113,8 @@ public class MenuScreen implements Screen
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
            
             if (Gdx.input.isTouched()){
-                this.dispose();
                 soundController.playMusic(buttonClick);
                 Gdx.app.exit();
-                System.exit(0);
             }
         }
         else {
@@ -159,19 +161,6 @@ public class MenuScreen implements Screen
     @Override
     public void dispose() 
     {
-        System.out.println("DISPOSING MAIN MENU");
-        /*
-        inActiveHelp.dispose();
-        activeHelp.dispose();
-        inActivePlayButton.dispose();
-        inActiveExitButton.dispose();
-        activePlayButton.dispose();
-        activeExitButton.dispose();
-        backGround.dispose();
-
-        introSong.dispose();
-        buttonClick.dispose();
-        */
         batch.dispose();
     }
 }

@@ -47,8 +47,9 @@ public class GameController
 	private boolean pause = false;
 
 	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
+
 	/**
-	 * Creates the camera
+	 * Creates the camera, sound controller and gameport
 	 * @param batch
 	 */
     public GameController(SpriteBatch batch)
@@ -63,7 +64,7 @@ public class GameController
 
 	/**
 	 * Creates the level.
-	 * Every single part of the game is declared and initialised here.
+	 * Every single part of the level is declared and initialised here.
 	 */
 	public void CreateLevel()
 	{
@@ -83,7 +84,7 @@ public class GameController
 		levelNumber++;
 
 		gameBoard = new Board(27, 15, basePercentageOfDestrctableWalls);
-		player = new Player(gameBoard, 65, 65, 175);
+		player = new Player(gameBoard, 90, 70, 175);
 		enemyController = new EnemyController(gameBoard, player);
 		boardAbilities = new ArrayList<Ability>();
 		activeAbilities = new ArrayList<Ability>();
@@ -125,21 +126,19 @@ public class GameController
 	{
 		if(gameLoaded == true)
 		{
-				if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+			//Pause game
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+			{
+				if(pause)
 				{
-					//Pause game
-					if(pause)
-					{
-						pause = false;
-					}
-					else
-					{
-						pause = true;
-					}
+					pause = false;
 				}
+				else
+				{
+					pause = true;
+				}
+			}
 			
-			
-
 			//Gameboard
 			gameBoard.Draw(batch);	//draws gameboard
 			ArrayList<Rectangle> deathSquares = gameBoard.getDeathSquares(); //Returns squares that should inflict damage when a bomb explodes
@@ -394,18 +393,6 @@ public class GameController
 
 	public void dispose()
 	{
-		System.out.println("MAIN GAME SCREEN DISPOSING");
-		/*
-		gui.dispose();
-		gameBoard.dispose();
-		player.dispose();
-
-		for (int i = 0; i < boardAbilities.size(); i++) 
-		{
-			boardAbilities.get(i).dispose();
-		}
-
-		*/
 		batch.dispose();
 	}
 }

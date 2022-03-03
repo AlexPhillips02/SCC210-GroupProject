@@ -32,10 +32,13 @@ public abstract class Ability
 
     /**
      * Constructor for the abstract class of Abilities, all of them should be extended by this.
-     * @param imageURL URL to an image to use for the entity (Stored as a Texture)
-     * @param board The game board
-     * @param x X coordinate of the entity
-     * @param y Y coordinate of the entity
+     * @param imageURL URL of the image for the ability
+     * @param board Instance of the gameboard
+     * @param x X position of the ability
+     * @param y Y position of the ability
+     * @param entity Entity for the ability to take affect on (Usually the player)
+     * @param name Name of the ability
+     * @param abilityLength Length of time the ability should take affect for
      */
     public Ability(String imageURL, Board board, float x, float y, Entity entity, String name, float abilityLength)
     {
@@ -64,6 +67,9 @@ public abstract class Ability
         }
     }
 
+    /**
+     * Updates the ability, deactivates when the ability has been active
+     */
     public void update() 
     {
         elapsedTime += Gdx.graphics.getDeltaTime();
@@ -76,17 +82,27 @@ public abstract class Ability
         }
     }
 
+    /**
+     * Sets the new elapsed time
+     * @param newElapsedTime Provides the new elapsed time
+     */
     public void setElapsedTime(float newElapsedTime) 
     {
         elapsedTime = newElapsedTime;
     }
 
+    /**
+     * Returns the elapsed time of the ability
+     * @return elapsedTime
+     */
     public float getElapsedTime() 
     {
         return elapsedTime;
     }
 
-    //Getters and Setters
+    /**
+     * Sets the ability as active
+     */
     public void setActive() 
     {
         ActivateAbility();

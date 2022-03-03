@@ -22,6 +22,7 @@ public class EnemyController
     private Player player;
 
 	private final SoundController soundController;
+	//change sounds
 	private final Sound alienHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/alien_hit.mp3"));
 	private final Sound spiderHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/spider_hit.mp3"));
     
@@ -130,6 +131,7 @@ public class EnemyController
                 {
                 	if (enemy instanceof Creep)
 					{
+						//ch
 						soundController.playMusic(alienHit);
 					} else if (enemy instanceof BombCarrier)
 					{

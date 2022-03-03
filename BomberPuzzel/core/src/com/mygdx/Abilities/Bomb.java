@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Entity;
+import com.mygdx.Player.Player;
 
 /**
  * @author Alex Phillips, Alex Chalakov
@@ -42,13 +43,12 @@ public class Bomb extends Ability
         int tileX = (int)(this.x / 64);
         int tileY = (int)(this.y / 64);
 
-        if (tileX < 0 || tileY < 0 || tileX >= 29 || tileY >= 15)   
-        {
-            System.out.println("ENTITY BOMB Attempted to get gamesquare x: " + tileX + " y: " + tileY);
-        }
-
         this.square = board.getGameSquare(tileX, tileY);
-        square.addBomb(this);
+
+        if(!square.addBomb(this))
+        {
+            ((Player) entity).setBombsNumber((((Player) entity).getBombsNumber()) -1);
+        }
     }
 
     /**

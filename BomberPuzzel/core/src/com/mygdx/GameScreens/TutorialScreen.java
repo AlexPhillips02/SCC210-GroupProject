@@ -121,21 +121,21 @@ public class TutorialScreen implements Screen
 
         control.setPosition(70,600);
         enemy.setPosition(70, 500);
-        player.setPosition(70, 250);
+        player.setPosition(70, 300);
         walls.setPosition(70, 400);
         wallsInfo.setPosition(250, 400);
-        puzzles.setPosition(70,40);
-        playerInfo.setPosition(250,250);
+        puzzles.setPosition(70,80);
+        playerInfo.setPosition(250,300);
         enemyInfo.setPosition(250,500);
         controlInfo.setPosition(250, 600);
-        puzzlesInfo.setPosition(250, 40);
+        puzzlesInfo.setPosition(250, 80);
         character.setPosition(1125, 200);
-        enemySpawn.setPosition(1125, 550);
+        enemySpawn.setPosition(1125, 575);
         bombCarrier.setPosition(1125, 375);
-        buttons.setPosition(1125, 20);
+        buttons.setPosition(1115, 60);
         button.setPosition(10, 690);
-        abilities.setPosition(70, 150);
-        abilitesInfo.setPosition(250, 150);
+        abilities.setPosition(70, 180);
+        abilitesInfo.setPosition(250, 180);
 
         wallsInfo.setWidth(700);
         enemyInfo.setWidth(700); 
@@ -174,6 +174,12 @@ public class TutorialScreen implements Screen
         Gdx.input.setInputProcessor(stage);
     }
     
+    /**
+     * 
+     * @param x the width of the window
+     * @param y the width of the object to draw
+     * @return returns the X position to place a drawing at the centre of screen
+     */
     public float centreLable(float x, float y){
         float result = (x - y)/2;
         return result;
@@ -189,13 +195,14 @@ public class TutorialScreen implements Screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        batch.draw(enemyImage, 1150, 600, 100, 100);
-        batch.draw(enemyImage2, 1150, 425, 100, 100);
-        batch.draw(playerImage, 1150, 250, 70, 110);
-        batch.draw(RedButton, 1135, 55, 25, 25);
-        batch.draw(GreenButton, 1165, 55, 25, 25);
-        batch.draw(YellowButton, 1195, 55, 25, 25);
-        batch.draw(BlueButton, 1225, 55, 25, 25);
+        batch.draw(enemyImage, 1140, 600, 100, 100);
+        batch.draw(enemyImage2, 1140, 425, 100, 100);
+        batch.draw(playerImage, 1150, 225, 70, 110);
+        batch.draw(RedButton, 1125, 100, 25, 25);
+        batch.draw(GreenButton, 1155, 100, 25, 25);
+        batch.draw(YellowButton, 1185, 100, 25, 25);
+        batch.draw(BlueButton, 1215, 100, 25, 25);
+        //batch.draw(texture, x, y);
         stage.draw();
         batch.end(); 
    }
@@ -233,7 +240,6 @@ public class TutorialScreen implements Screen
     @Override
     public void dispose()
     {
-        System.out.println("DISPOSING tutorial screen");
         batch.dispose();
     }
 }

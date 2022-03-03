@@ -38,6 +38,7 @@ public class GUI
     private String puzzleType;
     private float start = 0;
     private String abilites = "";
+    private String temp = "";
 
     private boolean text = false;
     // Now we create our widgets. Our widgets will be labels, essentially text, that allow us to display Game Information
@@ -257,6 +258,17 @@ public class GUI
         text = true;
         start = levelTimer;   
     }
+
+    /**
+     * Remove text from the puzzelLabel
+     * @return the text that was in the label
+     */
+    public String hideTempLabel()
+    {
+        String temp = (puzzelLabel.getText()).toString();
+        puzzelLabel.setText("");
+        return temp;
+    }
     
     public void gameOverLabel()
     {
@@ -293,6 +305,15 @@ public class GUI
         start = 0;
     }
 
+    /**
+     * Shows the text in the puzzle label without altering the timer
+     * @param temp text to set in label
+     */
+    public void showTempLabel(String temp)
+    {
+        puzzelLabel.setText(temp);
+    }
+
     public void startGame() 
     {
         gameOverLabel.setColor(Color.GREEN);
@@ -322,6 +343,11 @@ public class GUI
 
     public void Pause(GameController controller)
     {
+        if((puzzelLabel.getText()).toString() != "")
+        {
+            temp = hideTempLabel();
+        }
+
         batch.begin();
         batch.draw(UnActiveExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         batch.draw(UnActivePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
@@ -338,6 +364,7 @@ public class GUI
             batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
+                showTempLabel(temp);
                 controller.setPaused(false);
             }
         }
