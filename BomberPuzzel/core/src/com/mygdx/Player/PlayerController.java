@@ -68,7 +68,7 @@ public class PlayerController
     }
 
     /**
-     * The sole method that creates and places bombs on the game board.
+     * Creates and places bombs on the game board.
      */
     public void createBomb()
     {

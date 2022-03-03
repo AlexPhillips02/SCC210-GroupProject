@@ -20,12 +20,18 @@ public class SpeedDecrease extends Ability{ //also deemed as SLOWNESS in the spe
         super("Abilties/Speed down-1.png (2).png", board, x, y, player, "Slowness", 5);
     }
 
+    /**
+     * Executed when the ability is activated
+     */
     public void ActivateAbility()
     {
         float currentSpeed = entity.getMovementSpeed();
         entity.setMovementSpeed(currentSpeed - 50);
     }
 
+    /**
+     * Executed when the ability is deactivated
+     */
     public void DeactivateAbility()
     {
         float currentSpeed = entity.getMovementSpeed();

@@ -139,7 +139,7 @@ public abstract class PlayerTrackingEnemy extends Enemies
     }
 
     /**
-	 * A method that finds the shortest route
+	 * A method that finds the shortest route recursivly
 	 * 
 	 * @param count Distance away from the start square
 	 * @param current Algorithm square of the current square
