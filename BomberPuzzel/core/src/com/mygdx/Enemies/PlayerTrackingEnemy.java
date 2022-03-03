@@ -49,6 +49,7 @@ public abstract class PlayerTrackingEnemy extends Enemies
         //If they have found a route
         if (!(shortestRoute == -1)) 
         {
+            System.out.println("Target Square: " + targetSquare.getX() + " " + targetSquare.getY());
             calculateMovementDirection();
             move();
         }
