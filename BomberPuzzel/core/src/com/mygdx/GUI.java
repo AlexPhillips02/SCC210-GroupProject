@@ -249,6 +249,10 @@ public class GUI
         start = levelTimer;   
     }
 
+    /**
+     * Remove text from the puzzelLabel
+     * @return the text that was in the label
+     */
     public String hideTempLabel()
     {
         String temp = (puzzelLabel.getText()).toString();
@@ -291,6 +295,10 @@ public class GUI
         start = 0;
     }
 
+    /**
+     * Shows the text in the puzzle label without altering the timer
+     * @param temp text to set in label
+     */
     public void showTempLabel(String temp)
     {
         puzzelLabel.setText(temp);
