@@ -90,6 +90,10 @@ public class MenuScreen implements Screen
         batch.end();
     }
 
+    /**
+     * Called when Window is set to menu Screen. Draws 
+     * the components of the menu screen unto the window.
+     */
     private void playAndExit()
     {
         if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
