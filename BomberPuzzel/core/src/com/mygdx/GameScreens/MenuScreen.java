@@ -109,10 +109,8 @@ public class MenuScreen implements Screen
             batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
            
             if (Gdx.input.isTouched()){
-                this.dispose();
                 soundController.playMusic(buttonClick);
                 Gdx.app.exit();
-                System.exit(0);
             }
         }
         else {
@@ -159,19 +157,6 @@ public class MenuScreen implements Screen
     @Override
     public void dispose() 
     {
-        System.out.println("DISPOSING MAIN MENU");
-        /*
-        inActiveHelp.dispose();
-        activeHelp.dispose();
-        inActivePlayButton.dispose();
-        inActiveExitButton.dispose();
-        activePlayButton.dispose();
-        activeExitButton.dispose();
-        backGround.dispose();
-
-        introSong.dispose();
-        buttonClick.dispose();
-        */
         batch.dispose();
     }
 }

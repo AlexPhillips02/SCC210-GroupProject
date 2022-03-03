@@ -43,13 +43,12 @@ public abstract class PlayerTrackingEnemy extends Enemies
         shortestRoute = -1;
         resetAlgorithm();
         targetSquare = (AlgorithmSquares)board.getGameSquare((int)player.getX() / board.getTileSize(), (int)player.getY() / board.getTileSize());
-        currentSquare = (AlgorithmSquares)board.getGameSquare((int)x / board.getTileSize(), (int)y / board.getTileSize());
+        currentSquare = (AlgorithmSquares)board.getGameSquare((int)(x + this.getWidth()) / board.getTileSize(), (int)y / board.getTileSize());
         findShortestPathToPlayer(0, currentSquare, null);
 
         //If they have found a route
         if (!(shortestRoute == -1)) 
         {
-            System.out.println("Target Square: " + targetSquare.getX() + " " + targetSquare.getY());
             calculateMovementDirection();
             move();
         }
