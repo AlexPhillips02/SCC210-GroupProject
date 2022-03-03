@@ -10,6 +10,6 @@ public class UnbreakableWall extends Tile
 {
     public UnbreakableWall()
     {
-        super("Bombing_Chap_Sprite_Set/Sprites/Blocks/SolidBlock.png");
+        super("Wall/HardBlockTest.png");
     }
 }

@@ -62,16 +62,22 @@ public class GUI
 
     private Texture activePlayButton;
     private Texture activeExitButton;
+    private Texture activeRestartButton; 
+    private Texture UnActivePlayButton;
+    private Texture UnActiveExitButton;
+    private Texture UnActiveRestartButton;
+
 
     private int PLAY_BUTTON_WIDTH = 200;
     private int PLAY_BUTTON_HEIGHT = 150;
     private int EXIT_BUTTON_WIDTH = 200;
     private int EXIT_BUTTON_HEIGHT = 150;
-    private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+    private int RESTART_BUTTON_WIDTH = 300;
     private int PLAY_BUTTON_Y = 200;
     private int EXIT_BUTTON_Y = 200;
-    private int EXIT_BUTTON_X = 800;
-    private int PLAY_BUTTON_X = 300;
+    private int RESTART_BUTTON_X = Driver.WIDTH / 2 - RESTART_BUTTON_WIDTH / 2;
+    private int EXIT_BUTTON_X = (Driver.WIDTH / 4) * 3 - EXIT_BUTTON_WIDTH / 2;
+    private int PLAY_BUTTON_X = (Driver.WIDTH / 4) - PLAY_BUTTON_WIDTH / 2;
 
     private SpriteBatch batch;
 
@@ -85,6 +91,10 @@ public class GUI
 
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
+        activeRestartButton = new Texture("Screens/Restart(active).png");
+        UnActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
+        UnActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
+        UnActiveRestartButton = new Texture("Screens/Restart.png");
 
         this.levelCount = levelCount;
         levelTimer = 0;
@@ -313,11 +323,10 @@ public class GUI
     public void Pause(GameController controller)
     {
         batch.begin();
-        batch.draw(activeExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-        batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        batch.draw(UnActiveExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+        batch.draw(UnActivePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        batch.draw(UnActiveRestartButton, RESTART_BUTTON_X, PLAY_BUTTON_Y, RESTART_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         pauseStage.draw();
-        batch.end();
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
         {
@@ -326,14 +335,16 @@ public class GUI
 
         if(Gdx.input.getX() < PLAY_BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > PLAY_BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
         {
+            batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
                 controller.setPaused(false);
             }
         }
 
-        if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
-        
+        if(Gdx.input.getX() < RESTART_BUTTON_X + RESTART_BUTTON_WIDTH && Gdx.input.getX() > RESTART_BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y)
+        {
+            batch.draw(activeRestartButton, RESTART_BUTTON_X, PLAY_BUTTON_Y, RESTART_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
                 }
@@ -341,11 +352,14 @@ public class GUI
 
         if(Gdx.input.getX() < EXIT_BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > EXIT_BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y)
         {
+            batch.draw(activeExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
+            
             if (Gdx.input.isTouched())
             { 
                 controller.LoadMenu();
             }
         }
+        batch.end();
     }
 
     public void dispose()
