@@ -125,18 +125,21 @@ public class GameController
 	{
 		if(gameLoaded == true)
 		{
-			if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
-			{
-				//Pause game
-				if(pause)
+			if(gui.getPauseable() == true){
+				if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
 				{
-					pause = false;
-				}
-				else
-				{
-					pause = true;
+					//Pause game
+					if(pause)
+					{
+						pause = false;
+					}
+					else
+					{
+						pause = true;
+					}
 				}
 			}
+			
 
 			//Gameboard
 			gameBoard.Draw(batch);	//draws gameboard

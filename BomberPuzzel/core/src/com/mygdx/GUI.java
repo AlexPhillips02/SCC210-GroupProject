@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Abilities.Ability;
 import com.mygdx.GameScreens.MainGameScreen;
 
+
 /**
  * Displays the GUI with text to the user
  * @author Alex Phillips, Kathryn Hurst
@@ -73,6 +74,7 @@ public class GUI
     private int PLAY_BUTTON_X = 300;
 
     private SpriteBatch batch;
+    private boolean pauseable = true;
 
     /**
      * Constructor for the GUI around the Game Board, which displays all the player and game info.
@@ -211,6 +213,7 @@ public class GUI
 
         if(levelTimer >= start + 5 && text == true)
         {
+            pauseable = true;
             removeTempLabel();
         }
     }
@@ -244,9 +247,15 @@ public class GUI
     {
         puzzelLabel.setText(display);
         text = true;
-        start = levelTimer;
+        start = levelTimer;   
+        //make the game unpausable  
+        pauseable = false;
     }
 
+    public boolean getPauseable(){
+        return pauseable;
+    }
+    
     public void gameOverLabel()
     {
         gameOverLabel.setColor(Color.RED);
