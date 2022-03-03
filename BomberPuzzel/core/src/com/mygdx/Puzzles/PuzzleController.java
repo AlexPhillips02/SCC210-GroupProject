@@ -47,7 +47,7 @@ public class PuzzleController
     public void SetPuzzle()
 	{
 		Random rand = new Random();
-		puzzle = 1;//rand.nextInt(2);
+		rand.nextInt(2);
 
 		if(puzzle == 0)
 		{
