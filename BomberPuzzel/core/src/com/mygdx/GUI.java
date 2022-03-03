@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Abilities.Ability;
+import com.mygdx.GameScreens.MainGameScreen;
 
 /**
  * Displays the GUI with text to the user
@@ -65,6 +66,7 @@ public class GUI
     private int PLAY_BUTTON_HEIGHT = 150;
     private int EXIT_BUTTON_WIDTH = 200;
     private int EXIT_BUTTON_HEIGHT = 150;
+    private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
     private int PLAY_BUTTON_Y = 200;
     private int EXIT_BUTTON_Y = 200;
     private int EXIT_BUTTON_X = 800;
@@ -312,6 +314,7 @@ public class GUI
         batch.begin();
         batch.draw(activeExitButton, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
+        batch.draw(activePlayButton, BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         pauseStage.draw();
         batch.end();
         
@@ -327,6 +330,13 @@ public class GUI
                 controller.setPaused(false);
             }
         }
+
+        if(Gdx.input.getX() < BUTTON_X + PLAY_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > PLAY_BUTTON_Y){
+        
+            if (Gdx.input.isTouched()){
+                    ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
+                }
+            }
 
         if(Gdx.input.getX() < EXIT_BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > EXIT_BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y)
         {
@@ -346,4 +356,6 @@ public class GUI
         */
         batch.dispose();
     }
+  
+    
 }

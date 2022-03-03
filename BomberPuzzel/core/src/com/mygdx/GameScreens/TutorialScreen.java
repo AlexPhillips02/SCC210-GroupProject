@@ -111,12 +111,6 @@ public class TutorialScreen implements Screen
         " In Colour Sequencing, a sequence will appear on the screen. The buttons must be stepped on in the sequence provided. An incorrect button press will cause the sequence to reset.",labelStyle);
         button = new TextButton("Back To Main Screen", textButtonStyle);
         button.addListener(new InputListener(){
-            /*
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("Press a Button");
-            }     
-            */
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 dispose();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
@@ -195,7 +189,6 @@ public class TutorialScreen implements Screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
         batch.begin();
-        Exit();
         batch.draw(enemyImage, 1150, 600, 100, 100);
         batch.draw(enemyImage2, 1150, 425, 100, 100);
         batch.draw(playerImage, 1150, 250, 70, 110);
@@ -206,24 +199,6 @@ public class TutorialScreen implements Screen
         stage.draw();
         batch.end(); 
    }
-   
-    private void Exit(){
-        
-        /*
-        if(Gdx.input.getX() < BUTTON_X + EXIT_BUTTON_WIDTH && Gdx.input.getX() > BUTTON_X && Driver.HEIGHT - Gdx.input.getY() < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && Driver.HEIGHT - Gdx.input.getY() > EXIT_BUTTON_Y){
-            batch.draw(activeExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()){
-                soundController.playMusic(buttonClick);
-               
-            }
-        }
-        else {
-            batch.draw(inActiveExitButton, BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        }
-        
-        //if(Gdx.input.isButtonPressed(button))*/
-   }
-
    
    /**
     * @param width size of width
@@ -259,17 +234,6 @@ public class TutorialScreen implements Screen
     public void dispose()
     {
         System.out.println("DISPOSING tutorial screen");
-        /*
-        playerImage.dispose();
-        enemyImage.dispose();
-        enemyImage2.dispose();
-        RedButton.dispose();
-        BlueButton.dispose();
-        YellowButton.dispose();
-        GreenButton.dispose();
-    
-        stage.dispose();
-        */
         batch.dispose();
     }
 }
