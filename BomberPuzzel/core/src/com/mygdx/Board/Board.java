@@ -183,6 +183,11 @@ public class Board
         }
     }
 
+
+    /**
+     * Draws the bomb unto the screen 
+     * @param batch spritebatch to output images
+     */
     public void DrawBombs(SpriteBatch batch )
     {
         for (int x = 0; x < gameSquares.length; x++) 
