@@ -105,6 +105,10 @@ public class Match extends Puzzle
         buttons.add(temp);
     }
 
+    /**
+     * Draws all of the buttons on the board
+     * @param batch Spritebatch to display everything in the driver
+     */
     public void Draw(SpriteBatch batch)
     {
         for(int i = 0; i< buttons.size(); i++)
@@ -113,6 +117,10 @@ public class Match extends Puzzle
         }    
     }
 
+    /**
+     * What happens when player stands on a button
+     * @param newCurrent
+     */
     public void setCurrent(ColourButton newCurrent)
     {
         gui.addTempLabel(newCurrent.getColour() + " Button Pressed");
@@ -146,6 +154,10 @@ public class Match extends Puzzle
         }  
     }
 
+    /**
+     * Accessor method for the buttons array
+     * @return buttons array list
+     */
     public ArrayList<ColourButton> getButtons()
     {
         return buttons;

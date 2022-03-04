@@ -441,15 +441,11 @@ public class GUI
         batch.end();
     }
 
+    /**
+	 * Disposes of objects
+	 */
     public void dispose()
     {
-        /*
-        activePlayButton.dispose();
-        activeExitButton.dispose();
-        stage.dispose();
-        */
         batch.dispose();
     }
-  
-    
 }
