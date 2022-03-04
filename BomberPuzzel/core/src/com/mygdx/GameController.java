@@ -6,6 +6,7 @@ import java.util.Random;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,6 +19,7 @@ import com.mygdx.Enemies.EnemyController;
 import com.mygdx.GameScreens.MenuScreen;
 import com.mygdx.Player.Player;
 import com.mygdx.Puzzles.PuzzleController;
+import com.mygdx.Sound.SoundController;
 
 /**
  * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
@@ -43,6 +45,9 @@ public class GameController
 	private boolean runGame = true;
 	private boolean pause = false;
 
+	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
+	private Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/GameOver.mp3"));
+	private SoundController soundController;
 	/**
 	 * Creates the camera, sound controller and gameport
 	 * @param batch
@@ -50,6 +55,7 @@ public class GameController
     public GameController(SpriteBatch batch)
     {
         this.batch = batch;
+		soundController = new SoundController();
 		camera = new OrthographicCamera();
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		gamePort = new FitViewport(1280, 720, camera);
@@ -335,7 +341,14 @@ public class GameController
 		{
 			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
 			gui.gameOverLabel();
-		
+
+			
+			soundController.playMusic(gameOverSound);
+				
+			if(timeSinceGameStop >= 0.5){
+				gameOverSound.stop();		
+			}
+			
 			if(timeSinceGameStop >= 5)
 			{
 				LoadMenu();
