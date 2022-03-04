@@ -83,7 +83,7 @@ public class GUI
 
     private SpriteBatch batch;
     private SoundController soundController;
-    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/Click (2).mp3"));
+    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
     /**
      * Constructor for the GUI around the Game Board, which displays all the player and game info.
      * @param levelCount gets the level number.
