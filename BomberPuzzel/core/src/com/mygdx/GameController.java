@@ -47,6 +47,7 @@ public class GameController
 
 	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
 	private SoundController soundController;
+	
 	/**
 	 * Creates the camera, sound controller and gameport
 	 * @param batch

@@ -86,8 +86,7 @@ public class PuzzleController
 			for(int i = 0; i < buttons.size(); i++)
 			{
 				if(buttons.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
-				{	
-					
+				{			
 					if(buttons.get(i).getActiveStatus() && lastButtonTime >= 1)
 					{	
 						lastButtonTime = 0;
@@ -109,8 +108,9 @@ public class PuzzleController
 				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{
 					
-					if(buttons[i].getActiveStatus())
+					if(buttons[i].getActiveStatus() && lastButtonTime >= 1)
 					{
+						lastButtonTime = 0;
 						buttons[i].setActive(false);
 						((Order) puzzleGame).Pressed(buttons[i]);
 					}
