@@ -91,42 +91,51 @@ public class MenuScreen implements Screen
     @Override
     public void render(float delta) 
     {
+        batch.begin();
+
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        //Creates falling bombs on the main menu
         lastDropTime = lastDropTime + Gdx.graphics.getDeltaTime();
 
+        //If no bomb has been created within the last 0.5 seconds, spawn a falling bomb
         if(lastDropTime > 0.5)
         {
             spawnBomb();
         }
 
-        //drawing the background photo
-        batch.begin();
-
+        //Loops through falling bombs and adjusts y values
         for(int i = 0; i < bombs.size(); i++ )
         {
             Rectangle bomb = bombs.get(i);
             bomb.y -= 200 * Gdx.graphics.getDeltaTime();
             batch.draw(bombTexture, bomb.x, bomb.y, 100, 100);
 
+            //If the bomb has fallen off the screen, remove
 			if(bomb.y + 64 < 0)
             {
                 bombs.remove(i);
                 i--;
             } 
         }
+        
+        //Create buttons
         batch.draw(puzzleBomber, TITLE_X, TITLE, TITLE_BUTTON_WIDTH, TITLE_HEIGHT);
         playAndExit();
         batch.end();
     }
 
+    /**
+     * Creates a falling bomb
+     */
     private void spawnBomb() 
     {
 		Rectangle bomb = new Rectangle();
 		bomb.x = MathUtils.random(0, Gdx.graphics.getWidth()-64);
 		bomb.y = Gdx.graphics.getHeight();
 
+        //Adds to array list
 		bombs.add(bomb);
 		lastDropTime = 0f;
 	}

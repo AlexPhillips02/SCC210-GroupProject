@@ -17,7 +17,7 @@ public abstract class Enemies extends Entity
     private String[] possibleDirections = {"LEFT", "DOWN", "RIGHT", "UP"};
 
     /**
-     * 
+     * Constructor for the Enemies object, extended by Entity
      * @param imageURL URL of standing image
      * @param board Game board
      * @param x Starting x position

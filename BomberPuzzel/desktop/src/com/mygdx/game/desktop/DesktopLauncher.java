@@ -11,6 +11,6 @@ public class DesktopLauncher {
 		config.setWindowedMode(Driver.WIDTH, Driver.HEIGHT);
 		config.setResizable(false);	
 
-		new Lwjgl3Application(new Driver(), config);	//platform specific problem - testing with Paul
+		new Lwjgl3Application(new Driver(), config);
   }
 }
