@@ -71,7 +71,7 @@ public class PuzzleController
 
     /**
      * Called within GameController to update puzzle pieces
-     * @param batch Batch used to draw the tiles, buttons, or object for the puzzle
+     * @param batch SpriteBatch used to draw the buttons for the puzzle
      */
     public void Update(SpriteBatch batch)
     {
@@ -123,6 +123,10 @@ public class PuzzleController
 		}
     }
 
+	/**
+	 * Accessor method for the win status
+	 * @return boolean winStatus
+	 */
 	public boolean getWinStatus()
 	{
 		return puzzleGame.winStatus;
