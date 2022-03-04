@@ -1,5 +1,7 @@
 package com.mygdx.GameScreens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,8 +17,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.mygdx.Driver;
 import com.mygdx.Sound.SoundController;
-
-import java.util.Iterator;
 
 
 /**
@@ -45,14 +45,12 @@ public class MenuScreen implements Screen
     private Texture activeHelp;
     private Texture activePlayButton;
     private Texture activeExitButton;
-    private Texture backGround;
-    private Texture bomb;
+    private Texture bombTexture;
 
-    private Music introSong;
     private Sound buttonClick;
 
-    private long lastDropTime;
-    private Array<Rectangle> raindrops;
+    private float lastDropTime = 1f;
+    private ArrayList<Rectangle> bombs = new ArrayList<>();
    
     
     /**
@@ -61,8 +59,6 @@ public class MenuScreen implements Screen
     public MenuScreen()
     {
         batch = new SpriteBatch();
-
-        introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
         buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
 
         inActiveHelp = new Texture("Screens/Help(WHITE).png");
@@ -71,7 +67,7 @@ public class MenuScreen implements Screen
         inActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
-        bomb = new Texture("Bombs/bomb(single).png");
+        bombTexture = new Texture("Bombs/bomb(single).png");
         
 
         soundController = new SoundController();
@@ -91,23 +87,45 @@ public class MenuScreen implements Screen
     @Override
     public void render(float delta) 
     {
-        //soundController.playMusic(introSong);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
 
-		for (Iterator<Rectangle> iter = raindrops.iterator(); iter.hasNext(); ) {
-			Rectangle raindrop = iter.next();
-			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-			if(raindrop.y + 64 < 0) iter.remove();
+        lastDropTime = lastDropTime + Gdx.graphics.getDeltaTime();
+
+        if(lastDropTime > 0.5)
+        {
+            spawnBomb();
         }
 
         //drawing the background photo
         batch.begin();
+
+        for(int i = 0; i < bombs.size(); i++ )
+        {
+            Rectangle bomb = bombs.get(i);
+            bomb.y -= 200 * Gdx.graphics.getDeltaTime();
+            batch.draw(bombTexture, bomb.x, bomb.y, 100, 100);
+
+			if(bomb.y + 64 < 0)
+            {
+                bombs.remove(i);
+                i--;
+            } 
+        }
         
         playAndExit();
         batch.end();
     }
+
+    private void spawnBomb() 
+    {
+		Rectangle bomb = new Rectangle();
+		bomb.x = MathUtils.random(0, Gdx.graphics.getWidth()-64);
+		bomb.y = Gdx.graphics.getHeight();
+
+		bombs.add(bomb);
+		lastDropTime = 0f;
+	}
 
     /**
      * Called when Window is set to menu Screen. Draws 
@@ -153,16 +171,6 @@ public class MenuScreen implements Screen
         }
 
     }
-
-    private void spawnRaindrop() {
-		Rectangle bomb = new Rectangle();
-		bomb.x = MathUtils.random(0, 800-64);
-		bomb.y = 480;
-		bomb.width = 64;
-		bomb.height = 64;
-		raindrops.add(bomb);
-		lastDropTime = TimeUtils.nanoTime();
-	}
 
     /**
      * @param width size of width
