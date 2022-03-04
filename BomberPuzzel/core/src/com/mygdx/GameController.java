@@ -46,8 +46,8 @@ public class GameController
 	private boolean pause = false;
 
 	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
-	private Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/GameOver.mp3"));
 	private SoundController soundController;
+	
 	/**
 	 * Creates the camera, sound controller and gameport
 	 * @param batch
@@ -345,13 +345,6 @@ public class GameController
 		{
 			timeSinceGameStop = timeSinceGameStop + Gdx.graphics.getDeltaTime();
 			gui.gameOverLabel();
-
-			
-			soundController.playMusic(gameOverSound);
-				
-			if(timeSinceGameStop >= 0.5){
-				gameOverSound.stop();		
-			}
 			
 			if(timeSinceGameStop >= 5)
 			{
