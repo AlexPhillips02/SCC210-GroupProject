@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Tile;
-import com.mygdx.Enemies.BombCarrier;
 import com.mygdx.Sound.SoundController;
 import com.mygdx.TileTypes.Path;
 
