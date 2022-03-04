@@ -69,8 +69,8 @@ public class MenuScreen implements Screen
         activeHelp = new Texture("Screens/Help(active).png");
         inActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
         inActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
-        activePlayButton = new Texture("Screens/Play (Active).png");
-        activeExitButton = new Texture("Screens/Exit (active).png");
+        activePlayButton = new Texture("Screens/Play(Active).png");
+        activeExitButton = new Texture("Screens/Exit(active).png");
         bomb = new Texture("Bombs/bomb(single).png");
         
 
