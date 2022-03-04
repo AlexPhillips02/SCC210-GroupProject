@@ -10,10 +10,6 @@ import com.mygdx.Puzzles.Buttons.GreenButton;
 import com.mygdx.Puzzles.Buttons.RedButton;
 import com.mygdx.Puzzles.Buttons.YellowButton;
 import com.mygdx.Puzzles.Puzzle;
-import com.badlogic.gdx.audio.Sound;
-import com.mygdx.Sound.SoundController;
-import com.badlogic.gdx.Gdx;
-
 
 /*
 In the colour coding mini-game, there will be various colours hidden within the walls. 
