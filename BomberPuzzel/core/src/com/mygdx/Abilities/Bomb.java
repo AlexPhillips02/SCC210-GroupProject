@@ -27,7 +27,7 @@ public class Bomb extends Ability
     private Animation<TextureRegion> explosionLinesHorizontal;
 
     private SoundController soundController;
-    //private Sound bombSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/"));
+    private Sound bombSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/BombSound.mp3"));
 
     /**
      * Constructor for our bombs.
@@ -64,7 +64,7 @@ public class Bomb extends Ability
      */
     public void explode()
     {
-        //soundController.playMusic(bombSound);
+        soundController.playMusic(bombSound);
         entity.decreasePlacedBombs();
         square.removeBomb(); //removes bomb from the grid
     }

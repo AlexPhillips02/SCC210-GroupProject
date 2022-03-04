@@ -274,6 +274,7 @@ public class GameController
 			//If the player is in contact with a death square
 			if(deathSquare.overlaps(player.getCollisionRectangle())) 
 			{
+				soundController.playMusic(playerHit);
 				player.reduceHealth();
 
 			}
