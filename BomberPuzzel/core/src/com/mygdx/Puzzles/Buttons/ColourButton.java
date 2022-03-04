@@ -149,7 +149,7 @@ public abstract class ColourButton
      */
     public void clicked()
     {
-        for(int i = 0; i < 1; i++){
+        for(int i = 0; i <= 1; i++){
             soundController.playMusic(buttonPress);
         }
         currentImage = clickedImage;
