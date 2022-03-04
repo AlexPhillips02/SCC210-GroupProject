@@ -443,11 +443,6 @@ public class GUI
 
     public void dispose()
     {
-        /*
-        activePlayButton.dispose();
-        activeExitButton.dispose();
-        stage.dispose();
-        */
         batch.dispose();
     }
   
