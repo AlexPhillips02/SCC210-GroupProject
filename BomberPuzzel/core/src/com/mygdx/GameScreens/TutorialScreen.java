@@ -85,6 +85,8 @@ public class TutorialScreen implements Screen
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, null);
         textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = font;
+
+        //declaring all the labels
         information = new Label("Information",labelStyle);        
         information.setPosition(centreLable(Driver.WIDTH, information.getWidth()), 680);
         fontParameters.size = 15;
@@ -99,7 +101,7 @@ public class TutorialScreen implements Screen
         walls = new Label("Walls", labelStyle);
         abilities = new Label("Abilites", labelStyle);
     
-
+        //main text
         labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         abilitesInfo = new Label("Thoughout the level random abilities can spawn. These will have immediate positive or negative effects on the player. Speed increase, Speed decrease, Health increase (+1 life), Increase bomb range (+2), Increase bomb inventory (+1).\n" +
         "Once collected, most will be active for a short period of time before exipring.", labelStyle);
@@ -122,6 +124,7 @@ public class TutorialScreen implements Screen
             
         });
 
+        //setting positions
         control.setPosition(70,600);
         enemy.setPosition(70, 500);
         player.setPosition(70, 300);
@@ -140,6 +143,7 @@ public class TutorialScreen implements Screen
         abilities.setPosition(70, 180);
         abilitesInfo.setPosition(250, 180);
 
+        //setting parameters
         wallsInfo.setWidth(700);
         enemyInfo.setWidth(700); 
         playerInfo.setWidth(700); 
@@ -154,6 +158,7 @@ public class TutorialScreen implements Screen
         wallsInfo.setWrap(true);
         abilitesInfo.setWrap(true);
 
+        //adding them to the stage
         stage.addActor(information);
         stage.addActor(control);
         stage.addActor(enemy);
@@ -178,7 +183,7 @@ public class TutorialScreen implements Screen
     }
     
     /**
-     * 
+     * Method for centering labels
      * @param x the width of the window
      * @param y the width of the object to draw
      * @return returns the X position to place a drawing at the centre of screen
