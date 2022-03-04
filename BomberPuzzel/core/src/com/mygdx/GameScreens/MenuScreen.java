@@ -61,7 +61,7 @@ public class MenuScreen implements Screen
         batch = new SpriteBatch();
 
 
-        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/ButtonPress.mp3"));
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/ButtonPress.mp3"));
     
 
         inActiveHelp = new Texture("Screens/Help(WHITE).png");

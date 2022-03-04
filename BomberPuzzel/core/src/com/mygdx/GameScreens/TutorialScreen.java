@@ -61,7 +61,7 @@ public class TutorialScreen implements Screen
     private TextButtonStyle textButtonStyle;
     
     private SoundController soundController;
-    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
+    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/ButtonPress.mp3"));
     /**
      * Constructor for the Tutorial Screen which introduces players to how the game is played.
      * @param controller
