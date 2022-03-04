@@ -441,10 +441,11 @@ public class GUI
         batch.end();
     }
 
+    /**
+	 * Disposes of objects
+	 */
     public void dispose()
     {
         batch.dispose();
     }
-  
-    
 }
