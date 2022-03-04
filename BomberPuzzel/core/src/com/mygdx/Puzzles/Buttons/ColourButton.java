@@ -149,11 +149,12 @@ public abstract class ColourButton
      */
     public void clicked()
     {
-        for(int i = 0; i < 1; i++){
-            soundController.playMusic(buttonPress);
-        }
+     
+        soundController.playMusic(buttonPress);
         currentImage = clickedImage;
     }
+
+    
 
     /**
      * Mutator method to set new x-position
