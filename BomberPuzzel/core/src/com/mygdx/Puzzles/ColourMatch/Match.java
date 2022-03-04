@@ -150,6 +150,7 @@ public class Match extends Puzzle
                 gui.setPuzzleInfoBad("No Match");
                 prev.setActive(true);
                 prev.unclicked();
+                current = null;
             }
         }  
     }
