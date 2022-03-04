@@ -62,6 +62,8 @@ public class TutorialScreen implements Screen
     
     private SoundController soundController;
     private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/ButtonPress.mp3"));
+    private boolean hasDisposed = false;
+
     /**
      * Constructor for the Tutorial Screen which introduces players to how the game is played.
      * @param controller
@@ -247,6 +249,10 @@ public class TutorialScreen implements Screen
     @Override
     public void dispose()
     {
-        batch.dispose();
+        if (hasDisposed == false) 
+        {
+            batch.dispose();   
+            hasDisposed = true;
+        }
     }
 }

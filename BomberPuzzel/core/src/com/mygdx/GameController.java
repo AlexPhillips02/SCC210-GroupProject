@@ -44,6 +44,7 @@ public class GameController
 	private boolean gameLoaded = false;
 	private boolean runGame = true;
 	private boolean pause = false;
+	private boolean hasDisposed = false;
 
 	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
 	private SoundController soundController;
@@ -406,6 +407,10 @@ public class GameController
 	 */
 	public void dispose()
 	{
-		batch.dispose();
+		if (hasDisposed == false) 
+        {
+            batch.dispose();   
+            hasDisposed = true;
+        }
 	}
 }
