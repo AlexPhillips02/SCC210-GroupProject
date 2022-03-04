@@ -76,12 +76,12 @@ public class BombCarrier extends PlayerTrackingEnemy
             new Bomb(board, getX(), getY(), this, explosionRange);
             bombsMax--;   
         }
-        
-        this.reduceHealth();
+
+        reduceHealth();
         player.reduceHealth();
     }
 
-    public Sound damageSound()
+    public Sound getDamageSound()
     {
         return damageSound;
     }
