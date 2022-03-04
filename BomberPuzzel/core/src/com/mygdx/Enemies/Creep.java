@@ -1,5 +1,7 @@
 package com.mygdx.Enemies;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +14,8 @@ import com.mygdx.Board.Board;
  */
 public class Creep extends Enemies
 {
+    private Sound damageTaken = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/alien_hit.mp3"));
+    
     /**
      * @param board Gameboard
      * @param x Starting x position
@@ -48,5 +52,13 @@ public class Creep extends Enemies
         walkRight = standingAnimation;
         walkDown = standingAnimation;
         walkUp = standingAnimation;
+    }
+
+    /**
+     * Returns sound to make when the enemy dies
+     */
+    public Sound getDamageSound()
+    {
+        return damageTaken;
     }
 }

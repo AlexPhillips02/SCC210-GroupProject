@@ -1,15 +1,11 @@
 package com.mygdx.Enemies;
 
 import java.util.ArrayList;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Player;
-import com.mygdx.Sound.SoundController;
 
 /**
  * @author Alex Phillips, Kathryn Hurst, Alex Chalakov - Sounds only
@@ -21,11 +17,6 @@ public class EnemyController
     private Board board;
     private Player player;
 
-	private final SoundController soundController;
-	//change sounds
-	private final Sound alienHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/alien_hit.mp3"));
-	private final Sound spiderHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/spider_hit.mp3"));
-    
 	/**
 	 * Loads the board and the player (For player tracking)
 	 * @param board Used to determine original spawn points
@@ -36,7 +27,6 @@ public class EnemyController
         this.board = board;
         this.player = player;
         enemies = new ArrayList<>();
-        soundController = new SoundController();
     }    
 
     /**
@@ -129,14 +119,6 @@ public class EnemyController
                 //If the enemy is in contact with the death square
                 if (enemy.getCollisionRectangle().overlaps(deathSquare)) 
                 {
-                	if (enemy instanceof Creep)
-					{
-						//ch
-						soundController.playMusic(alienHit);
-					} else if (enemy instanceof BombCarrier)
-					{
-						soundController.playMusic(spiderHit);
-					}
                     enemy.reduceHealth();
                 }
             }

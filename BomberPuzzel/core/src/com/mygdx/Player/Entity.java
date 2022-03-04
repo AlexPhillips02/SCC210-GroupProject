@@ -52,7 +52,6 @@ public abstract class Entity
      */
     public Entity(String imageURL, Board board, float x, float y, float movementSpeed)
     {
-        this.soundController = new SoundController();
         if (imageURL != null) 
         {
             defaultImage = new Texture(imageURL);   
@@ -62,6 +61,8 @@ public abstract class Entity
         this.x = x;
         this.y = y;
         this.movementSpeed = movementSpeed;
+        this.soundController = new SoundController();
+        
         //Collision rectangle to be used for collisions with other entities
         int height;
 
@@ -155,11 +156,6 @@ public abstract class Entity
 
         int xx = (int)(tempX / tileWidth);
         int yy = (int)((tempY) / tileHeight);
-        
-        if (xx < 0 || yy < 0 || xx >= 27 || yy >= 15)   
-        {
-            System.out.println("ENTITY ERROR Attempted to get gamesquare x: " + xx + " y: " + yy);
-        }
 
         //Calculate the corners of the entity in the new position
         //Get the tile in those corners then check if they are path tiles
@@ -231,8 +227,7 @@ public abstract class Entity
         }
         } catch (Exception e) 
         {
-            System.out.println("Actual Gamesquare Bottom left of Entity x: " + xx + " y: " + yy);
-            System.out.println("Gamesquare + image sizes x: " + (int)((tempX + imageWidth) / tileWidth) + " y: " + (int)((tempY + imageHeight) / tileHeight));
+            System.out.println(e);
         }
 
         return false;
@@ -351,13 +346,19 @@ public abstract class Entity
 
     /**
      * Reducing the health method
+     * Produces the sound if the entity has one
      */
     public void reduceHealth()
     {
         if (lastDamageTimer >= healthCooldown) 
         {
             this.health--;
-            System.out.println("Damage Taken");
+
+            if (getDamageSound() != null) 
+            {
+                soundController.playMusic(getDamageSound());   
+            }
+
             lastDamageTimer = 0f;   
         }
     }
@@ -448,5 +449,14 @@ public abstract class Entity
     public void dispose() 
     {
         defaultImage.dispose();
+    }
+
+    /**
+     * Overwritten in the enemy type classes
+     * @return Sound
+     */
+    public Sound getDamageSound()
+    {
+        return null;
     }
 }

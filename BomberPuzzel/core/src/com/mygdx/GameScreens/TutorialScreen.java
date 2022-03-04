@@ -21,6 +21,10 @@ import com.mygdx.Sound.SoundController;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.Game;
 
+/**
+ * @author Victor Boateng
+ * The help menu screen which supports new players and gives info on the game
+ */
 public class TutorialScreen implements Screen
 {
     private SpriteBatch batch;
@@ -217,29 +221,23 @@ public class TutorialScreen implements Screen
     */
    @Override
    public void resize (int width, int height) 
-   {
-       
-   }
+   {}
 
-   /**
-    * Called when this screen becomes the current screen for a Game.
-    */
    @Override
-   public void show () {
-        
-   }
+   public void show () 
+   {}
 
    @Override
    public void hide () 
    {}
 
    @Override
-   public void pause () {
-   }
+   public void pause () 
+   {}
 
    @Override
-   public void resume () {
-   }
+   public void resume () 
+   {}
 
     @Override
     public void dispose()

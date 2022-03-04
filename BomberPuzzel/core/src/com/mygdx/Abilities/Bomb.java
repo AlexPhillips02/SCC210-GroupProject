@@ -1,5 +1,7 @@
 package com.mygdx.Abilities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,6 +10,7 @@ import com.mygdx.Board.Board;
 import com.mygdx.Board.Squares;
 import com.mygdx.Player.Entity;
 import com.mygdx.Player.Player;
+import com.mygdx.Sound.SoundController;
 
 /**
  * @author Alex Phillips, Alex Chalakov
@@ -23,6 +26,9 @@ public class Bomb extends Ability
     private Animation<TextureRegion> explosionLinesVertical;
     private Animation<TextureRegion> explosionLinesHorizontal;
 
+    private SoundController soundController;
+    //private Sound bombSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/"));
+
     /**
      * Constructor for our bombs.
      * @param board The game board
@@ -33,6 +39,7 @@ public class Bomb extends Ability
         this.explosionRange = explosionRange;
         createAnimations();
         placeBomb();
+        soundController = new SoundController();
     }
 
     /**
@@ -57,6 +64,7 @@ public class Bomb extends Ability
      */
     public void explode()
     {
+        //soundController.playMusic(bombSound);
         entity.decreasePlacedBombs();
         square.removeBomb(); //removes bomb from the grid
     }

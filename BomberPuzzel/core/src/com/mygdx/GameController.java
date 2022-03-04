@@ -23,12 +23,11 @@ import com.mygdx.Sound.SoundController;
 
 /**
  * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
- * Controls the games will create the board / player / enemies
+ * Controls the games, will create the board / player / enemies / puzzels
  * Creates and controls the camera
  */
 public class GameController
 {
-	//private Boolean winStatus;
 	private GUI gui;
     private Board gameBoard;
 	private Player player;
@@ -39,15 +38,16 @@ public class GameController
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
+	
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
-	private SoundController soundController;
 	private boolean gameLoaded = false;
 	private boolean runGame = true;
 	private boolean pause = false;
 
 	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
 	private Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/GameOver.mp3"));
+	private SoundController soundController;
 	/**
 	 * Creates the camera, sound controller and gameport
 	 * @param batch
@@ -274,7 +274,6 @@ public class GameController
 			//If the player is in contact with a death square
 			if(deathSquare.overlaps(player.getCollisionRectangle())) 
 			{
-				soundController.playMusic(playerHit);
 				player.reduceHealth();
 
 			}

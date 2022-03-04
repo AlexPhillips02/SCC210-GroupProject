@@ -21,7 +21,6 @@ import com.mygdx.Abilities.Ability;
 import com.mygdx.GameScreens.MainGameScreen;
 import com.mygdx.Sound.SoundController;
 
-
 /**
  * Displays the GUI with text to the user
  * @author Alex Phillips, Kathryn Hurst
@@ -94,6 +93,7 @@ public class GUI
         batch = new SpriteBatch();
         soundController = new SoundController();
 
+        //declaring all the buttons with their corresponding pictures
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
         activeRestartButton = new Texture("Screens/Restart(active).png");
@@ -116,6 +116,7 @@ public class GUI
         FreeTypeFontGenerator.FreeTypeFontParameter fontParameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
         fontParameters.size = 17;
 
+        //Constructing the screen
         BitmapFont font = fontGenerator.generateFont(fontParameters);
         
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, null);
@@ -189,6 +190,12 @@ public class GUI
         pauseStage.addActor(Pause);
     }
 
+    /**
+     * Updating the board with the active abilities
+     * @param playerHealth variable 1 on the GUI
+     * @param elapsedTime the elapsed time 
+     * @param activeAbilities variable 2 on the GUI
+     */
     public void update(int playerHealth, float elapsedTime, ArrayList<Ability> activeAbilities)
     {      
         abilites = "";
@@ -240,12 +247,20 @@ public class GUI
         puzzelNameLabel.setText(puzzle);
     }
 
+    /**
+     * Makes it coloured
+     * @param puzzle puzzle type
+     */
     public void setPuzzleInfoBad(String puzzle)
     {
         puzzelInfoLabel.setColor(Color.RED);
         puzzelInfoLabel.setText(puzzle);
     }
 
+    /**
+     * Makes it coloured
+     * @param puzzle puzzle type
+     */
     public void setPuzzleInfoGood(String puzzle)
     {
         puzzelInfoLabel.setColor(Color.LIME);
@@ -274,24 +289,36 @@ public class GUI
         return temp;
     }
     
+    /**
+     * Game Over Label
+     */
     public void gameOverLabel()
     {
         gameOverLabel.setColor(Color.RED);
         gameOverLabel.setText("GAMEOVER");
     }
 
+    /**
+     * Label for completed level
+     */
     public void levelCompletionLabel()
     {
         levelCompletionLabel.setColor(Color.RED);
         levelCompletionLabel.setText("Completed " + (levelCount - 1) + " Levels");
     }
 
+    /**
+     * Label for every puzzle completed
+     */
     public void puzzelCompleted()
     {
         gameOverLabel.setColor(Color.GREEN);
         gameOverLabel.setText("PUZZLE COMPLETED");
     }
 
+    /**
+     * Time for puzzle completion
+     */
     public void puzzelCompletedTime()
     {
         levelCompletionLabel.setColor(Color.GREEN);
@@ -318,24 +345,38 @@ public class GUI
         puzzelLabel.setText(temp);
     }
 
+    /**
+     * Label for every level started
+     */
     public void startGame() 
     {
         gameOverLabel.setColor(Color.GREEN);
         gameOverLabel.setText("LEVEL START:");
     }
 
+    /**
+     * Removing countdown
+     */
     public void removeCountDown() 
     {
         gameOverLabel.setText("");
         levelCompletionLabel.setText("");
     }
 
+    /**
+     * Game Countdown
+     * @param countDown the number that it starts from
+     */
     public void gameCountDown(int countDown) 
     {
         levelCompletionLabel.setColor(Color.GREEN);
         levelCompletionLabel.setText("" + countDown);
     }
 
+    /**
+     * Setting player health for the label
+     * @param playerHealth how many lives does the player have
+     */
     public void setHealth(int playerHealth) 
     {
         if (playerHealth != playerLives) 
@@ -345,6 +386,10 @@ public class GUI
         }
     }
 
+    /**
+     * Pause labels
+     * @param controller Game controller
+     */
     public void Pause(GameController controller)
     {
         if((puzzelLabel.getText()).toString() != "")

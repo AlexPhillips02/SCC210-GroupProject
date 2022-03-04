@@ -41,7 +41,6 @@ public class Match extends Puzzle
     public Match(GUI gui, Board board)
     {
         super(gui, board);
-        soundController = new SoundController();
     }
 
     /**
@@ -64,6 +63,8 @@ public class Match extends Puzzle
                 }
             }
         }
+
+        gui.addTempLabel("Colour Match!");
     }
 
     /**
@@ -139,7 +140,6 @@ public class Match extends Puzzle
             else 
             {
                 gui.setPuzzleInfoBad("No Match");
-                //soundController.playMusic(wrongButtonSound);
                 prev.setActive(true);
                 prev.unclicked();
             }

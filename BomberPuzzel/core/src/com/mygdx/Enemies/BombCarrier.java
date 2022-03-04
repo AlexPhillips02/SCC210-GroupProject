@@ -18,7 +18,8 @@ public class BombCarrier extends PlayerTrackingEnemy
 {
     private int explosionRange = 2;
     private int bombsMax = 1;
-    private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/damage.mp3"));
+    private Sound damageSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/spider_hit.mp3"));
+
 
     /**
      * Constructor for the Bomb Carrier enemy type.
@@ -36,7 +37,7 @@ public class BombCarrier extends PlayerTrackingEnemy
     }
 
     /**
-     * Creates the animations of a creep (Stored within entity)
+     * Creates the animations of a bomb carrier (Stored within entity)
      */
     public void createAnimations()
     {
@@ -68,6 +69,10 @@ public class BombCarrier extends PlayerTrackingEnemy
         walkRight = walkDown;
     }
 
+    /**~
+     * Called when the enemy hits the player and attacks them
+     * Bomb carrier drops a bomb on their location and dies
+     */
     public void Attack(Player player)
     {
         if (bombsMax > 0) 
@@ -76,8 +81,15 @@ public class BombCarrier extends PlayerTrackingEnemy
             bombsMax--;   
         }
 
-        soundController.playMusic(playerHit);
+        reduceHealth();
         player.reduceHealth();
-        this.reduceHealth();
+    }
+
+    /**
+     * Returns sound to make when the bomb carrier dies
+     */
+    public Sound getDamageSound()
+    {
+        return damageSound;
     }
 }

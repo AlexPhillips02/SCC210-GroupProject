@@ -1,5 +1,7 @@
 package com.mygdx.GameScreens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,7 +10,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.mygdx.Driver;
 import com.mygdx.Sound.SoundController;
 
@@ -39,10 +45,13 @@ public class MenuScreen implements Screen
     private Texture activeHelp;
     private Texture activePlayButton;
     private Texture activeExitButton;
-    private Texture backGround;
+    private Texture bombTexture;
 
-    private Music introSong;
     private Sound buttonClick;
+
+    private float lastDropTime = 1f;
+    private ArrayList<Rectangle> bombs = new ArrayList<>();
+   
     
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
@@ -51,16 +60,18 @@ public class MenuScreen implements Screen
     {
         batch = new SpriteBatch();
 
-        introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
-        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
 
-        inActiveHelp = new Texture("Screens/Help.png");
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
+    
+
+        inActiveHelp = new Texture("Screens/Help(WHITE).png");
         activeHelp = new Texture("Screens/Help(active).png");
-        inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
-        inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
+        inActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
+        inActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
-        backGround = new Texture("Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
+        bombTexture = new Texture("Bombs/bomb(single).png");
+        
 
         soundController = new SoundController();
     }
@@ -79,16 +90,45 @@ public class MenuScreen implements Screen
     @Override
     public void render(float delta) 
     {
-        //soundController.playMusic(introSong);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        lastDropTime = lastDropTime + Gdx.graphics.getDeltaTime();
+
+        if(lastDropTime > 0.5)
+        {
+            spawnBomb();
+        }
+
         //drawing the background photo
         batch.begin();
-        batch.draw(backGround, 0, 0, Driver.WIDTH, Driver.HEIGHT);
+
+        for(int i = 0; i < bombs.size(); i++ )
+        {
+            Rectangle bomb = bombs.get(i);
+            bomb.y -= 200 * Gdx.graphics.getDeltaTime();
+            batch.draw(bombTexture, bomb.x, bomb.y, 100, 100);
+
+			if(bomb.y + 64 < 0)
+            {
+                bombs.remove(i);
+                i--;
+            } 
+        }
+        
         playAndExit();
         batch.end();
     }
+
+    private void spawnBomb() 
+    {
+		Rectangle bomb = new Rectangle();
+		bomb.x = MathUtils.random(0, Gdx.graphics.getWidth()-64);
+		bomb.y = Gdx.graphics.getHeight();
+
+		bombs.add(bomb);
+		lastDropTime = 0f;
+	}
 
     /**
      * Called when Window is set to menu Screen. Draws 
