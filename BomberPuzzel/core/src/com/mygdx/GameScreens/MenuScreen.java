@@ -29,9 +29,9 @@ public class MenuScreen implements Screen
     private int PLAY_BUTTON_Y = 170;
     private int EXIT_BUTTON_Y = 10;
     private int OPTION_BUTTON_Y = 330;
-    private int TITLE = 490;
-    private int TITLE_HEIGHT = 220;
-    private int TITLE_BUTTON_WIDTH = 900;
+    private int TITLE = 485;
+    private int TITLE_HEIGHT = 240;
+    private int TITLE_BUTTON_WIDTH = 800;
     private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
     private int TITLE_X = Driver.WIDTH / 2 - TITLE_BUTTON_WIDTH / 2;
 
