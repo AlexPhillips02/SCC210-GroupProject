@@ -61,6 +61,8 @@ public class Match extends Puzzle
                 }
             }
         }
+
+        gui.addTempLabel("Colour Match!");
     }
 
     /**
