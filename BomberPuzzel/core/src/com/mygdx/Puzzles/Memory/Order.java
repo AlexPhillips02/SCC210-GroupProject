@@ -211,7 +211,9 @@ public class Order extends Puzzle
     {
         gui.addTempLabel(button.getColour() + " Button Pressed");
         button.setActive(false);
-        button.clicked();
+        for(int i = 0; i <= 1; i++){
+            button.clicked();
+        }
         add(button);
         compareInput();
     }
