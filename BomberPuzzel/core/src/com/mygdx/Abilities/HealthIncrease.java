@@ -17,7 +17,7 @@ public class HealthIncrease extends Ability { //also deemed as SHIELD in the spe
      * @param player   the player which gets the ability.
      */
     public HealthIncrease(Board board, float x, float y, Player player) {
-        super("Abilties/Health-1.png (2).png", board, x, y, player, "Extra Heart", 0);
+        super("Abilties/Health.png", board, x, y, player, "Extra Heart", 0);
     }
 
     /**

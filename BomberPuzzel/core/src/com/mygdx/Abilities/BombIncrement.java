@@ -17,7 +17,7 @@ public class BombIncrement extends Ability {
      * @param player the player which gets the ability.
      */
     public BombIncrement(Board board, float x, float y, Player player) {
-        super("Abilties/Up 1 explosion-1.png (1).png", board, x, y, player, "Increased Inventory Size", 5);
+        super("Abilties/Up 1 explosion.png", board, x, y, player, "Increased Inventory Size", 5);
     }
 
     /**
