@@ -11,6 +11,6 @@ public class SoftWall extends BreakableWall
      */
     public SoftWall()
     {
-        super("Wall/Box(better).png", 1);
+        super("Wall/Box.png", 1);
     }
 }
