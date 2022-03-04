@@ -1,5 +1,7 @@
 package com.mygdx.Player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +17,7 @@ public class Player extends Entity
     private int bombsNumber;    //Current placed bombs
     private int bombsMax;       //Max amount of bombs placed
     private int bombsRange;
+    private Sound damageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
 
     /**
      * Constructor for the Player Model, the main character in the game.
@@ -133,5 +136,10 @@ public class Player extends Entity
 
     public void setBombsRange(int bombsRange) {
         this.bombsRange = bombsRange;
+    }
+
+    public Sound getDamageSound()
+    {
+        return damageSound;
     }
 }

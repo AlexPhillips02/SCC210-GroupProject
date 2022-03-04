@@ -76,7 +76,6 @@ public abstract class Ability
         if (elapsedTime > abilityLength) 
         {
             DeactivateAbility();
-            System.out.println("Decativate");
             deactivated = true;
         }
     }
@@ -106,7 +105,6 @@ public abstract class Ability
     {
         ActivateAbility();
         elapsedTime = 0f;
-        System.out.println("Activate");
     }
 
     public Texture getImage() {

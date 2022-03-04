@@ -6,7 +6,6 @@ import java.util.Random;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,7 +18,6 @@ import com.mygdx.Enemies.EnemyController;
 import com.mygdx.GameScreens.MenuScreen;
 import com.mygdx.Player.Player;
 import com.mygdx.Puzzles.PuzzleController;
-import com.mygdx.Sound.SoundController;
 
 /**
  * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
@@ -41,12 +39,9 @@ public class GameController
 	private Viewport gamePort;
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
-	private SoundController soundController;
 	private boolean gameLoaded = false;
 	private boolean runGame = true;
 	private boolean pause = false;
-
-	private Sound playerHit = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/damage.mp3"));
 
 	/**
 	 * Creates the camera, sound controller and gameport
@@ -55,7 +50,6 @@ public class GameController
     public GameController(SpriteBatch batch)
     {
         this.batch = batch;
-		soundController = new SoundController();
 		camera = new OrthographicCamera();
 		camera.translate(camera.viewportWidth / 2, camera.viewportHeight / 2);
 		gamePort = new FitViewport(1280, 720, camera);
@@ -274,7 +268,6 @@ public class GameController
 			//If the player is in contact with a death square
 			if(deathSquare.overlaps(player.getCollisionRectangle())) 
 			{
-				soundController.playMusic(playerHit);
 				player.reduceHealth();
 
 			}

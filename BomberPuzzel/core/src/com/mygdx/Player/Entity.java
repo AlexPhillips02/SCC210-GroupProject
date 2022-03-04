@@ -156,11 +156,6 @@ public abstract class Entity
 
         int xx = (int)(tempX / tileWidth);
         int yy = (int)((tempY) / tileHeight);
-        
-        if (xx < 0 || yy < 0 || xx >= 27 || yy >= 15)   
-        {
-            System.out.println("ENTITY ERROR Attempted to get gamesquare x: " + xx + " y: " + yy);
-        }
 
         //Calculate the corners of the entity in the new position
         //Get the tile in those corners then check if they are path tiles
@@ -232,8 +227,7 @@ public abstract class Entity
         }
         } catch (Exception e) 
         {
-            System.out.println("Actual Gamesquare Bottom left of Entity x: " + xx + " y: " + yy);
-            System.out.println("Gamesquare + image sizes x: " + (int)((tempX + imageWidth) / tileWidth) + " y: " + (int)((tempY + imageHeight) / tileHeight));
+            System.out.println(e);
         }
 
         return false;
@@ -358,7 +352,12 @@ public abstract class Entity
         if (lastDamageTimer >= healthCooldown) 
         {
             this.health--;
-            System.out.println("Damage Taken");
+
+            if (getDamageSound() != null) 
+            {
+                soundController.playMusic(getDamageSound());   
+            }
+
             lastDamageTimer = 0f;   
         }
     }
@@ -449,5 +448,10 @@ public abstract class Entity
     public void dispose() 
     {
         defaultImage.dispose();
+    }
+
+    public Sound getDamageSound()
+    {
+        return null;
     }
 }
