@@ -44,6 +44,16 @@ public class BombCarrier extends PlayerTrackingEnemy
         //Walking up (Back Of bomb carrier
         Array<TextureRegion> frames = new Array<TextureRegion>();
 
+        //Bomb carrier standing
+        Texture bombCarrierStanding = new Texture("Enemies/Spider enemy/SpiderBounce.png");
+        for (int i = 0; i < 2; i++) 
+        {
+            frames.add(new TextureRegion(bombCarrierStanding, 50 * i, 0, 50, 56));
+        }
+
+        standingAnimation = new Animation<>(1/3f, frames);
+        frames.clear();
+
         //Walking backwards
         Texture bombCarrierBack = new Texture("Enemies/Spider enemy/Spider(moving Back fixed.png");
         for (int i = 0; i < 2; i++) 
