@@ -12,8 +12,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.mygdx.Driver;
 import com.mygdx.Sound.SoundController;
+
+import java.util.Iterator;
 
 
 /**
@@ -43,12 +46,14 @@ public class MenuScreen implements Screen
     private Texture activePlayButton;
     private Texture activeExitButton;
     private Texture backGround;
+    private Texture bomb;
 
     private Music introSong;
     private Sound buttonClick;
 
     private long lastDropTime;
     private Array<Rectangle> raindrops;
+   
     
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
@@ -66,6 +71,7 @@ public class MenuScreen implements Screen
         inActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
+        bomb = new Texture("Bombs/bomb(single).png");
         
 
         soundController = new SoundController();
@@ -88,6 +94,13 @@ public class MenuScreen implements Screen
         //soundController.playMusic(introSong);
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(TimeUtils.nanoTime() - lastDropTime > 1000000000) spawnRaindrop();
+
+		for (Iterator<Rectangle> iter = raindrops.iterator(); iter.hasNext(); ) {
+			Rectangle raindrop = iter.next();
+			raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
+			if(raindrop.y + 64 < 0) iter.remove();
+        }
 
         //drawing the background photo
         batch.begin();
@@ -142,12 +155,12 @@ public class MenuScreen implements Screen
     }
 
     private void spawnRaindrop() {
-		Rectangle raindrop = new Rectangle();
-		raindrop.x = MathUtils.random(0, 800-64);
-		raindrop.y = 480;
-		raindrop.width = 64;
-		raindrop.height = 64;
-		raindrops.add(raindrop);
+		Rectangle bomb = new Rectangle();
+		bomb.x = MathUtils.random(0, 800-64);
+		bomb.y = 480;
+		bomb.width = 64;
+		bomb.height = 64;
+		raindrops.add(bomb);
 		lastDropTime = TimeUtils.nanoTime();
 	}
 
