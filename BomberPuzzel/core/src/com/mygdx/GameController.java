@@ -319,6 +319,9 @@ public class GameController
 		camera.update();
 	}
 
+	/**
+	 * What happens when the game is paused
+	 */
 	public void GamePauseOutput()
 	{
 		if (puzzleController.getWinStatus())
@@ -387,16 +390,26 @@ public class GameController
 		gamePort.update(screenWidth, screenHeight);
 	}
 
+	/**
+	 * set the poolean paused to true or false
+	 * @param b new value of pause
+	 */
 	public void setPaused(boolean b) {
 		pause = b;
 	}
 
+	/**
+	 * Loads the menu
+	 */
 	public void LoadMenu()
 	{
 		dispose();
 		((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
 	}
 
+	/**
+	 * Disposes of objects
+	 */
 	public void dispose()
 	{
 		batch.dispose();
