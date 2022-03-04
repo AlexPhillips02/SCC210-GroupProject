@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.Abilities.Ability;
 import com.mygdx.GameScreens.MainGameScreen;
+import com.mygdx.Sound.SoundController;
 
 /**
  * Displays the GUI with text to the user
@@ -80,7 +82,8 @@ public class GUI
     private int PLAY_BUTTON_X = (Driver.WIDTH / 4) - PLAY_BUTTON_WIDTH / 2;
 
     private SpriteBatch batch;
-
+    private SoundController soundController;
+    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/Click (2).mp3"));
     /**
      * Constructor for the GUI around the Game Board, which displays all the player and game info.
      * @param levelCount gets the level number.
@@ -88,6 +91,7 @@ public class GUI
     public GUI(int levelCount)
     {
         batch = new SpriteBatch();
+        soundController = new SoundController();
 
         //declaring all the buttons with their corresponding pictures
         activePlayButton = new Texture("Screens/Play (Active).png");
@@ -409,6 +413,7 @@ public class GUI
             batch.draw(activePlayButton, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched())
             {
+                soundController.playMusic(buttonClick);
                 showTempLabel(temp);
                 controller.setPaused(false);
             }
@@ -418,6 +423,7 @@ public class GUI
         {
             batch.draw(activeRestartButton, RESTART_BUTTON_X, PLAY_BUTTON_Y, RESTART_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
             if (Gdx.input.isTouched()){
+                    soundController.playMusic(buttonClick);
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen());
                 }
             }
@@ -428,6 +434,7 @@ public class GUI
             
             if (Gdx.input.isTouched())
             { 
+                soundController.playMusic(buttonClick);
                 controller.LoadMenu();
             }
         }

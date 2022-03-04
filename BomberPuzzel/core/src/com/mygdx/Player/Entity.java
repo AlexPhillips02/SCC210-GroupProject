@@ -44,6 +44,7 @@ public abstract class Entity
     protected SpriteBatch batch; //for the Game Over screen
 
     /**
+     * Constructor for the Entity object which extends Player.
      * @param imageURL URL to an image to use for the entity (Stored as a Texture)
      * @param board The gameboard
      * @param x X coordinate of the entity
@@ -153,9 +154,6 @@ public abstract class Entity
         {
             return false;
         }
-
-        int xx = (int)(tempX / tileWidth);
-        int yy = (int)((tempY) / tileHeight);
 
         //Calculate the corners of the entity in the new position
         //Get the tile in those corners then check if they are path tiles
@@ -379,20 +377,35 @@ public abstract class Entity
         }
     }
 
+    /**
+     * Method for setting the health
+     * @param health number of lives
+     */
     public void setHealth (int health) {
         this.health = health;
     }
 
+    /**
+     * Sees when's the last damage inflicted and increases the timer
+     */
     public void increaseLastDamaged()
     {
         this.lastDamageTimer = lastDamageTimer + Gdx.graphics.getDeltaTime();
     }
 
+    /**
+     * Method for setting the directions
+     * @param direction a direction
+     */
     public void setMovementDirection(String direction)
     {
         this.movementDirection = direction;
     }
 
+    /**
+     * Collision rectangle
+     * @return
+     */
     public Rectangle getCollisionRectangle()
     {
         return collisionRectangle;

@@ -5,19 +5,14 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.mygdx.Driver;
 import com.mygdx.Sound.SoundController;
-
 
 /**
  * @author Alex Chalakov, Lincoln Delhomme
@@ -59,7 +54,10 @@ public class MenuScreen implements Screen
     public MenuScreen()
     {
         batch = new SpriteBatch();
-        buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
+
+
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
+    
 
         inActiveHelp = new Texture("Screens/Help(WHITE).png");
         activeHelp = new Texture("Screens/Help(active).png");
