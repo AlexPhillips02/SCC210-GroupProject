@@ -18,7 +18,7 @@ public class BombCarrier extends PlayerTrackingEnemy
 {
     private int explosionRange = 2;
     private int bombsMax = 1;
-    private Sound damageSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/spider_hit.mp3"));
+    private Sound damageSound = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/spider_hit.mp3"));
 
 
     /**

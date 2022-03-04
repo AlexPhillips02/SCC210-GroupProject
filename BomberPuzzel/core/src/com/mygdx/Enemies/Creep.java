@@ -14,7 +14,7 @@ import com.mygdx.Board.Board;
  */
 public class Creep extends Enemies
 {
-    private Sound damageTaken = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/alien_hit.mp3"));
+    private Sound damageTaken = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/alien_hit.mp3"));
     
     /**
      * @param board Gameboard

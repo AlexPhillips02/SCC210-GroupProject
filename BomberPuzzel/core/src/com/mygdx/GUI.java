@@ -97,7 +97,7 @@ public class GUI
         activePlayButton = new Texture("Screens/Play(Active).png");
         activeExitButton = new Texture("Screens/Exit(active).png");
         activeRestartButton = new Texture("Screens/Restart(active).png");
-        UnActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
+        UnActivePlayButton = new Texture("Screens/Play(unactiveWHITE).png");
         UnActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
         UnActiveRestartButton = new Texture("Screens/Restart.png");
 
