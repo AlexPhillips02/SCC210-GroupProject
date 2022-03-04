@@ -71,7 +71,7 @@ public class MenuScreen implements Screen
         activePlayButton = new Texture("Screens/Play(Active).png");
         activeExitButton = new Texture("Screens/Exit(active).png");
         bombTexture = new Texture("Bombs/bomb(single).png");
-        puzzleBomber = new Texture("Screens/PuzzleBomber.png");
+        puzzleBomber = new Texture("Screens/TitleScreen.png");
         
 
         soundController = new SoundController();

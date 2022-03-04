@@ -94,8 +94,8 @@ public class GUI
         soundController = new SoundController();
 
         //declaring all the buttons with their corresponding pictures
-        activePlayButton = new Texture("Screens/Play (Active).png");
-        activeExitButton = new Texture("Screens/Exit (active).png");
+        activePlayButton = new Texture("Screens/Play(Active).png");
+        activeExitButton = new Texture("Screens/Exit(active).png");
         activeRestartButton = new Texture("Screens/Restart(active).png");
         UnActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
         UnActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
