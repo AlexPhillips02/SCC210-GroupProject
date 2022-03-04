@@ -1,0 +1,12 @@
+com.mygdx
+com.mygdx.Abilities
+com.mygdx.Board
+com.mygdx.Enemies
+com.mygdx.GameScreens
+com.mygdx.Player
+com.mygdx.Puzzles
+com.mygdx.Puzzles.Buttons
+com.mygdx.Puzzles.ColourMatch
+com.mygdx.Puzzles.Memory
+com.mygdx.Sound
+com.mygdx.TileTypes

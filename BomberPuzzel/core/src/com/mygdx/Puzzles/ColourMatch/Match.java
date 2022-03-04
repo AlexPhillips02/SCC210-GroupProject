@@ -115,7 +115,7 @@ public class Match extends Puzzle
 
     /**
      * What happens when player stands on a button
-     * @param newCurrent
+     * @param newCurrent the new ColourButton
      */
     public void setCurrent(ColourButton newCurrent)
     {
