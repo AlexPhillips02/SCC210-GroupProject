@@ -346,6 +346,7 @@ public abstract class Entity
 
     /**
      * Reducing the health method
+     * Produces the sound if the entity has one
      */
     public void reduceHealth()
     {
@@ -450,6 +451,10 @@ public abstract class Entity
         defaultImage.dispose();
     }
 
+    /**
+     * Overwritten in the enemy type classes
+     * @return Sound
+     */
     public Sound getDamageSound()
     {
         return null;

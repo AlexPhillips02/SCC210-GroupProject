@@ -21,12 +21,11 @@ import com.mygdx.Puzzles.PuzzleController;
 
 /**
  * @author Alex Phillips, Alex Chalakov, Kathryn Hurst
- * Controls the games will create the board / player / enemies
+ * Controls the games, will create the board / player / enemies / puzzels
  * Creates and controls the camera
  */
 public class GameController
 {
-	//private Boolean winStatus;
 	private GUI gui;
     private Board gameBoard;
 	private Player player;
@@ -37,6 +36,7 @@ public class GameController
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private Viewport gamePort;
+	
 	private int levelNumber = 0;
 	private float timeSinceGameStop = 0;
 	private boolean gameLoaded = false;

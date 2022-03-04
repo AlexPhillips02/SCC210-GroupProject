@@ -26,8 +26,8 @@ public class Bomb extends Ability
     private Animation<TextureRegion> explosionLinesVertical;
     private Animation<TextureRegion> explosionLinesHorizontal;
 
-    private final SoundController soundController;
-    //private final Sound bombSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/"));
+    private SoundController soundController;
+    //private Sound bombSound = Gdx.audio.newSound(Gdx.files.internal("Sounds/Effects/"));
 
     /**
      * Constructor for our bombs.

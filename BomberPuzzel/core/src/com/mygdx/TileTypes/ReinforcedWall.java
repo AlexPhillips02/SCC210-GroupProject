@@ -2,7 +2,7 @@ package com.mygdx.TileTypes;
 
 /**
  * @author Alex Phillips
- * Like soft wall can be destroyed but takes more than 1 hit
+ * Like soft wall can be destroyed but has an intial health greater than 1
  */
 public class ReinforcedWall extends BreakableWall
 { 

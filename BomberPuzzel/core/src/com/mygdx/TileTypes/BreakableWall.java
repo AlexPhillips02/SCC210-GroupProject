@@ -3,7 +3,7 @@ package com.mygdx.TileTypes;
 import com.mygdx.Board.Tile;
 
 /**
- * @author Alex Phillips, Alex C
+ * @author Alex Phillips
  * Breakable wall with a bomb
  */
 public abstract class BreakableWall extends Tile

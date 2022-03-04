@@ -54,6 +54,9 @@ public class Creep extends Enemies
         walkUp = standingAnimation;
     }
 
+    /**
+     * Returns sound to make when the enemy dies
+     */
     public Sound getDamageSound()
     {
         return damageTaken;

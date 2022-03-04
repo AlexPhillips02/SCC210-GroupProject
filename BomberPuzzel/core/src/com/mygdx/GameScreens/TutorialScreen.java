@@ -216,29 +216,23 @@ public class TutorialScreen implements Screen
     */
    @Override
    public void resize (int width, int height) 
-   {
-       
-   }
+   {}
 
-   /**
-    * Called when this screen becomes the current screen for a Game.
-    */
    @Override
-   public void show () {
-        
-   }
+   public void show () 
+   {}
 
    @Override
    public void hide () 
    {}
 
    @Override
-   public void pause () {
-   }
+   public void pause () 
+   {}
 
    @Override
-   public void resume () {
-   }
+   public void resume () 
+   {}
 
     @Override
     public void dispose()

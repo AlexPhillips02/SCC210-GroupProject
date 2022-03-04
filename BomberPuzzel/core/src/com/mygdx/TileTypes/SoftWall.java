@@ -2,6 +2,7 @@ package com.mygdx.TileTypes;
 
 /**
  * @author Alex Phillips
+ * Creates a soft wall, initial health of one
  */
 public class SoftWall extends BreakableWall
 {
