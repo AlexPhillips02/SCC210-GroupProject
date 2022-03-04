@@ -8,7 +8,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.Driver;
 import com.mygdx.Sound.SoundController;
 
@@ -43,6 +46,9 @@ public class MenuScreen implements Screen
 
     private Music introSong;
     private Sound buttonClick;
+
+    private long lastDropTime;
+    private Array<Rectangle> raindrops;
     
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
@@ -54,13 +60,13 @@ public class MenuScreen implements Screen
         introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
         buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
 
-        inActiveHelp = new Texture("Screens/Help.png");
+        inActiveHelp = new Texture("Screens/Help(WHITE).png");
         activeHelp = new Texture("Screens/Help(active).png");
-        inActivePlayButton = new Texture("Screens/Play(Unactive)-1.png");
-        inActiveExitButton = new Texture("Screens/Exit(unactive)-1.png");
+        inActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
+        inActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
         activePlayButton = new Texture("Screens/Play (Active).png");
         activeExitButton = new Texture("Screens/Exit (active).png");
-        backGround = new Texture("Bombing_Chap_Sprite_Set/Sprites/Menu/title_background.jpg");
+        
 
         soundController = new SoundController();
     }
@@ -85,7 +91,7 @@ public class MenuScreen implements Screen
 
         //drawing the background photo
         batch.begin();
-        batch.draw(backGround, 0, 0, Driver.WIDTH, Driver.HEIGHT);
+        
         playAndExit();
         batch.end();
     }
@@ -134,6 +140,16 @@ public class MenuScreen implements Screen
         }
 
     }
+
+    private void spawnRaindrop() {
+		Rectangle raindrop = new Rectangle();
+		raindrop.x = MathUtils.random(0, 800-64);
+		raindrop.y = 480;
+		raindrop.width = 64;
+		raindrop.height = 64;
+		raindrops.add(raindrop);
+		lastDropTime = TimeUtils.nanoTime();
+	}
 
     /**
      * @param width size of width
