@@ -62,14 +62,14 @@ public class TutorialScreen implements Screen
     
     private SoundController soundController;
     private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/ButtonPress.mp3"));
-    private boolean hasDisposed = false;
 
     /**
      * Constructor for the Tutorial Screen which introduces players to how the game is played.
      */
-    public TutorialScreen()
+    public TutorialScreen(SpriteBatch batch)
     {
-        batch = new SpriteBatch();
+        this.batch = batch;
+
         soundController = new SoundController();
         //soundController = new SoundController();
         playerImage = new Texture("Bomberman/BombermanDefault.png");
@@ -216,7 +216,6 @@ public class TutorialScreen implements Screen
         batch.draw(GreenButton, 1155, 100, 25, 25);
         batch.draw(YellowButton, 1185, 100, 25, 25);
         batch.draw(BlueButton, 1215, 100, 25, 25);
-        //batch.draw(texture, x, y);
         stage.draw();
         batch.end(); 
    }
@@ -248,10 +247,7 @@ public class TutorialScreen implements Screen
     @Override
     public void dispose()
     {
-        if (hasDisposed == false) 
-        {
-            batch.dispose();   
-            hasDisposed = true;
-        }
+        stage.dispose();   
+        batch.dispose();
     }
 }

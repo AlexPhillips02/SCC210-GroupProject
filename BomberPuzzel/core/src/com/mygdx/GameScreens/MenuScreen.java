@@ -51,7 +51,6 @@ public class MenuScreen implements Screen
 
     private float lastDropTime = 1f;
     private ArrayList<Rectangle> bombs = new ArrayList<>();
-    private boolean hasDisposed = false;
     
     /**
      * Constructor for the main Menu Screen which appears at the start of the game.
@@ -173,7 +172,7 @@ public class MenuScreen implements Screen
             if (Gdx.input.isTouched()){
                 this.dispose();
                 soundController.playMusic(buttonClick);
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new TutorialScreen(batch));
             }
         }
         else {
@@ -207,11 +206,5 @@ public class MenuScreen implements Screen
      */
     @Override
     public void dispose() 
-    {
-        if (hasDisposed == false) 
-        {
-            batch.dispose();   
-            hasDisposed = true;
-        }
-    }
+    {}
 }
