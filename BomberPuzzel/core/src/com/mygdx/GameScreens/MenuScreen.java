@@ -5,19 +5,14 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.SortedIntList.Iterator;
 import com.mygdx.Driver;
 import com.mygdx.Sound.SoundController;
-
 
 /**
  * @author Alex Chalakov, Lincoln Delhomme
@@ -34,7 +29,11 @@ public class MenuScreen implements Screen
     private int PLAY_BUTTON_Y = 170;
     private int EXIT_BUTTON_Y = 10;
     private int OPTION_BUTTON_Y = 330;
+    private int TITLE = 490;
+    private int TITLE_HEIGHT = 220;
+    private int TITLE_BUTTON_WIDTH = 900;
     private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+    private int TITLE_X = Driver.WIDTH / 2 - TITLE_BUTTON_WIDTH / 2;
 
     private SpriteBatch batch;
     private SoundController soundController;
@@ -46,6 +45,7 @@ public class MenuScreen implements Screen
     private Texture activePlayButton;
     private Texture activeExitButton;
     private Texture bombTexture;
+    private Texture puzzleBomber;
 
     private Sound buttonClick;
 
@@ -59,15 +59,19 @@ public class MenuScreen implements Screen
     public MenuScreen()
     {
         batch = new SpriteBatch();
-        buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
+
+
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
+    
 
         inActiveHelp = new Texture("Screens/Help(WHITE).png");
         activeHelp = new Texture("Screens/Help(active).png");
         inActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
         inActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
-        activePlayButton = new Texture("Screens/Play (Active).png");
-        activeExitButton = new Texture("Screens/Exit (active).png");
+        activePlayButton = new Texture("Screens/Play(Active).png");
+        activeExitButton = new Texture("Screens/Exit(active).png");
         bombTexture = new Texture("Bombs/bomb(single).png");
+        puzzleBomber = new Texture("Screens/TitleScreen.png");
         
 
         soundController = new SoundController();
@@ -112,7 +116,7 @@ public class MenuScreen implements Screen
                 i--;
             } 
         }
-        
+        batch.draw(puzzleBomber, TITLE_X, TITLE, TITLE_BUTTON_WIDTH, TITLE_HEIGHT);
         playAndExit();
         batch.end();
     }

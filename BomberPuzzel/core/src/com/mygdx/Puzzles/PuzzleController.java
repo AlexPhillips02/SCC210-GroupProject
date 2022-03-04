@@ -11,7 +11,6 @@ import com.mygdx.Player.Player;
 import com.mygdx.Puzzles.Buttons.ColourButton;
 import com.mygdx.Puzzles.ColourMatch.Match;
 import com.mygdx.Puzzles.Memory.Order;
-import com.mygdx.Sound.SoundController;
 
 /**
  * @author Kathryn Hurst
@@ -24,11 +23,9 @@ public class PuzzleController
     private Player player;
     private int puzzle;
 	private Puzzle puzzleGame;
-	private SoundController soundController;
-
 	private float lastButtonTime = 1;
 
-    /**
+	/**
      * Loads board and player
      * @param board used to select locations on board
      * @param player used for collision detection on puzzle interaction
@@ -38,7 +35,6 @@ public class PuzzleController
 		this.gui = gui;
         this.board = board;
         this.player = player;
-		soundController = new SoundController();
     }
 
     /**
@@ -91,6 +87,7 @@ public class PuzzleController
 			{
 				if(buttons.get(i).getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{	
+					
 					if(buttons.get(i).getActiveStatus() && lastButtonTime >= 1)
 					{	
 						lastButtonTime = 0;
@@ -111,6 +108,7 @@ public class PuzzleController
 			{
 				if(buttons[i].getCollisionRectangle().overlaps(player.getCollisionRectangle()))
 				{
+					
 					if(buttons[i].getActiveStatus())
 					{
 						buttons[i].setActive(false);

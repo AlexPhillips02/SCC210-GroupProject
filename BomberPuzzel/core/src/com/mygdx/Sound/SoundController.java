@@ -25,6 +25,6 @@ public class SoundController
      */
     public void playMusic(Sound s)
     {
-        s.play();
+        s.play(1);
     }
 }
