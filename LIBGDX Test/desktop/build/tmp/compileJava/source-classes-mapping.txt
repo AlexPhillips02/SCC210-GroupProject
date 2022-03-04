@@ -1,2 +1,0 @@
-scc210/groupproject/desktop/DesktopLauncher.java
- scc210.groupproject.desktop.DesktopLauncher
