@@ -29,7 +29,11 @@ public class MenuScreen implements Screen
     private int PLAY_BUTTON_Y = 170;
     private int EXIT_BUTTON_Y = 10;
     private int OPTION_BUTTON_Y = 330;
+    private int TITLE = 490;
+    private int TITLE_HEIGHT = 220;
+    private int TITLE_BUTTON_WIDTH = 900;
     private int BUTTON_X = Driver.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+    private int TITLE_X = Driver.WIDTH / 2 - TITLE_BUTTON_WIDTH / 2;
 
     private SpriteBatch batch;
     private SoundController soundController;
@@ -41,6 +45,7 @@ public class MenuScreen implements Screen
     private Texture activePlayButton;
     private Texture activeExitButton;
     private Texture bombTexture;
+    private Texture puzzleBomber;
 
     private Sound buttonClick;
 
@@ -63,9 +68,10 @@ public class MenuScreen implements Screen
         activeHelp = new Texture("Screens/Help(active).png");
         inActivePlayButton = new Texture("Screens/Play(UnactiveWHITE).png");
         inActiveExitButton = new Texture("Screens/Exit(unactiveWHITE).png");
-        activePlayButton = new Texture("Screens/Play (Active).png");
-        activeExitButton = new Texture("Screens/Exit (active).png");
+        activePlayButton = new Texture("Screens/Play(Active).png");
+        activeExitButton = new Texture("Screens/Exit(active).png");
         bombTexture = new Texture("Bombs/bomb(single).png");
+        puzzleBomber = new Texture("Screens/TitleScreen.png");
         
 
         soundController = new SoundController();
@@ -115,6 +121,7 @@ public class MenuScreen implements Screen
         }
         
         //Create buttons
+        batch.draw(puzzleBomber, TITLE_X, TITLE, TITLE_BUTTON_WIDTH, TITLE_HEIGHT);
         playAndExit();
         batch.end();
     }
