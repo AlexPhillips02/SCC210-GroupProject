@@ -26,7 +26,7 @@ public abstract class ColourButton
 
     protected boolean active = true;
     protected SoundController soundController;
-    protected Sound buttonPress = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/Click (2).mp3"));
+    protected Sound buttonPress = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/Click (2) (6).mp3"));
 
     /**
      * Constructor for the button class
