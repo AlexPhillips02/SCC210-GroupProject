@@ -41,6 +41,10 @@ public class Order extends Puzzle
         super(gui, board);
     }
 
+    /**
+     * Draws all of the buttons on the board
+     * @param batch Spritebatch to display everything in the driver
+     */
     public void Draw(SpriteBatch batch)
     {
         R.Draw(batch);
@@ -50,7 +54,7 @@ public class Order extends Puzzle
     }
 
     /**
-     * // Accessor method for the buttons array
+     * Accessor method for the buttons array
      * @return the buttons array
      */
     public ColourButton[] getButtons()

@@ -52,65 +52,114 @@ public abstract class ColourButton
         batch.draw(currentImage , x, y);
     }
 
+    /**
+     * Accessor method for the image to be displayed
+     * @return currentImage
+     */
     public Texture getImage()
     {
         return currentImage;
     }
 
+    /**
+     * Gets the height of the current image
+     * @return currentImage height
+     */
     public int getHeight()
     {
         return currentImage.getHeight();
     }
 
+    /**
+     * Gets the width of the current image
+     * @return currentImage width
+     */
     public int getWidth()
     {
         return currentImage.getWidth();
     }
 
+    /**
+     * Accessor method for the buttons's x-position
+     * @return x
+     */
     public float getX()
     {
         return x;
     }
 
+    /**
+     * Accessor method for the buttons's y-position
+     * @return y
+     */
     public float getY()
     {
         return y;
     }
 
+    /**
+     * Accessor method for the buttons collision rectangle
+     * @return collisionRectange
+     */
     public Rectangle getCollisionRectangle()
     {
         return collisionRectangle;
     }
 
+    /**
+     * Mutator method to set active to true or false
+     * @param TF the boolen to set active to
+     */
     public void setActive(boolean TF)
     {
         active = TF;
     }
     
+    /**
+     * Accessor method to see if the buton is active or not
+     */
     public boolean getActiveStatus()
     {
         return active;
     }
 
+    /**
+     * Accessor method to get the colour of the button
+     * @return colour
+     */
     public String getColour() {
         return colour;
     }
 
+    /**
+     * Sets current image to unclickedImage
+     */
     public void unclicked()
     {
         currentImage = unclickedImage;
     }
 
+    /**
+     * Sets current image to clickedImage
+     */
     public void clicked()
     {
         currentImage = clickedImage;
     }
 
+    /**
+     * Mutator method to set new x-position
+     * @param x new position of the button
+     */
     public void setX(float x)
     {
         this.x = x;
     }
 
+    /**
+     * Mutator method to set new y-position
+     * @param y new position of the button
+     */
     public void setY(float y)
     {
         this.y = y;
