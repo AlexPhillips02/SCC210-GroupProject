@@ -52,7 +52,7 @@ public class MenuScreen implements Screen
         batch = new SpriteBatch();
 
         introSong = Gdx.audio.newMusic(Gdx.files.internal("Sounds/alex-productions-epic-cinematic-gaming-cyberpunk-reset.mp3"));
-        buttonClick = Gdx.audio.newSound(Gdx.files.internal("Sounds/mixkit-interface-click-1126.mp3"));
+        buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
 
         inActiveHelp = new Texture("Screens/Help.png");
         activeHelp = new Texture("Screens/Help(active).png");

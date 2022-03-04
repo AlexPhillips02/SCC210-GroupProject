@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.mygdx.Driver;
+import com.mygdx.Sound.SoundController;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.Game;
 
@@ -55,7 +56,8 @@ public class TutorialScreen implements Screen
     private TextButton button; 
     private TextButtonStyle textButtonStyle;
     
-
+    private SoundController soundController;
+    private Sound buttonClick = Gdx.audio.newSound(Gdx.files.internal("sounds/mixkit-interface-click-1126.mp3"));
     /**
      * Constructor for the Tutorial Screen which introduces players to how the game is played.
      * @param controller
@@ -63,6 +65,7 @@ public class TutorialScreen implements Screen
     public TutorialScreen()
     {
         batch = new SpriteBatch();
+        soundController = new SoundController();
         //soundController = new SoundController();
         playerImage = new Texture("Bomberman/BombermanDefault.png");
         enemyImage = new Texture("Alien enemy/Alien(single).png");
@@ -112,6 +115,7 @@ public class TutorialScreen implements Screen
         button = new TextButton("Back To Main Screen", textButtonStyle);
         button.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                soundController.playMusic(buttonClick);
                 dispose();
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
                 return true;

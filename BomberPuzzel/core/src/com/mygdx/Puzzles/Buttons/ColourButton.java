@@ -1,9 +1,12 @@
 package com.mygdx.Puzzles.Buttons;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.Board.Board;
+import com.mygdx.Sound.SoundController;
 
 /**
  * @author Kathryn Hurst, Alex Phillips
@@ -22,6 +25,8 @@ public abstract class ColourButton
     protected Rectangle collisionRectangle;
 
     protected boolean active = true;
+    protected SoundController soundController;
+    protected Sound buttonPress = Gdx.audio.newSound(Gdx.files.internal("sounds/Effects/Click (2).mp3"));
 
     /**
      * Constructor for the button class
@@ -39,7 +44,7 @@ public abstract class ColourButton
         this.y = y;
 
         this.currentImage = unclickedImage;
-        
+        soundController = new SoundController();
         collisionRectangle = new Rectangle(this.x, this.y, currentImage.getWidth(), currentImage.getHeight());
     }
 
@@ -103,6 +108,7 @@ public abstract class ColourButton
 
     public void clicked()
     {
+        soundController.playMusic(buttonPress);
         currentImage = clickedImage;
     }
 
